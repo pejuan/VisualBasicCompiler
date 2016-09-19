@@ -1,0 +1,70 @@
+program -> function_declarations
+			| /* lambda */
+
+function_declarations -> function_declaration function_declarations 
+						| function_declaration
+
+function_declaration -> structure_statement | sub_statement | function_statement
+
+structure_statement -> Structure identifier statement End Structure
+
+sub_statement 		-> 	Sub identifier PARIN parameters PAROUT statement End Sub
+					    | sub identifier PARIN parameters PAROUT statement End Sub
+
+function_statement 	-> 	Function identifier PARIN parameters PAROUT statement End Function
+						| Function identifier PARIN parameters PAROUT statement End Function
+						| Function identifier PARIN parameters PAROUT As data_type statement End Function
+						| Function identifier PARIN parameters PAROUT As data_type statement  End Function
+
+
+parameters -> parameter, parameters
+			| parameter | /* lambda */
+
+parameter -> parameter_type id AS data_type 
+
+parameter_type -> BYVAL 
+				| BYREF
+
+data_type -> Integer|Boolean|String
+
+statement -> if_statement
+			| while_statement
+			| for_statement
+			| do_statement
+			| variable_declaration
+			| expression
+			| /* lambda */
+
+if_statement ->	If expression Then statement End If
+				| If expression Then statement Else statement End If
+				| If expression Then statement elseif_statements End If
+				| If expression Then statement elseif_statements Else statement End If
+
+elseif_statements ->  elseif_statement elseif_statements
+					  |elseif_statement
+
+elseif_statement -> ElseIf expression Then
+
+for_statement -> For variable_declaration To expression statements Next
+				| For variable_declaration To expression Step Number statements Next
+
+while_statement -> While expression statements End While
+
+do_statement -> Do While expression statement Loop
+				|Do statement Loop Until expression
+
+variable_declaration -> variable_declarator,variable_declaration 
+						|variable_declarator
+
+variable_declarator  -> Dim identifier As data_type = expression
+						|identifier As data_type = expression
+						|Dim identifier = expression
+						|identifier = expression
+;
+
+expression -> numeric_exp
+			 | boolean_exp
+			 | logical_exp
+			 | literal_exp
+			 | function_call
+			 | identifier
