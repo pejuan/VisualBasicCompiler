@@ -646,7 +646,7 @@ public class parser extends java_cup.runtime.lr_parser {
             if(s.sym==0){
 
             }else{
-                System.err.print("Syntax error, Line "+(s.left+1)+ " Column "+(s.right+1)+ " Symbol #"+s.sym+". ");
+                System.err.print("Syntax error, Line "+(s.left)+ " Column "+(s.right)+ " Symbol #"+s.sym+". ");
                 List<Integer> expected = expected_token_ids();
                 String expectedSymbol = "";
                 /*System.out.println("Tamaño:"+expected.size());

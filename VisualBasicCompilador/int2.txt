@@ -5,10 +5,11 @@ Sub main()
     Dim a As Integer = 0
     llamadaAFuncion (1,2,3
     Do
-        a = k + n
+        
         While i>10
 			
 		End While
+		a = k + n+
     Loop Until index > 10
 
 	For index As Integer = 1 To 100000
@@ -28,11 +29,8 @@ Sub main()
 	While i>10
 		+
 	End While
-	Do While i>10
-		
-	Loop
 	
-	+
+	jun(
 	While i>10
 		
 	End While
