@@ -306,6 +306,7 @@ if_statement ::=    TK_IF expression:expr TK_THEN statements:stmnts TK_END TK_IF
                     |TK_IF expression:expr TK_THEN statements:stmnts TK_ELSE statements:stmnts1 TK_END TK_IF                                    {: :}
                     |TK_IF expression:expr TK_THEN statements:stmnts elseif_statements:elseifStmnts TK_END TK_IF                                {: :}
                     |TK_IF expression:expr TK_THEN statements:stmnts elseif_statements:elseifStmnts TK_ELSE statements:stmnts1 TK_END TK_IF     {: :}
+                    |TK_IF expression:expr TK_THEN statements:stmnts error                                                                      {:System.err.print("Error in If."); :}
 ; 
 
 elseif_statements ::=	elseif_statement:elseifStmnt elseif_statements:elseifStmnts                     {: :}
@@ -317,6 +318,8 @@ elseif_statement ::=	TK_ELSEIF expression:expr TK_THEN           {: :}
 
 
 for_statement ::=	TK_FOR variable_declaration:var_declare TK_TO expression:expr statements:stmnts TK_NEXT                         {: :}
+                        |TK_FOR error TK_TO expression:expr statements:stmnts TK_NEXT                                                   {:System.err.println("Error in variable declaration by For."); :}
+                        |TK_FOR variable_declaration:var_declare TK_TO expression:expr error statements:stmnts TK_NEXT                  {:System.err.println("Check syntax inside For.");:}
 ;
 
 while_statement ::=     TK_WHILE expression:expr statements:stmnts TK_END TK_WHILE                  {: :}
