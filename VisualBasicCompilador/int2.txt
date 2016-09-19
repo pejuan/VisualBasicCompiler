@@ -12,7 +12,7 @@ Sub main()
 		End While
 		a = k + n+
     Loop Until index > 10
-    
+
 	For index As Integer = 1 To 100000
     	' If index is between 5 and 7, continue
     	' with the next iteration.
@@ -27,6 +27,7 @@ Sub main()
         	
     	End If
 	Next
+	+
 	While i>10
 		+
 	End While
@@ -39,6 +40,7 @@ Sub main()
 		
 	End While
 	+
+
 End Sub
 
 Sub algo()

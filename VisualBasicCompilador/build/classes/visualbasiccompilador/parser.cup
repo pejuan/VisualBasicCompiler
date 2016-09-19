@@ -7,7 +7,7 @@ import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 
 
 parser code {:
-
+        
 	public void syntax_error(Symbol s){
             if(s.sym==0){
 
@@ -260,7 +260,8 @@ structure_statement ::= TK_STRUCTURE TK_ID statements:stmnts TK_END TK_STRUCTURE
 
 sub_statement ::=   TK_SUB TK_ID TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_SUB            {: :}
                     |TK_SUB TK_ID TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                            {: :}
-                    |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts TK_END TK_SUB                      {:System.err.println("Error with Sub statement");:}
+                    |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts TK_END TK_SUB                      {:System.err.println("Error inside Sub statement");:}
+                    |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts error TK_END TK_SUB                {:System.err.println("Several errors inside Sub statement");:}
                     |TK_SUB error TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                            {:System.err.println("Erroneous Sub declaration.");:}
 ;
 
