@@ -242,136 +242,136 @@ precedence nonassoc TK_ELSE;
 initial ::= program {: System.out.println("Programa en Visual Basic"); :}
 ;
 
-program ::= function_declarations:functionDeclarations {:System.out.println("Hola"); :}                   
+program ::= function_declarations:functionDeclarations {:System.out.println("Program"); :}                   
             | /* Vacio */
 ;
 
 
-function_declarations ::= function_declaration:functionDeclaration function_declarations:functionDeclarations       {: //System.out.println("Encontre una o varias funciones"); :}
+function_declarations ::= function_declaration:functionDeclaration function_declarations:functionDeclarations       {: :}
 ;
 
-function_declaration ::= structure_statement:structureStatement                             {: //System.out.println("Structure encontrada"); :}
-			 |sub_statement:subStatement                                        {: //System.out.println("Sub encontrada"); :}
-			 |function_statement:functionStatement                              {: //System.out.println("Function encontrada"); :}
+function_declaration ::= structure_statement:structureStatement                             {:  :}
+			 |sub_statement:subStatement                                        {:  :}
+			 |function_statement:functionStatement                              {:  :}
 ;
 
-structure_statement ::= TK_STRUCTURE TK_ID statements:stmnts TK_END TK_STRUCTURE            {: //System.out.println("Definicion de Structure"); :}
+structure_statement ::= TK_STRUCTURE TK_ID statements:stmnts TK_END TK_STRUCTURE            {: :}
 ;
 
-sub_statement ::=   TK_SUB TK_ID TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_SUB            {://System.out.println("Sub con parametros"); :}
-                    |TK_SUB TK_ID TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                            {://System.out.println("Sub sin parametros"); :}
-                    |TK_SUB TK_ID TK_PARIN TK_PAROUT error TK_END TK_SUB                                                                 {:System.err.println("Error with Sub");:}
+sub_statement ::=   TK_SUB TK_ID TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_SUB            {: :}
+                    |TK_SUB TK_ID TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                            {: :}
+                    |TK_SUB TK_ID TK_PARIN TK_PAROUT error TK_END TK_SUB                                        {:System.err.println("Error with Sub statement");:}
                     |TK_SUB error TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                            {:System.err.println("Erroneous Sub declaration.");:}
 ;
 
 
-function_statement ::= 	TK_FUNCTION TK_ID TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_FUNCTION                          {:// System.out.println("Function con parametros sin retorno"); :}
-			|TK_FUNCTION TK_ID TK_PARIN parameters:prmts TK_PAROUT TK_AS data_type:type statements:stmnts TK_END TK_FUNCTION    {:// System.out.println("Function con parametros con retorno"); :}
-                        |TK_FUNCTION TK_ID TK_PARIN TK_PAROUT TK_AS data_type:type statements:stmnts TK_END TK_FUNCTION                     {: //System.out.println("Function sin parametros con retorno"); :}
-                        |TK_FUNCTION TK_ID TK_PARIN TK_PAROUT statements:stmnts TK_END TK_FUNCTION                                          {: //System.out.println("Function sin parametros sin retorno"); :}
+function_statement ::= 	TK_FUNCTION TK_ID TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_FUNCTION                          {: :}
+			|TK_FUNCTION TK_ID TK_PARIN parameters:prmts TK_PAROUT TK_AS data_type:type statements:stmnts TK_END TK_FUNCTION    {: :}
+                        |TK_FUNCTION TK_ID TK_PARIN TK_PAROUT TK_AS data_type:type statements:stmnts TK_END TK_FUNCTION                     {: :}
+                        |TK_FUNCTION TK_ID TK_PARIN TK_PAROUT statements:stmnts TK_END TK_FUNCTION                                          {: :}
 ;
 
-parameters ::= 	parameter:prmt TK_COMMA parameters:prmts        {: //System.out.println("Encontre varios parametros"); :}
-		|parameter:prmt                                 {: //System.out.println("Encontre un parametro"); :}
+parameters ::= 	parameter:prmt TK_COMMA parameters:prmts        {: :}
+		|parameter:prmt                                 {: :}
 ;
 
-parameter ::=	parameter_type:prmt_type TK_ID TK_AS data_type:type {: //System.out.println("Definicion de parametros"); :}
+parameter ::=	parameter_type:prmt_type TK_ID TK_AS data_type:type {: :}
 ;
 
-parameter_type ::=  TK_BYVAL                    {: //System.out.println("Tipo de parametro por valor"); :}
-                    |TK_BYREF                   {: //System.out.println("Tipo de parametro por referencia"); :}
+parameter_type ::=  TK_BYVAL                    {: :}
+                    |TK_BYREF                   {: :}
 ;
 
-data_type ::=	TK_INTEGER          {: //System.out.println("Integer"); :}
-		|TK_BOOLEAN         {: //System.out.println("Boolean"); :}
-		|TK_STRING          {: //System.out.println("String"); :}
+data_type ::=	TK_INTEGER          {: :}
+		|TK_BOOLEAN         {: :}
+		|TK_STRING          {: :}
 ;
 
 statements ::=	statement:stmnt statements:stmnts 
 		| /* Vacio */                      
 ;
 
-statement ::=	if_statement:ifStatement                {: //System.out.println("Encontre un statement IF"); :}
-                |while_statement:whileStatement         {: //System.out.println("Encontre un statement WHILE"); :}
-		|for_statement:forStatement             {: //System.out.println("Encontre un statement FOR");:}
-		|do_statement:doStatement               {: //System.out.println("Encontre un statement DO WHILE");:}
-                |variable_declaration:var_declare       {: //System.out.println("Encontre una declaracion de variable");:}
-		|expression:expr                        {: //System.out.println("Encontre una expression ");:}
-		|TK_RETURN expression                   {: //System.out.println("Encontre un statement RETURN");:}
-		|TK_EXIT                                {: //System.out.println("Encontre un statement EXIT");:}
+statement ::=	if_statement:ifStatement                {:  :}
+                |while_statement:whileStatement         {:  :}
+		|for_statement:forStatement             {: :}
+		|do_statement:doStatement               {: :}
+                |variable_declaration:var_declare       {: :}
+		|expression:expr                        {: :}
+		|TK_RETURN expression                   {: :}
+		|TK_EXIT                                {: :}
 ;
 
-if_statement ::=    TK_IF expression:expr TK_THEN statements:stmnts TK_END TK_IF                                                                {: //System.out.println("Encontre un IF sencillo"); :}
-                    |TK_IF expression:expr TK_THEN statements:stmnts TK_ELSE statements:stmnts1 TK_END TK_IF                                    {: //System.out.println("Encontre un IF con ELSE"); :}
-                    |TK_IF expression:expr TK_THEN statements:stmnts elseif_statements:elseifStmnts TK_END TK_IF                                {: //System.out.println("Encontre un IF con ELSEIF"); :}
-                    |TK_IF expression:expr TK_THEN statements:stmnts elseif_statements:elseifStmnts TK_ELSE statements:stmnts1 TK_END TK_IF     {: //System.out.println("Encontre un IF con ELSEIF y con ELSE"); :}
+if_statement ::=    TK_IF expression:expr TK_THEN statements:stmnts TK_END TK_IF                                                                {: :}
+                    |TK_IF expression:expr TK_THEN statements:stmnts TK_ELSE statements:stmnts1 TK_END TK_IF                                    {: :}
+                    |TK_IF expression:expr TK_THEN statements:stmnts elseif_statements:elseifStmnts TK_END TK_IF                                {: :}
+                    |TK_IF expression:expr TK_THEN statements:stmnts elseif_statements:elseifStmnts TK_ELSE statements:stmnts1 TK_END TK_IF     {: :}
 ; 
 
-elseif_statements ::=	elseif_statement:elseifStmnt elseif_statements:elseifStmnts                     {: //System.out.println("Encontre varios statements ELSEIF"); :}
-			|elseif_statement:elseifStmnt                                                   {: //System.out.println("Encontre un statement ELSEIF"); :}
+elseif_statements ::=	elseif_statement:elseifStmnt elseif_statements:elseifStmnts                     {: :}
+			|elseif_statement:elseifStmnt                                                   {: :}
 ;
 
-elseif_statement ::=	TK_ELSEIF expression:expr TK_THEN           {: //System.out.println("Encontre un bloque ELSEIF");:}
+elseif_statement ::=	TK_ELSEIF expression:expr TK_THEN           {: :}
 ;
 
 
-for_statement ::=	TK_FOR variable_declaration:var_declare TK_TO expression:expr statements:stmnts TK_NEXT                         {://System.out.println("Encontre un bloque FOR"); :}
+for_statement ::=	TK_FOR variable_declaration:var_declare TK_TO expression:expr statements:stmnts TK_NEXT                         {: :}
 ;
 
-while_statement ::=     TK_WHILE expression:expr statements:stmnts TK_END TK_WHILE                  {://System.out.println("Encontre un bloque WHILE"); :}
+while_statement ::=     TK_WHILE expression:expr statements:stmnts TK_END TK_WHILE                  {: :}
                         |TK_WHILE error TK_END TK_WHILE                                             {:System.err.println("Error inside While block");:}
 ;
 
-do_statement ::=    TK_DO TK_WHILE expression:expr statements:stmnts TK_LOOP                    {://System.out.println("Encontre un bloque DO WHILE con LOOP"); :}
-                    |TK_DO statements:stmnts TK_LOOP TK_UNTIL expression:expr                   {://System.out.println("Encontre un bloque DO con UNTIL"); :}
+do_statement ::=    TK_DO TK_WHILE expression:expr statements:stmnts TK_LOOP                    {: :}
+                    |TK_DO statements:stmnts TK_LOOP TK_UNTIL expression:expr                   {: :}
                     |TK_DO error TK_LOOP TK_UNTIL expression:expr                               {:System.err.println("Error inside Do Loop");:} 
                     |TK_DO TK_WHILE error TK_LOOP                                               {:System.err.println("Error in Do While");:}
                     |TK_DO TK_WHILE expression:expr error                                       {:System.err.println("Error after Do While statement ");:}
 ;
 
-variable_declaration ::=    variable_declarator:var TK_COMMA variable_declaration:var_declare   {: //System.out.println("Declaracion de variables en una sola linea"); :}
-                            |variable_declarator:var                                                {: //System.out.println("Declaracion de variable simple"); :}
+variable_declaration ::=    variable_declarator:var TK_COMMA variable_declaration:var_declare   {: :}
+                            |variable_declarator:var                                                {: :}
 ;
 
 
-variable_declarator  ::=    TK_DIM TK_ID TK_AS data_type:type TK_EQUALS expression:expr         {: //System.out.println("Declaracion de variable explicita con DIM"); :}
-                            |TK_ID TK_AS data_type:type TK_EQUALS expression:expr               {: //System.out.println("Declaracion de variable explicita"); :}
-                            |TK_DIM TK_ID TK_EQUALS expression:expr                             {: //System.out.println("Declaracion de variable simple con DIM"); :}
-                            |TK_ID TK_EQUALS expression:expr                                    {: //System.out.println("Declaracion de variable simple"); :}
+variable_declarator  ::=    TK_DIM TK_ID TK_AS data_type:type TK_EQUALS expression:expr         {: :}
+                            |TK_ID TK_AS data_type:type TK_EQUALS expression:expr               {: :}
+                            |TK_DIM TK_ID TK_EQUALS expression:expr                             {: :}
+                            |TK_ID TK_EQUALS expression:expr                                    {: :}
 ;   
 
 
 
-expression ::=	numeric_expression:num_exp      {: //System.out.println("Expresion aritmetica"); :}
-		|boolean_expression:bool_exp    {: //System.out.println("Expresion booleana"); :}
-		|logical_expression:logic_exp   {: //System.out.println("Expresion Logica"); :}
-		|literal_expression:lit_exp     {: //System.out.println("Literal"); :}
-		|TK_ID:id                       {: //System.out.println("Identificador"); :}
-		|function_call:call             {: //System.out.println("Llamada a Funcion"); :}
+expression ::=	numeric_expression:num_exp      {: :}
+		|boolean_expression:bool_exp    {: :}
+		|logical_expression:logic_exp   {: :}
+		|literal_expression:lit_exp     {: :}
+		|TK_ID:id                       {: :}
+		|function_call:call             {: :}
 ;
 
-boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2       {: //System.out.println("Expresion MAYOR"); :}
-                       |expression:e1 TK_LESSTHAN expression:e2         {: //System.out.println("Expresion MENOR"); :}
-                       |expression:e1 TK_GREATEREQUAL expression:e2     {: //System.out.println("Expresion MAYOR IGUAL"); :}
-                       |expression:e1 TK_LESSEQUAL expression:e2        {: //System.out.println("Expresion MENOR IGUAL"); :}
-                       |expression:e1 TK_EQUALS expression:e2           {: //System.out.println("Expresion IGUAL"); :}
+boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2       {: :}
+                       |expression:e1 TK_LESSTHAN expression:e2         {: :}
+                       |expression:e1 TK_GREATEREQUAL expression:e2     {: :}
+                       |expression:e1 TK_LESSEQUAL expression:e2        {: :}
+                       |expression:e1 TK_EQUALS expression:e2           {: :}
 ;
 
-logical_expression ::= TK_NOT expression:e1                             {: //System.out.println("Expresion NOT"); :}
-                       |expression:e1 TK_OR expression:e2               {: //System.out.println("Expresion OR"); :}
-                       |expression:e1 TK_AND expression:e2              {: //System.out.println("Expresion AND"); :}
-                       |expression:e1 TK_XOR expression:e2              {: //System.out.println("Expresion XOR"); :}
-                       |TK_TRUE                                         {: //System.out.println("TRUE"); :}
-                       |TK_FALSE                                        {: //System.out.println("FALSE"); :}
+logical_expression ::= TK_NOT expression:e1                             {: :}
+                       |expression:e1 TK_OR expression:e2               {: :}
+                       |expression:e1 TK_AND expression:e2              {: :}
+                       |expression:e1 TK_XOR expression:e2              {: :}
+                       |TK_TRUE                                         {: :}
+                       |TK_FALSE                                        {: :}
 ;
-numeric_expression ::= expression:e1 TK_SUM expression:e2               {: //System.out.println("Expresion de SUMA"); :}
-                       |expression:e1 TK_MINUS expression:e2            {: //System.out.println("Expresion de RESTA"); :}
-                       |expression:e1 TK_PRODUCT expression:e2          {: //System.out.println("Expresion de MULTIPLICACION"); :}
-                       |expression:e1 TK_DIVISION expression:e2         {: //System.out.println("Expresion de DIVISION"); :}
+numeric_expression ::= expression:e1 TK_SUM expression:e2               {: :}
+                       |expression:e1 TK_MINUS expression:e2            {: :}
+                       |expression:e1 TK_PRODUCT expression:e2          {: :}
+                       |expression:e1 TK_DIVISION expression:e2         {: :}
 ;   
 
-literal_expression ::= 	TK_NUMBER                                       {: //System.out.println("NUMERO"); :}
-			|TK_STRINGVAL                                   {: //System.out.println("Valor de String"); :}
+literal_expression ::= 	TK_NUMBER                                       {: :}
+			|TK_STRINGVAL                                   {: :}
 ;
 
 function_call ::=   TK_ID TK_PARIN arguments:args TK_PAROUT

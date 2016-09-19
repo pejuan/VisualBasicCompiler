@@ -1,19 +1,15 @@
 Sub main()
-
 	Dim k As Integer = 0
 	Dim n As Boolean = False
 	Dim m As String = "Hola Mundo"
     Dim a As Integer = 0
-    llamadaAFuncion (1,2,3)
-
+    llamadaAFuncion (1,2,3
     Do
         a = k + n
         While i>10
-			+
+			
 		End While
     Loop Until index > 10
-
-    him(
 
 	For index As Integer = 1 To 100000
     	' If index is between 5 and 7, continue
@@ -40,7 +36,7 @@ Sub main()
 	While i>10
 		
 	End While
-	+
+	
 End Sub
 
 Sub algo()
