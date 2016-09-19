@@ -108,7 +108,7 @@ parser code {:
                     }else if(expected.get(0) == sym.TK_XOR){
                         expectedSymbol = "Xor";
                     }
-                    System.err.println(", expected symbol "+expectedSymbol );
+                    System.err.println("Expected symbol "+expectedSymbol );
                 }else{
                     if(s.sym == sym.TK_ID){
                         System.err.println("Expected definition of type for ID.");
@@ -376,6 +376,7 @@ literal_expression ::= 	TK_NUMBER                                       {: //Sys
 
 function_call ::=   TK_ID TK_PARIN arguments:args TK_PAROUT
                     |TK_ID TK_PARIN TK_PAROUT
+                    |TK_ID TK_PARIN error                               {:System.err.println("Function call expects ')'");:}
 ;
 
 arguments ::=   argument:arg TK_COMMA arguments:args
