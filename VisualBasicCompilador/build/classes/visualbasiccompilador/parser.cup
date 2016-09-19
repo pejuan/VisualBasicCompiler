@@ -260,7 +260,7 @@ structure_statement ::= TK_STRUCTURE TK_ID statements:stmnts TK_END TK_STRUCTURE
 
 sub_statement ::=   TK_SUB TK_ID TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_SUB            {: :}
                     |TK_SUB TK_ID TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                            {: :}
-                    |TK_SUB TK_ID TK_PARIN TK_PAROUT error TK_END TK_SUB                                        {:System.err.println("Error with Sub statement");:}
+                    |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts TK_END TK_SUB                      {:System.err.println("Error with Sub statement");:}
                     |TK_SUB error TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                            {:System.err.println("Erroneous Sub declaration.");:}
 ;
 
@@ -320,6 +320,7 @@ for_statement ::=	TK_FOR variable_declaration:var_declare TK_TO expression:expr 
 
 while_statement ::=     TK_WHILE expression:expr statements:stmnts TK_END TK_WHILE                  {: :}
                         |TK_WHILE error TK_END TK_WHILE                                             {:System.err.println("Error inside While block");:}
+                        |TK_WHILE expression:expr statements:stmnts TK_END error                    {: :}
 ;
 
 do_statement ::=    TK_DO TK_WHILE expression:expr statements:stmnts TK_LOOP                    {: :}
