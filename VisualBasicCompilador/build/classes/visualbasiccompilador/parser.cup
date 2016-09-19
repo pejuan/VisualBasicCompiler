@@ -107,6 +107,8 @@ parser code {:
                         expectedSymbol = "Integer";
                     }else if(expected.get(0) == sym.TK_XOR){
                         expectedSymbol = "Xor";
+                    }else if(expected.get(0) == sym.TK_AMPERSAND){
+                        expectedSymbol = "&";
                     }
                     System.err.println("Expected symbol "+expectedSymbol );
                 }else{
@@ -116,10 +118,10 @@ parser code {:
                     if(s.sym == sym.TK_PARIN || s.sym == sym.TK_PAROUT){
                         System.err.println("Expected an expression or call.");
                     }
-                    if(s.sym == sym.TK_SUM || s.sym == sym.TK_MINUS || s.sym == sym.TK_DIVISION || s.sym == sym.TK_PRODUCT){
+                    if(s.sym == sym.TK_SUM || s.sym == sym.TK_MINUS || s.sym == sym.TK_DIVISION || s.sym == sym.TK_PRODUCT  ||s.sym == sym.TK_AMPERSAND){
                         System.err.println("Unplaced, lacking or unexpected expression.");
                     }
-                    if(s.sym == sym.TK_GREATERTHAN || s.sym == sym.TK_GREATEREQUAL || s.sym == sym.TK_LESSTHAN || s.sym == sym.TK_LESSEQUAL){
+                    if(s.sym == sym.TK_GREATERTHAN || s.sym == sym.TK_GREATEREQUAL || s.sym == sym.TK_LESSTHAN || s.sym == sym.TK_LESSEQUAL ||s.sym == sym.TK_NOTEQUAL ){
                         System.err.println("Unexpected evaluation.");
                     }
                     if(s.sym == sym.TK_EQUALS){
@@ -180,7 +182,7 @@ terminal TK_SUM, TK_MINUS, TK_PRODUCT, TK_DIVISION, TK_AMPERSAND;
 terminal TK_AND, TK_OR, TK_NOT, TK_XOR;
 
 /*Operadores Relacionales */
-terminal TK_GREATERTHAN, TK_LESSTHAN, TK_GREATEREQUAL, TK_LESSEQUAL, TK_EQUALS;
+terminal TK_GREATERTHAN, TK_LESSTHAN, TK_GREATEREQUAL, TK_LESSEQUAL, TK_EQUALS, TK_NOTEQUAL;
 
 /* Parentesis */
 terminal TK_PARIN, TK_PAROUT;
@@ -231,10 +233,10 @@ non terminal argument;
 /* Precedencia */
 precedence left TK_EQUALS;
 precedence left TK_OR;
-precedence right TK_XOR;
+precedence right TK_XOR, TK_NOTEQUAL;
 precedence left TK_AND;
 precedence left TK_LESSTHAN, TK_LESSEQUAL,TK_GREATERTHAN, TK_GREATEREQUAL, TK_EQUALS;
-precedence left TK_SUM, TK_MINUS;
+precedence left TK_SUM, TK_MINUS, TK_AMPERSAND;
 precedence left TK_PRODUCT, TK_DIVISION;
 precedence right TK_NOT;
 precedence nonassoc TK_ELSE;
@@ -360,6 +362,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2       {: :}
                        |expression:e1 TK_GREATEREQUAL expression:e2     {: :}
                        |expression:e1 TK_LESSEQUAL expression:e2        {: :}
                        |expression:e1 TK_EQUALS expression:e2           {: :}
+                       |expression:e1 TK_NOTEQUAL expression:e2         {: :}
 ;
 
 logical_expression ::= TK_NOT expression:e1                             {: :}
@@ -373,6 +376,7 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {: :}
                        |expression:e1 TK_MINUS expression:e2            {: :}
                        |expression:e1 TK_PRODUCT expression:e2          {: :}
                        |expression:e1 TK_DIVISION expression:e2         {: :}
+                       |expression:e1 TK_AMPERSAND expression:e2         {: :}
 ;   
 
 literal_expression ::= 	TK_NUMBER                                       {: :}

@@ -28,7 +28,7 @@ Sub main()
     	
 	Next
 	If index = 10 Then
-        	+
+        	&
     End If
 	While i>10
 		+

@@ -65,6 +65,7 @@ GreaterThan = ">"
 LessThan = "<"
 GreaterEqual = ">="
 LessEqual = "<="
+NotEqual = "<>"
 And = "And"
 Or = "Or"
 Not = "Not"
@@ -130,6 +131,7 @@ whitespace = {linebreak} | [\s\t\f]
 	{LessThan}						{return symbol(sym.TK_LESSTHAN);}
 	{GreaterEqual}                                          {return symbol(sym.TK_GREATEREQUAL);}
 	{LessEqual}						{return symbol(sym.TK_LESSEQUAL);}
+        {NotEqual}						{return symbol(sym.TK_NOTEQUAL);}
 	{And}							{return symbol(sym.TK_AND);}
 	{Or}							{return symbol(sym.TK_OR);}
 	{Not}							{return symbol(sym.TK_NOT);}
