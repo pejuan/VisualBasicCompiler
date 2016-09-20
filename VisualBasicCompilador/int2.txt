@@ -1,5 +1,4 @@
 Sub main()
-	+
 	Dim k As Integer = 0
 	Dim n As Boolean = False
 	()
