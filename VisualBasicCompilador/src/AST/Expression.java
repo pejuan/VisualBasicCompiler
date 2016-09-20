@@ -9,6 +9,6 @@ package AST;
  *
  * @author Jose Alberto Pejuan
  */
-public class Expression {
+public class Expression extends Statements{
     
 }
