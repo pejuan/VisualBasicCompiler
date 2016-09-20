@@ -233,9 +233,9 @@ non terminal argument;
 /* Precedencia */
 precedence left TK_EQUALS;
 precedence left TK_OR;
-precedence right TK_XOR, TK_NOTEQUAL;
+precedence right TK_XOR;
 precedence left TK_AND;
-precedence left TK_LESSTHAN, TK_LESSEQUAL,TK_GREATERTHAN, TK_GREATEREQUAL, TK_EQUALS;
+precedence left TK_LESSTHAN, TK_LESSEQUAL,TK_GREATERTHAN, TK_GREATEREQUAL, TK_EQUALS, TK_NOTEQUAL;
 precedence left TK_SUM, TK_MINUS, TK_AMPERSAND;
 precedence left TK_PRODUCT, TK_DIVISION;
 precedence right TK_NOT;
