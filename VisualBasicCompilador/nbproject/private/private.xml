@@ -5,13 +5,11 @@
         <group>
             <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/parser.java</file>
             <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/parser.cup</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/ReadStatement.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/WriteStatement.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/VisualBasicCompilador.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/Statements.java</file>
+            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/LiteralExpression.java</file>
             <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/SubStatement.java</file>
             <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/lexer.flex</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/Program.java</file>
+            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/LogicalExpression.java</file>
+            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/FunctionCall.java</file>
         </group>
     </open-files>
 </project-private>
