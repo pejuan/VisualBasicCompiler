@@ -368,12 +368,12 @@ expression ::=	numeric_expression:num_exp      {:RESULT = new NumericExpression(
 		|function_call:call             {://RESULT = new NumericExpression(); :}
 ;
 
-boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2       {: :}
-                       |expression:e1 TK_LESSTHAN expression:e2         {: :}
-                       |expression:e1 TK_GREATEREQUAL expression:e2     {: :}
-                       |expression:e1 TK_LESSEQUAL expression:e2        {: :}
-                       |expression:e1 TK_EQUALS expression:e2           {: :}
-                       |expression:e1 TK_NOTEQUAL expression:e2         {: :}
+boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2       {: RESULT = new BooleanExpression(e1,">",e2,null); :}
+                       |expression:e1 TK_LESSTHAN expression:e2         {: RESULT = new BooleanExpression(e1,"<",e2,null); :}
+                       |expression:e1 TK_GREATEREQUAL expression:e2     {: RESULT = new BooleanExpression(e1,">=",e2,null); :}
+                       |expression:e1 TK_LESSEQUAL expression:e2        {: RESULT = new BooleanExpression(e1,"<=",e2,null); :}
+                       |expression:e1 TK_EQUALS expression:e2           {: RESULT = new BooleanExpression(e1,"=",e2,null); :}
+                       |expression:e1 TK_NOTEQUAL expression:e2         {: RESULT = new BooleanExpression(e1,"<>",e2,null); :}
 ;
 
 logical_expression ::= TK_NOT expression:e1                             {: :}
