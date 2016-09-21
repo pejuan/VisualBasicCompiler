@@ -1867,7 +1867,7 @@ class CUP$parser$actions {
 		int lit_expleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int lit_expright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression lit_exp = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		//RESULT = new LiteralExpression(); 
+		RESULT = new LiteralExpression(((LiteralExpression)lit_exp).getStringval(),((LiteralExpression)lit_exp).getNumber(),null); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expression",23, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

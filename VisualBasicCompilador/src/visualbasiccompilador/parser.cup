@@ -363,7 +363,7 @@ variable_declarator  ::=    TK_DIM TK_ID TK_AS data_type:type TK_EQUALS expressi
 expression ::=	numeric_expression:num_exp      {:RESULT = new NumericExpression(((NumericExpression)num_exp).getExpression1(),((NumericExpression)num_exp).getExpression2(),((NumericExpression)num_exp).getOperador(),null); :}
 		|boolean_expression:bool_exp    {:RESULT = new BooleanExpression(((BooleanExpression)bool_exp).getExpression1(), ((BooleanExpression)bool_exp).getOperador(), ((BooleanExpression)bool_exp).getExpression2(),null); :}
 		|logical_expression:logic_exp   {:RESULT = new LogicalExpression(((LogicalExpression)logic_exp).isValue(),((LogicalExpression)logic_exp).getOperador(),((LogicalExpression)logic_exp).getExpression1(),((LogicalExpression)logic_exp).getExpression2(),null); :}
-		|literal_expression:lit_exp     {://RESULT = new LiteralExpression(); :}
+		|literal_expression:lit_exp     {:RESULT = new LiteralExpression(((LiteralExpression)lit_exp).getStringval(),((LiteralExpression)lit_exp).getNumber(),null); :}
 		|TK_ID:id                       {:RESULT = new Expression(id); :}
 		|function_call:call             {://RESULT = new NumericExpression(); :}
 ;
