@@ -11,23 +11,13 @@ package AST;
  */
 public class LiteralExpression extends Expression{
     private String stringval;
-    private int number;
+    private Integer number;
 
 
-    public LiteralExpression(String stringval, int number, String Id) {
+    public LiteralExpression(String stringval, Integer number, String Id) {
         super(Id);
         this.stringval = stringval;
         this.number = number;
-    }
-    
-    public LiteralExpression(int number, String Id){
-        super(Id);
-        this.number = number;
-    }
-    
-    public LiteralExpression(String stringval,String Id){
-        super(Id);
-        this.stringval = stringval;
     }
     
     
