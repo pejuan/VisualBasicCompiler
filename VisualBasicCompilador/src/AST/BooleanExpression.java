@@ -14,7 +14,9 @@ public class BooleanExpression extends Expression{
     private String operador;
     private Expression expression2;
 
-    public BooleanExpression(Expression expression1, String operador, Expression expression2) {
+
+    public BooleanExpression(Expression expression1, String operador, Expression expression2, String Id) {
+        super(Id);
         this.expression1 = expression1;
         this.operador = operador;
         this.expression2 = expression2;

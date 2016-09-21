@@ -10,5 +10,19 @@ package AST;
  * @author Jose Alberto Pejuan
  */
 public class Expression extends Statements{
+    private String Id;
+
+    public Expression(String Id) {
+        this.Id = Id;
+    }
+    
+    
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String Id) {
+        this.Id = Id;
+    }
     
 }

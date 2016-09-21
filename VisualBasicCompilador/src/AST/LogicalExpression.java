@@ -15,7 +15,8 @@ public class LogicalExpression extends Expression{
     private Expression expression1;
     private Expression expression2;
 
-    public LogicalExpression(boolean value, String operador, Expression expression1, Expression expression2) {
+    public LogicalExpression(boolean value, String operador, Expression expression1, Expression expression2, String Id) {
+        super(Id);
         this.value = value;
         this.operador = operador;
         this.expression1 = expression1;
