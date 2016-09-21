@@ -20,6 +20,16 @@ public class LiteralExpression extends Expression{
         this.number = number;
     }
     
+    public LiteralExpression(int number, String Id){
+        super(Id);
+        this.number = number;
+    }
+    
+    public LiteralExpression(String stringval,String Id){
+        super(Id);
+        this.stringval = stringval;
+    }
+    
     
     public String getStringval() {
         return stringval;
