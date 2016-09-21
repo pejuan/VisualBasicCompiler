@@ -9,6 +9,6 @@ package AST;
  *
  * @author Jose Alberto Pejuan
  */
-public class Statements {
+public abstract class Statements {
     
 }

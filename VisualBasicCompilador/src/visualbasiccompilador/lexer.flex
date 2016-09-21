@@ -78,7 +78,8 @@ parIn = "("
 parOut = ")"
 ampersand = "&"
 
-
+write = "Write"
+read = "Read"
 id = {letter}({letter}|{digit})*
 Number = {digit}+
 
@@ -140,6 +141,8 @@ whitespace = {linebreak} | [\s\t\f]
 	{comma}							{return symbol(sym.TK_COMMA);}
 	{parIn}							{return symbol(sym.TK_PARIN);}
 	{parOut}						{return symbol(sym.TK_PAROUT);}
+        {write}                                                 {return symbol(sym.TK_WRITE);}
+        {read}                                                 {return symbol(sym.TK_READ);}
 	{id}							{return symbol(sym.TK_ID,new OBJID(yytext()));}
 	{Number}						{return symbol(sym.TK_NUMBER, new Integer(Integer.parseInt(yytext())));}
 	{comment}						{yybegin(COMMENTS);}

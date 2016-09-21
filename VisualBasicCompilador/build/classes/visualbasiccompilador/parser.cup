@@ -4,10 +4,10 @@ import java.util.*;
 import java.io.*;
 import java_cup.runtime.*;
 import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
-
+import AST.*;
 
 parser code {:
-        
+        public Program FINALOBJECT;
 	public void syntax_error(Symbol s){
             if(s.sym==0){
 
@@ -191,7 +191,7 @@ terminal TK_PARIN, TK_PAROUT;
 terminal TK_COMMA;
 
 /* Otras palabras reservadas */
-terminal TK_DIM, TK_AS, TK_END, TK_EXIT, TK_RETURN;
+terminal TK_DIM, TK_AS, TK_END, TK_EXIT, TK_RETURN, TK_WRITE, TK_READ;
 
 /* Valores */
 terminal String TK_STRINGVAL;
@@ -201,34 +201,36 @@ terminal Integer TK_NUMBER;
 													/* NO TERMINALES */
 
 non terminal initial;
-non terminal program;
-non terminal statements;
-non terminal function_declarations;
-non terminal function_declaration;
-non terminal structure_statement;
-non terminal sub_statement;
-non terminal function_statement;
+non terminal Program program;
+non terminal Statements statements;
+non terminal FunctionDeclarations function_declarations;
+non terminal FunctionDeclaration function_declaration;
+non terminal FunctionDeclaration structure_statement;
+non terminal FunctionDeclaration sub_statement;
+non terminal FunctionDeclaration function_statement;
 non terminal parameters;
-non terminal parameter;
+non terminal Parameter parameter;
 non terminal parameter_type;
 non terminal data_type;
-non terminal statement;
-non terminal if_statement;
-non terminal elseif_statements;
-non terminal elseif_statement;
-non terminal for_statement;
-non terminal while_statement; 
-non terminal do_statement;
-non terminal variable_declaration;
-non terminal variable_declarator;
-non terminal expression;
-non terminal numeric_expression;
-non terminal boolean_expression;
-non terminal literal_expression;
-non terminal logical_expression;
-non terminal function_call;
-non terminal arguments;
-non terminal argument;
+non terminal Statements statement;
+non terminal Statements write_statement;
+non terminal Statements read_statement;
+non terminal Statements if_statement;
+non terminal Statements elseif_statements;
+non terminal Statements elseif_statement;
+non terminal Statements for_statement;
+non terminal Statements while_statement; 
+non terminal Statements do_statement;
+non terminal Statements variable_declaration;
+non terminal VariableDeclarator variable_declarator;
+non terminal Statements expression;
+non terminal Expression numeric_expression;
+non terminal Expression boolean_expression;
+non terminal Expression literal_expression;
+non terminal Expression logical_expression;
+non terminal Expression function_call;
+non terminal Argument arguments;
+non terminal Argument argument;
 
 /* Precedencia */
 precedence left TK_EQUALS;
@@ -298,12 +300,20 @@ statement ::=	if_statement:ifStatement                {:  :}
                 |while_statement:whileStatement         {:  :}
 		|for_statement:forStatement             {: :}
 		|do_statement:doStatement               {: :}
+                |write_statement:writeStatement         {: :}
+                |read_statement:readStatement            {: :}
                 |variable_declaration:var_declare       {: :}
 		|expression:expr                        {: :}
 		|TK_RETURN expression                   {: :}
 		|TK_EXIT                                {: :}
 ;
-
+write_statement ::= TK_WRITE TK_PARIN literal_expression TK_PAROUT              {: :}
+                    |TK_WRITE TK_PARIN TK_ID TK_PAROUT                          {: :}
+                    |TK_WRITE TK_PARIN error TK_PAROUT                          {:System.err.println("\t\t\t\t\t  Problem near Console.Write()"); :}
+;
+read_statement  ::= TK_READ TK_PARIN TK_ID TK_PAROUT              {: :}
+                    |TK_READ TK_PARIN error TK_PAROUT              {:System.err.println("\t\t\t\t\t  Problem near Console.Read()."); :}
+;
 if_statement ::=    TK_IF expression:expr TK_THEN statements:stmnts TK_END TK_IF                                                                {: :}
                     |TK_IF expression:expr TK_THEN statements:stmnts TK_ELSE statements:stmnts1 TK_END TK_IF                                    {: :}
                     |TK_IF expression:expr TK_THEN statements:stmnts elseif_statements:elseifStmnts TK_END TK_IF                                {: :}
@@ -392,5 +402,5 @@ arguments ::=   argument:arg TK_COMMA arguments:args
                 |argument:arg
 ;
 
-argument ::= expression:expr
+argument ::= expression:expr                                            {: :}
 ;

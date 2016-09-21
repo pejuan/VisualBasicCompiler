@@ -11,6 +11,7 @@ public class sym {
   public static final int TK_EQUALS = 36;
   public static final int TK_MINUS = 24;
   public static final int TK_GREATERTHAN = 32;
+  public static final int TK_WRITE = 46;
   public static final int TK_PRODUCT = 25;
   public static final int TK_LESSEQUAL = 35;
   public static final int TK_FOR = 11;
@@ -23,7 +24,7 @@ public class sym {
   public static final int TK_AMPERSAND = 27;
   public static final int TK_ELSEIF = 9;
   public static final int TK_IF = 7;
-  public static final int TK_ID = 47;
+  public static final int TK_ID = 49;
   public static final int TK_PAROUT = 39;
   public static final int TK_BYVAL = 5;
   public static final int TK_BOOLEAN = 3;
@@ -32,11 +33,11 @@ public class sym {
   public static final int TK_EXIT = 44;
   public static final int TK_LOOP = 13;
   public static final int TK_NEXT = 17;
-  public static final int TK_STRINGVAL = 46;
+  public static final int TK_STRINGVAL = 48;
   public static final int TK_RETURN = 45;
   public static final int TK_TRUE = 18;
   public static final int TK_PARIN = 38;
-  public static final int TK_NUMBER = 48;
+  public static final int TK_NUMBER = 50;
   public static final int EOF = 0;
   public static final int TK_BYREF = 6;
   public static final int error = 1;
@@ -44,6 +45,7 @@ public class sym {
   public static final int TK_TO = 12;
   public static final int TK_WHILE = 15;
   public static final int TK_ELSE = 10;
+  public static final int TK_READ = 47;
   public static final int TK_DIVISION = 26;
   public static final int TK_END = 43;
   public static final int TK_SUM = 23;
@@ -104,6 +106,8 @@ public class sym {
   "TK_END",
   "TK_EXIT",
   "TK_RETURN",
+  "TK_WRITE",
+  "TK_READ",
   "TK_STRINGVAL",
   "TK_ID",
   "TK_NUMBER"

@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Jose Alberto Pejuan
  */
-public class StructureStatement {
+public class StructureStatement extends FunctionDeclaration{
     private String structure;
     private String id;
     private String end_structure;

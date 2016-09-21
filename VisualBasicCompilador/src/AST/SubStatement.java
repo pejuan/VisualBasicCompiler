@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Jose Alberto Pejuan
  */
-public class SubStatement {
+public class SubStatement extends FunctionDeclaration{
     private String Sub;
     private String id;
     private ArrayList<Parameter> parameters;

@@ -14,6 +14,6 @@ import java.util.ArrayList;
 public class Program {
     private String begin;
     private String end;
-    private ArrayList<Declaration> declarations;
+    private ArrayList<FunctionDeclarations> declarations;
     
 }

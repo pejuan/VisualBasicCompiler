@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Jose Alberto Pejuan
  */
-public class FunctionStatement {
+public class FunctionStatement extends FunctionDeclaration{
     private String function;
     private String id;
     private ArrayList<Parameter> parameters;

@@ -9,6 +9,6 @@ package AST;
  *
  * @author Jose Alberto Pejuan
  */
-public class Declaration {//FunctionDeclarations
+public abstract class FunctionDeclaration {
     
 }
