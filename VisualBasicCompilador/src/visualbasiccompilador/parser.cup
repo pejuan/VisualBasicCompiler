@@ -406,9 +406,9 @@ function_call ::=   TK_ID:i TK_PARIN arguments:args TK_PAROUT             {:RESU
                     |TK_ID:i TK_PARIN arguments:args error                {:System.err.println("Function call expects2 ')'");foundError=true;:}
 ;
 
-arguments ::=   argument:arg TK_COMMA arguments:args                    {:listaarguments.add(arg); :}
-                |argument:arg                                           {:listaarguments.add(arg); :}
+arguments ::=   argument:arg TK_COMMA arguments:args                    {:if(!foundError){listaarguments.add(arg);} :}
+                |argument:arg                                           {:if(!foundError){listaarguments.add(arg);} :}
 ;
 
-argument ::= expression:expr                                            {:RESULT = new Argument(expr); :}
+argument ::= expression:expr                                            {:if(!foundError){RESULT = new Argument(expr);} :}
 ;
