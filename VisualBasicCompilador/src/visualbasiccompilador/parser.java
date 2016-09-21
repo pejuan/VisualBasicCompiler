@@ -1039,7 +1039,7 @@ class CUP$parser$actions {
 		int subStatementleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int subStatementright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		FunctionDeclaration subStatement = (FunctionDeclaration)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		System.out.println("Func decl");RESULT = new SubStatement(((SubStatement)subStatement).getSub(),((SubStatement)subStatement).getId(),((SubStatement)subStatement).getParameters(),((SubStatement)subStatement).getStatements(),((SubStatement)subStatement).getEndSub());FINALOBJECT.getDeclarations().add(RESULT);
+		RESULT = new SubStatement(((SubStatement)subStatement).getSub(),((SubStatement)subStatement).getId(),((SubStatement)subStatement).getParameters(),((SubStatement)subStatement).getStatements(),((SubStatement)subStatement).getEndSub());FINALOBJECT.getDeclarations().add(RESULT);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_declaration",4, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1093,7 +1093,7 @@ class CUP$parser$actions {
 		int stmntsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int stmntsright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Statements stmnts = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		System.out.println("SubSt");RESULT = new SubStatement("Sub",i,null,listastatements,"End Sub");listastatements = new ArrayList(); 
+		RESULT = new SubStatement("Sub",i,null,listastatements,"End Sub");listastatements = new ArrayList(); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("sub_statement",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

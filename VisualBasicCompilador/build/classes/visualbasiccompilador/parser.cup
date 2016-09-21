@@ -256,7 +256,7 @@ function_declarations ::= function_declaration:functionDeclaration function_decl
 ;
 
 function_declaration ::= structure_statement:structureStatement                             {:  :}
-			 |sub_statement:subStatement                                        {:System.out.println("Func decl");RESULT = new SubStatement(((SubStatement)subStatement).getSub(),((SubStatement)subStatement).getId(),((SubStatement)subStatement).getParameters(),((SubStatement)subStatement).getStatements(),((SubStatement)subStatement).getEndSub());FINALOBJECT.getDeclarations().add(RESULT);:}
+			 |sub_statement:subStatement                                        {:RESULT = new SubStatement(((SubStatement)subStatement).getSub(),((SubStatement)subStatement).getId(),((SubStatement)subStatement).getParameters(),((SubStatement)subStatement).getStatements(),((SubStatement)subStatement).getEndSub());FINALOBJECT.getDeclarations().add(RESULT);:}
 			 |function_statement:functionStatement                              {:  :}
 ;
 
@@ -264,7 +264,7 @@ structure_statement ::= TK_STRUCTURE TK_ID statements:stmnts TK_END TK_STRUCTURE
 ;
 
 sub_statement ::=   TK_SUB TK_ID TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_SUB            {: :}
-                    |TK_SUB TK_ID:i TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                          {:System.out.println("SubSt");RESULT = new SubStatement("Sub",i,null,listastatements,"End Sub");listastatements = new ArrayList(); :}
+                    |TK_SUB TK_ID:i TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                          {:RESULT = new SubStatement("Sub",i,null,listastatements,"End Sub");listastatements = new ArrayList(); :}
                     |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts TK_END TK_SUB                      {:System.err.println("Error inside Sub statement");:}
                     |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts error TK_END TK_SUB                {:System.err.println("Several errors inside Sub statement");:}
                     |TK_SUB error TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                            {:System.err.println("Erroneous Sub declaration.");:}
