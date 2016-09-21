@@ -29,11 +29,11 @@ public class LiteralExpression extends Expression{
         this.stringval = stringval;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 }
