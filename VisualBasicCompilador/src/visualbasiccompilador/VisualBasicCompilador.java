@@ -30,6 +30,7 @@ public class VisualBasicCompilador {
             parser p = new parser(new VisualBasicLexer(new FileReader("./int2.txt")));
             p.parse();
             System.out.println(p.FINALOBJECT.getDeclarations().size());
+            
         }catch(Exception e){
             e.printStackTrace();
         }
