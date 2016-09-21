@@ -390,8 +390,8 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:RESULT
                        |expression:e1 TK_AMPERSAND expression:e2        {:RESULT = new NumericExpression(e1,e2,"&",null); :}
 ;   
 
-literal_expression ::= 	TK_NUMBER                                       {: :}
-			|TK_STRINGVAL                                   {: :}
+literal_expression ::= 	TK_NUMBER:num                                       {: RESULT = new LiteralExpression(null,num,null); :}
+			|TK_STRINGVAL:strVal                                {: RESULT = new LiteralExpression(strVal,0,null); :}
 ;
 
 function_call ::=   TK_ID TK_PARIN arguments:args TK_PAROUT

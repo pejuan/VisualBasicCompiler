@@ -2140,7 +2140,10 @@ class CUP$parser$actions {
           case 91: // literal_expression ::= TK_NUMBER 
             {
               Expression RESULT =null;
-		 
+		int numleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int numright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Integer num = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = new LiteralExpression(null,num,null); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("literal_expression",26, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2149,7 +2152,10 @@ class CUP$parser$actions {
           case 92: // literal_expression ::= TK_STRINGVAL 
             {
               Expression RESULT =null;
-		 
+		int strValleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int strValright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String strVal = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = new LiteralExpression(strVal,0,null); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("literal_expression",26, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
