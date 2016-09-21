@@ -15,7 +15,7 @@ public class StructureStatement extends FunctionDeclaration{
     private String structure;
     private String id;
     private String end_structure;
-    private ArrayList<Statements> statements;
+    private ArrayList<Statements> statements = new ArrayList();
 
     public StructureStatement(String structure, String id, String end_structure) {
         this.structure = structure;

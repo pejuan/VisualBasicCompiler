@@ -10,6 +10,7 @@ parser code {:
         public Program FINALOBJECT = new Program();
         public ArrayList<Statements> listastatements = new ArrayList();
         public ArrayList<Argument> listaarguments = new ArrayList();
+        public ArrayList<Parameters> listaparameters = new ArrayList();
 	public void syntax_error(Symbol s){
             if(s.sym==0){
 
@@ -212,8 +213,8 @@ non terminal FunctionDeclaration sub_statement;
 non terminal FunctionDeclaration function_statement;
 non terminal parameters;
 non terminal Parameter parameter;
-non terminal parameter_type;
-non terminal data_type;
+non terminal String parameter_type;
+non terminal String data_type;
 non terminal Statements statement;
 non terminal Statements write_statement;
 non terminal Statements read_statement;
@@ -256,12 +257,13 @@ program ::= function_declarations:functionDeclarations {:System.out.println("Pro
 function_declarations ::= function_declaration:functionDeclaration function_declarations:functionDeclarations       {: System.out.println("Func decls");FINALOBJECT.getDeclarations().add(functionDeclaration);:}
 ;
 
-function_declaration ::= structure_statement:structureStatement                             {:  :}
+function_declaration ::= structure_statement:structureStatement                             {:RESULT = new StructureStatement(((StructureStatement)structureStatement).getStructure(),((StructureStatement)structureStatement).getId(),((StructureStatement)structureStatement).getEnd_structure(),((StructureStatement)structureStatement).getStatements());FINALOBJECT.getDeclarations().add(RESULT); :}
 			 |sub_statement:subStatement                                        {:RESULT = new SubStatement(((SubStatement)subStatement).getSub(),((SubStatement)subStatement).getId(),((SubStatement)subStatement).getParameters(),((SubStatement)subStatement).getStatements(),((SubStatement)subStatement).getEndSub());FINALOBJECT.getDeclarations().add(RESULT);:}
 			 |function_statement:functionStatement                              {:  :}
 ;
 
-structure_statement ::= TK_STRUCTURE TK_ID statements:stmnts TK_END TK_STRUCTURE            {: :}
+structure_statement ::= TK_STRUCTURE TK_ID:i statements:stmnts TK_END TK_STRUCTURE            {:RESULT = new StructureStatement("Structure",i,"End Structure",listastatements);listastatements = new ArrayList();:}
+                        |TK_STRUCTURE TK_ID:i statements:stmnts error TK_END TK_STRUCTURE     {:System.err.println("Error inside Structure statement"); :}
 ;
 
 sub_statement ::=   TK_SUB TK_ID TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_SUB            {: :}
@@ -272,26 +274,28 @@ sub_statement ::=   TK_SUB TK_ID TK_PARIN parameters:prmts TK_PAROUT statements:
 ;
 
 
-function_statement ::= 	TK_FUNCTION TK_ID TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_FUNCTION                          {: :}
-			|TK_FUNCTION TK_ID TK_PARIN parameters:prmts TK_PAROUT TK_AS data_type:type statements:stmnts TK_END TK_FUNCTION    {: :}
-                        |TK_FUNCTION TK_ID TK_PARIN TK_PAROUT TK_AS data_type:type statements:stmnts TK_END TK_FUNCTION                     {: :}
-                        |TK_FUNCTION TK_ID TK_PARIN TK_PAROUT statements:stmnts TK_END TK_FUNCTION                                          {: :}
+function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_FUNCTION                        {:RESULT = new FunctionStatement("Function",i,listaparameters,listastatements,null,"End Function"); listaparameters = new ArrayList();listastatements = new ArrayList();:}
+			|TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT TK_AS data_type:type statements:stmnts TK_END TK_FUNCTION  {:RESULT = new FunctionStatement("Function",i,listaparameters,listastatements,type,"End Function"); listaparameters = new ArrayList();listastatements = new ArrayList(); :}
+                        |TK_FUNCTION TK_ID:i TK_PARIN TK_PAROUT TK_AS data_type:type statements:stmnts TK_END TK_FUNCTION                   {:RESULT = new FunctionStatement("Function",i,null,listastatements,type,"End Function"); listastatements = new ArrayList(); :}
+                        |TK_FUNCTION TK_ID TK_PARIN TK_PAROUT statements:stmnts TK_END TK_FUNCTION                                          {:RESULT = new FunctionStatement("Function",i,null,listastatements,null,"End Function"); listastatements = new ArrayList(); :}
+                        |TK_FUNCTION TK_ID TK_PARIN parameters:prmts error TK_PAROUT statements:stmnts TK_END TK_FUNCTION                   {:System.err.println("Erroneous Function declaration."); :}
+                        |TK_FUNCTION TK_ID TK_PARIN TK_PAROUT statements:stmnts error TK_END TK_FUNCTION                                    {:System.err.println("Error inside Function statement.");:}
 ;
 
-parameters ::= 	parameter:prmt TK_COMMA parameters:prmts        {: :}
-		|parameter:prmt                                 {: :}
+parameters ::= 	parameter:prmt TK_COMMA parameters:prmts        {: listaparameters.add(prmt);:}
+		|parameter:prmt                                 {: listaparameters.add(prmt);:}
 ;
 
-parameter ::=	parameter_type:prmt_type TK_ID TK_AS data_type:type {: :}
+parameter ::=	parameter_type:prmt_type TK_ID:i TK_AS data_type:type {:RESULT = new Parameter(prmt_type, type,i); :}
 ;
 
-parameter_type ::=  TK_BYVAL                    {: :}
-                    |TK_BYREF                   {: :}
+parameter_type ::=  TK_BYVAL                    {: RESULT = "ByVal";:}
+                    |TK_BYREF                   {: RESULT = "ByRef";:}
 ;
 
-data_type ::=	TK_INTEGER          {: :}
-		|TK_BOOLEAN         {: :}
-		|TK_STRING          {: :}
+data_type ::=	TK_INTEGER          {: RESULT = "Integer"; :}
+		|TK_BOOLEAN         {: RESULT = "Boolean"; :}
+		|TK_STRING          {: RESULT = "String"; :}
 ;
 
 statements ::=	statement:stmnt statements:stmnts       {:listastatements.add(stmnt);:}  
@@ -300,20 +304,20 @@ statements ::=	statement:stmnt statements:stmnts       {:listastatements.add(stm
 
 statement ::=	if_statement:ifStatement                {:  :}
                 |while_statement:whileStatement         {:  :}
-		|for_statement:forStatement             {: :}
-		|do_statement:doStatement               {: :}
-                |write_statement:writeStatement         {: :}
-                |read_statement:readStatement           {: :}
-                |variable_declaration:var_declare       {: :}
+		|for_statement:forStatement             {:  :}
+		|do_statement:doStatement               {:  :}
+                |write_statement:writeStatement         {:  :}
+                |read_statement:readStatement           {:  :}
+                |variable_declaration:var_declare       {:  :}
 		|expression:expr                        {:RESULT = expr;:}
-		|TK_RETURN expression                   {: :}
-		|TK_EXIT                                {: :}
+		|TK_RETURN expression:exp               {:RESULT = new ReturnExpression("Return",exp);:}
+		|TK_EXIT                                {:RESULT = new ExitStatement("Exit"); :}
 ;
 write_statement ::= TK_WRITE TK_PARIN literal_expression TK_PAROUT              {: :}
                     |TK_WRITE TK_PARIN TK_ID TK_PAROUT                          {: :}
                     |TK_WRITE TK_PARIN error TK_PAROUT                          {:System.err.println("\t\t\t\t\t  Problem near Console.Write()"); :}
 ;
-read_statement  ::= TK_READ TK_PARIN TK_ID TK_PAROUT              {: :}
+read_statement  ::= TK_READ TK_PARIN TK_ID TK_PAROUT               {: :}
                     |TK_READ TK_PARIN error TK_PAROUT              {:System.err.println("\t\t\t\t\t  Problem near Console.Read()."); :}
 ;
 if_statement ::=    TK_IF expression:expr TK_THEN statements:stmnts TK_END TK_IF                                                                {: :}
@@ -366,7 +370,7 @@ expression ::=	numeric_expression:num_exp      {:RESULT = new NumericExpression(
 		|logical_expression:logic_exp   {:RESULT = new LogicalExpression(((LogicalExpression)logic_exp).isValue(),((LogicalExpression)logic_exp).getOperador(),((LogicalExpression)logic_exp).getExpression1(),((LogicalExpression)logic_exp).getExpression2(),null); :}
 		|literal_expression:lit_exp     {:RESULT = new LiteralExpression(((LiteralExpression)lit_exp).getStringval(),((LiteralExpression)lit_exp).getNumber(),null); :}
 		|TK_ID:id                       {:RESULT = new Expression(id); :}
-		|function_call:call             {://RESULT = new NumericExpression(); :}
+		|function_call:call             {:RESULT = new FunctionCall(((FunctionCall)call).getArguments(),null); :}
 ;
 
 boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2       {: RESULT = new BooleanExpression(e1,">",e2,null); :}
