@@ -10,7 +10,7 @@ parser code {:
         public Program FINALOBJECT = new Program();
         public ArrayList<Statements> listastatements = new ArrayList();
         public ArrayList<Argument> listaarguments = new ArrayList();
-        public ArrayList<Parameters> listaparameters = new ArrayList();
+        public ArrayList<Parameter> listaparameters = new ArrayList();
 	public void syntax_error(Symbol s){
             if(s.sym==0){
 
@@ -277,7 +277,7 @@ sub_statement ::=   TK_SUB TK_ID TK_PARIN parameters:prmts TK_PAROUT statements:
 function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_FUNCTION                        {:RESULT = new FunctionStatement("Function",i,listaparameters,listastatements,null,"End Function"); listaparameters = new ArrayList();listastatements = new ArrayList();:}
 			|TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT TK_AS data_type:type statements:stmnts TK_END TK_FUNCTION  {:RESULT = new FunctionStatement("Function",i,listaparameters,listastatements,type,"End Function"); listaparameters = new ArrayList();listastatements = new ArrayList(); :}
                         |TK_FUNCTION TK_ID:i TK_PARIN TK_PAROUT TK_AS data_type:type statements:stmnts TK_END TK_FUNCTION                   {:RESULT = new FunctionStatement("Function",i,null,listastatements,type,"End Function"); listastatements = new ArrayList(); :}
-                        |TK_FUNCTION TK_ID TK_PARIN TK_PAROUT statements:stmnts TK_END TK_FUNCTION                                          {:RESULT = new FunctionStatement("Function",i,null,listastatements,null,"End Function"); listastatements = new ArrayList(); :}
+                        |TK_FUNCTION TK_ID:i TK_PARIN TK_PAROUT statements:stmnts TK_END TK_FUNCTION                                          {:RESULT = new FunctionStatement("Function",i,null,listastatements,null,"End Function"); listastatements = new ArrayList(); :}
                         |TK_FUNCTION TK_ID TK_PARIN parameters:prmts error TK_PAROUT statements:stmnts TK_END TK_FUNCTION                   {:System.err.println("Erroneous Function declaration."); :}
                         |TK_FUNCTION TK_ID TK_PARIN TK_PAROUT statements:stmnts error TK_END TK_FUNCTION                                    {:System.err.println("Error inside Function statement.");:}
 ;

@@ -805,7 +805,7 @@ public class parser extends java_cup.runtime.lr_parser {
         public Program FINALOBJECT = new Program();
         public ArrayList<Statements> listastatements = new ArrayList();
         public ArrayList<Argument> listaarguments = new ArrayList();
-        public ArrayList<Parameters> listaparameters = new ArrayList();
+        public ArrayList<Parameter> listaparameters = new ArrayList();
 	public void syntax_error(Symbol s){
             if(s.sym==0){
 
@@ -1232,6 +1232,9 @@ class CUP$parser$actions {
           case 18: // function_statement ::= TK_FUNCTION TK_ID TK_PARIN TK_PAROUT statements TK_END TK_FUNCTION 
             {
               FunctionDeclaration RESULT =null;
+		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).left;
+		int iright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).right;
+		String i = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
 		int stmntsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int stmntsright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Statements stmnts = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
