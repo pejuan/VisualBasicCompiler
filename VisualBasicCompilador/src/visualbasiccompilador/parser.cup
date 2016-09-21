@@ -343,7 +343,7 @@ for_statement ::=	TK_FOR variable_declaration:var_declare TK_TO expression:expr 
 
 while_statement ::=     TK_WHILE expression:expr statements:stmnts TK_END TK_WHILE                  {: :}
                         |TK_WHILE error TK_END TK_WHILE                                             {:System.err.println("Error inside While block");foundError=true;:}
-                        |TK_WHILE expression:expr statements:stmnts TK_END error                    {: :}
+                        |TK_WHILE expression:expr statements:stmnts TK_END error                    {:foundError=true; :}
 ;
 
 do_statement ::=    TK_DO TK_WHILE expression:expr statements:stmnts TK_LOOP                    {: :}
