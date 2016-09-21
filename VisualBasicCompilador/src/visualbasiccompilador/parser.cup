@@ -7,7 +7,8 @@ import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 import AST.*;
 
 parser code {:
-        public Program FINALOBJECT;
+        public Program FINALOBJECT = new Program();
+        public ArrayList<Statements> listastatements = new ArrayList();
 	public void syntax_error(Symbol s){
             if(s.sym==0){
 
@@ -195,7 +196,7 @@ terminal TK_DIM, TK_AS, TK_END, TK_EXIT, TK_RETURN, TK_WRITE, TK_READ;
 
 /* Valores */
 terminal String TK_STRINGVAL;
-terminal OBJID TK_ID;
+terminal String TK_ID;
 terminal Integer TK_NUMBER;
 
 													/* NO TERMINALES */
@@ -223,7 +224,7 @@ non terminal Statements while_statement;
 non terminal Statements do_statement;
 non terminal Statements variable_declaration;
 non terminal VariableDeclarator variable_declarator;
-non terminal Statements expression;
+non terminal Expression expression;
 non terminal Expression numeric_expression;
 non terminal Expression boolean_expression;
 non terminal Expression literal_expression;
@@ -251,11 +252,11 @@ program ::= function_declarations:functionDeclarations {:System.out.println("Pro
 ;
 
 
-function_declarations ::= function_declaration:functionDeclaration function_declarations:functionDeclarations       {: :}
+function_declarations ::= function_declaration:functionDeclaration function_declarations:functionDeclarations       {: System.out.println("Func decls");FINALOBJECT.getDeclarations().add(functionDeclaration);:}
 ;
 
 function_declaration ::= structure_statement:structureStatement                             {:  :}
-			 |sub_statement:subStatement                                        {:  :}
+			 |sub_statement:subStatement                                        {:System.out.println("Func decl");RESULT = new SubStatement(((SubStatement)subStatement).getSub(),((SubStatement)subStatement).getId(),((SubStatement)subStatement).getParameters(),((SubStatement)subStatement).getStatements(),((SubStatement)subStatement).getEndSub());FINALOBJECT.getDeclarations().add(RESULT);:}
 			 |function_statement:functionStatement                              {:  :}
 ;
 
@@ -263,7 +264,7 @@ structure_statement ::= TK_STRUCTURE TK_ID statements:stmnts TK_END TK_STRUCTURE
 ;
 
 sub_statement ::=   TK_SUB TK_ID TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_SUB            {: :}
-                    |TK_SUB TK_ID TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                            {: :}
+                    |TK_SUB TK_ID:i TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                          {:System.out.println("SubSt");RESULT = new SubStatement("Sub",i,null,listastatements,"End Sub");listastatements = new ArrayList(); :}
                     |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts TK_END TK_SUB                      {:System.err.println("Error inside Sub statement");:}
                     |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts error TK_END TK_SUB                {:System.err.println("Several errors inside Sub statement");:}
                     |TK_SUB error TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                            {:System.err.println("Erroneous Sub declaration.");:}
@@ -292,7 +293,7 @@ data_type ::=	TK_INTEGER          {: :}
 		|TK_STRING          {: :}
 ;
 
-statements ::=	statement:stmnt statements:stmnts 
+statements ::=	statement:stmnt statements:stmnts       {:listastatements.add(stmnt);:}  
 		| /* Vacio */                      
 ;
 
@@ -303,7 +304,7 @@ statement ::=	if_statement:ifStatement                {:  :}
                 |write_statement:writeStatement         {: :}
                 |read_statement:readStatement            {: :}
                 |variable_declaration:var_declare       {: :}
-		|expression:expr                        {: :}
+		|expression:expr                        {:RESULT = expr;:}
 		|TK_RETURN expression                   {: :}
 		|TK_EXIT                                {: :}
 ;
@@ -359,12 +360,12 @@ variable_declarator  ::=    TK_DIM TK_ID TK_AS data_type:type TK_EQUALS expressi
 
 
 
-expression ::=	numeric_expression:num_exp      {: :}
-		|boolean_expression:bool_exp    {: :}
-		|logical_expression:logic_exp   {: :}
-		|literal_expression:lit_exp     {: :}
-		|TK_ID:id                       {: :}
-		|function_call:call             {: :}
+expression ::=	numeric_expression:num_exp      {:RESULT = new NumericExpression(((NumericExpression)num_exp).getExpression1(),((NumericExpression)num_exp).getExpression2(),((NumericExpression)num_exp).getOperador(),null); :}
+		|boolean_expression:bool_exp    {://RESULT = new BooleanExpression(); :}
+		|logical_expression:logic_exp   {://RESULT = new LogicalExpression(); :}
+		|literal_expression:lit_exp     {://RESULT = new LiteralExpression(); :}
+		|TK_ID:id                       {:RESULT = new Expression(id); :}
+		|function_call:call             {://RESULT = new NumericExpression(); :}
 ;
 
 boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2       {: :}
@@ -382,11 +383,11 @@ logical_expression ::= TK_NOT expression:e1                             {: :}
                        |TK_TRUE                                         {: :}
                        |TK_FALSE                                        {: :}
 ;
-numeric_expression ::= expression:e1 TK_SUM expression:e2               {: :}
-                       |expression:e1 TK_MINUS expression:e2            {: :}
-                       |expression:e1 TK_PRODUCT expression:e2          {: :}
-                       |expression:e1 TK_DIVISION expression:e2         {: :}
-                       |expression:e1 TK_AMPERSAND expression:e2         {: :}
+numeric_expression ::= expression:e1 TK_SUM expression:e2               {:RESULT = new NumericExpression(e1,e2,"+",null); :}
+                       |expression:e1 TK_MINUS expression:e2            {:RESULT = new NumericExpression(e1,e2,"-",null); :}
+                       |expression:e1 TK_PRODUCT expression:e2          {:RESULT = new NumericExpression(e1,e2,"*",null); :}
+                       |expression:e1 TK_DIVISION expression:e2         {:RESULT = new NumericExpression(e1,e2,"/",null); :}
+                       |expression:e1 TK_AMPERSAND expression:e2        {:RESULT = new NumericExpression(e1,e2,"&",null); :}
 ;   
 
 literal_expression ::= 	TK_NUMBER                                       {: :}
@@ -402,5 +403,5 @@ arguments ::=   argument:arg TK_COMMA arguments:args
                 |argument:arg
 ;
 
-argument ::= expression:expr                                            {: :}
+argument ::= expression:expr                                            {:RESULT = new Argument(expr); :}
 ;

@@ -9,7 +9,7 @@ package AST;
  *
  * @author Jose Alberto Pejuan
  */
-public abstract class Expression extends Statements{
+public class Expression extends Statements{
     private String Id;
 
     public Expression(String Id) {

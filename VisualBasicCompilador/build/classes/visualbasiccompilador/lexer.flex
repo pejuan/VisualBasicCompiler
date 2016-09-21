@@ -142,8 +142,8 @@ whitespace = {linebreak} | [\s\t\f]
 	{parIn}							{return symbol(sym.TK_PARIN);}
 	{parOut}						{return symbol(sym.TK_PAROUT);}
         {write}                                                 {return symbol(sym.TK_WRITE);}
-        {read}                                                 {return symbol(sym.TK_READ);}
-	{id}							{return symbol(sym.TK_ID,new OBJID(yytext()));}
+        {read}                                                  {return symbol(sym.TK_READ);}
+	{id}							{return symbol(sym.TK_ID,yytext());}
 	{Number}						{return symbol(sym.TK_NUMBER, new Integer(Integer.parseInt(yytext())));}
 	{comment}						{yybegin(COMMENTS);}
         <<EOF>>                                                 {return new Symbol(sym.EOF,yyline,yycolumn);}
