@@ -361,7 +361,7 @@ variable_declarator  ::=    TK_DIM TK_ID TK_AS data_type:type TK_EQUALS expressi
 
 
 expression ::=	numeric_expression:num_exp      {:RESULT = new NumericExpression(((NumericExpression)num_exp).getExpression1(),((NumericExpression)num_exp).getExpression2(),((NumericExpression)num_exp).getOperador(),null); :}
-		|boolean_expression:bool_exp    {://RESULT = new BooleanExpression(); :}
+		|boolean_expression:bool_exp    {:RESULT = new BooleanExpression(((BooleanExpression)bool_exp).getExpression1(), ((BooleanExpression)bool_exp).getOperador(), ((BooleanExpression)bool_exp).getExpression2(),null); :}
 		|logical_expression:logic_exp   {://RESULT = new LogicalExpression(); :}
 		|literal_expression:lit_exp     {://RESULT = new LiteralExpression(); :}
 		|TK_ID:id                       {:RESULT = new Expression(id); :}
@@ -390,8 +390,8 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:RESULT
                        |expression:e1 TK_AMPERSAND expression:e2        {:RESULT = new NumericExpression(e1,e2,"&",null); :}
 ;   
 
-literal_expression ::= 	TK_NUMBER:num                                       {: RESULT = new LiteralExpression(null,num,null); :}
-			|TK_STRINGVAL:strVal                                {: RESULT = new LiteralExpression(strVal,0,null); :}
+literal_expression ::= 	TK_NUMBER:num                                       {: RESULT = new LiteralExpression(num,null); :}
+			|TK_STRINGVAL:strVal                                {: RESULT = new LiteralExpression(strVal,null); :}
 ;
 
 function_call ::=   TK_ID TK_PARIN arguments:args TK_PAROUT

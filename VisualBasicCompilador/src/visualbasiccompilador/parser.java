@@ -1843,7 +1843,7 @@ class CUP$parser$actions {
 		int bool_expleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int bool_expright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression bool_exp = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		//RESULT = new BooleanExpression(); 
+		RESULT = new BooleanExpression(((BooleanExpression)bool_exp).getExpression1(), ((BooleanExpression)bool_exp).getOperador(), ((BooleanExpression)bool_exp).getExpression2(),null); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expression",23, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2143,7 +2143,7 @@ class CUP$parser$actions {
 		int numleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int numright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Integer num = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new LiteralExpression(null,num,null); 
+		 RESULT = new LiteralExpression(num,null); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("literal_expression",26, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2155,7 +2155,7 @@ class CUP$parser$actions {
 		int strValleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int strValright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String strVal = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new LiteralExpression(strVal,0,null); 
+		 RESULT = new LiteralExpression(strVal,null); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("literal_expression",26, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
