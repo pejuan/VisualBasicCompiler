@@ -10,12 +10,12 @@ package AST;
  * @author Jose Alberto Pejuan
  */
 public class LogicalExpression extends Expression{
-    private boolean value;
+    private Boolean value;
     private String operador;
     private Expression expression1;
     private Expression expression2;
 
-    public LogicalExpression(boolean value, String operador, Expression expression1, Expression expression2, String Id) {
+    public LogicalExpression(Boolean value, String operador, Expression expression1, Expression expression2, String Id) {
         super(Id);
         this.value = value;
         this.operador = operador;
@@ -25,6 +25,7 @@ public class LogicalExpression extends Expression{
 
     public LogicalExpression(String operador, Expression expression1, Expression expression2, String Id) {
         super(Id);
+        this.value = null;
         this.operador = operador;
         this.expression1 = expression1;
         this.expression2 = expression2;
@@ -32,23 +33,28 @@ public class LogicalExpression extends Expression{
 
     public LogicalExpression(String operador, Expression expression1, String Id) {
         super(Id);
+        this.value = null;
         this.operador = operador;
         this.expression1 = expression1;
+        this.expression2 = null;
     }
 
-    public LogicalExpression(boolean value, String Id) {
+    public LogicalExpression(Boolean value, String Id) {
         super(Id);
         this.value = value;
+        this.expression1 = null;
+        this.expression2 = null;
+        this.operador = null;
     }
     
     
 
     
-    public boolean isValue() {
+    public Boolean isValue() {
         return value;
     }
 
-    public void setValue(boolean value) {
+    public void setValue(Boolean value) {
         this.value = value;
     }
 

@@ -1855,7 +1855,7 @@ class CUP$parser$actions {
 		int logic_expleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int logic_expright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression logic_exp = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		//RESULT = new LogicalExpression(); 
+		RESULT = new LogicalExpression(((LogicalExpression)logic_exp).isValue(),((LogicalExpression)logic_exp).getOperador(),((LogicalExpression)logic_exp).getExpression1(),((LogicalExpression)logic_exp).getExpression2(),null); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expression",23, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
