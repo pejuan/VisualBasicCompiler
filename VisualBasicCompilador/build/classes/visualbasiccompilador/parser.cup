@@ -376,12 +376,12 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2       {: :}
                        |expression:e1 TK_NOTEQUAL expression:e2         {: :}
 ;
 
-logical_expression ::= TK_NOT expression:e1                             {: :}
-                       |expression:e1 TK_OR expression:e2               {: :}
-                       |expression:e1 TK_AND expression:e2              {: :}
-                       |expression:e1 TK_XOR expression:e2              {: :}
-                       |TK_TRUE                                         {: :}
-                       |TK_FALSE                                        {: :}
+logical_expression ::= TK_NOT expression:e1                             {:RESULT = new LogicalExpression("Not",e1,null);:}
+                       |expression:e1 TK_OR expression:e2               {:RESULT = new LogicalExpression("Or",e1,e2,null);:}
+                       |expression:e1 TK_AND expression:e2              {:RESULT = new LogicalExpression("And",e1,e2,null); :}
+                       |expression:e1 TK_XOR expression:e2              {:RESULT = new LogicalExpression("Xor",e1,e2,null); :}
+                       |TK_TRUE                                         {:RESULT = new LogicalExpression(true,null); :}
+                       |TK_FALSE                                        {:RESULT = new LogicalExpression(false,null); :}
 ;
 numeric_expression ::= expression:e1 TK_SUM expression:e2               {:RESULT = new NumericExpression(e1,e2,"+",null); :}
                        |expression:e1 TK_MINUS expression:e2            {:RESULT = new NumericExpression(e1,e2,"-",null); :}

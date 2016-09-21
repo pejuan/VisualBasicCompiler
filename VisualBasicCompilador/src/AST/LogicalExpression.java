@@ -23,6 +23,26 @@ public class LogicalExpression extends Expression{
         this.expression2 = expression2;
     }
 
+    public LogicalExpression(String operador, Expression expression1, Expression expression2, String Id) {
+        super(Id);
+        this.operador = operador;
+        this.expression1 = expression1;
+        this.expression2 = expression2;
+    }
+
+    public LogicalExpression(String operador, Expression expression1, String Id) {
+        super(Id);
+        this.operador = operador;
+        this.expression1 = expression1;
+    }
+
+    public LogicalExpression(boolean value, String Id) {
+        super(Id);
+        this.value = value;
+    }
+    
+    
+
     
     public boolean isValue() {
         return value;
