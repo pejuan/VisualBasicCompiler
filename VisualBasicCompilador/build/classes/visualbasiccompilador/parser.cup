@@ -225,7 +225,7 @@ non terminal Statements elseif_statement;
 non terminal Statements for_statement;
 non terminal Statements while_statement; 
 non terminal Statements do_statement;
-non terminal Statements variable_declaration;
+non terminal VariableDeclaration variable_declaration;
 non terminal VariableDeclarator variable_declarator;
 non terminal Expression expression;
 non terminal Expression numeric_expression;
@@ -260,7 +260,7 @@ function_declarations ::= function_declaration:functionDeclaration function_decl
 
 function_declaration ::= structure_statement:structureStatement                             {:if(!foundError){RESULT = new StructureStatement(((StructureStatement)structureStatement).getStructure(),((StructureStatement)structureStatement).getId(),((StructureStatement)structureStatement).getEnd_structure(),((StructureStatement)structureStatement).getStatements());FINALOBJECT.getDeclarations().add(RESULT);} :}
 			 |sub_statement:subStatement                                        {:if(!foundError){RESULT = new SubStatement(((SubStatement)subStatement).getSub(),((SubStatement)subStatement).getId(),((SubStatement)subStatement).getParameters(),((SubStatement)subStatement).getStatements(),((SubStatement)subStatement).getEndSub());FINALOBJECT.getDeclarations().add(RESULT);}:}
-			 |function_statement:functionStatement                              {:  :}
+			 |function_statement:functionStatement                              {:if(!foundError){RESULT = new FunctionStatement(((FunctionStatement)functionStatement).getFunction(),((FunctionStatement)functionStatement).getId(),((FunctionStatement)functionStatement).getParameters(),((FunctionStatement)functionStatement).getStatements(),((FunctionStatement)functionStatement).getDataType(),"End Function");FINALOBJECT.getDeclarations().add(RESULT);  }:}
 ;
 
 structure_statement ::= TK_STRUCTURE TK_ID:i statements:stmnts TK_END TK_STRUCTURE            {:if(!foundError){RESULT = new StructureStatement("Structure",i,"End Structure",listastatements);listastatements = new ArrayList();}:}
@@ -336,7 +336,7 @@ elseif_statement ::=	TK_ELSEIF expression:expr TK_THEN           {: :}
 ;
 
 
-for_statement ::=	TK_FOR variable_declaration:var_declare TK_TO expression:expr statements:stmnts TK_NEXT                         {: :}
+for_statement ::=	TK_FOR variable_declaration:var_declare TK_TO expression:expr statements:stmnts TK_NEXT                         {:if(!foundError){RESULT = new ForStatement("For",var_declare,"To",expr,listastatements,"Next"); listastatements = new ArrayList(); } :}
                         |TK_FOR error TK_TO expression:expr statements:stmnts TK_NEXT                                                   {:System.err.println("Error in variable declaration by For.");foundError=true; :}
                         |TK_FOR variable_declaration:var_declare TK_TO expression:expr error statements:stmnts TK_NEXT                  {:System.err.println("Check syntax inside For.");foundError=true;:}
 ;
@@ -353,15 +353,15 @@ do_statement ::=    TK_DO TK_WHILE expression:expr statements:stmnts TK_LOOP    
                     |TK_DO TK_WHILE expression:expr error                                       {:System.err.println("Error after Do While statement ");foundError=true;:}
 ;
 
-variable_declaration ::=    variable_declarator:var TK_COMMA variable_declaration:var_declare   {: :}
-                            |variable_declarator:var                                                {: :}
+variable_declaration ::=    variable_declarator:var TK_COMMA variable_declaration:var_declare   {: if(!foundError){RESULT = new VariableDeclaration(var,var_declare);}:}
+                            |variable_declarator:var                                            {: if(!foundError){RESULT = new VariableDeclaration(var,null);}:}
 ;
 
 
-variable_declarator  ::=    TK_DIM TK_ID TK_AS data_type:type TK_EQUALS expression:expr         {: :}
-                            |TK_ID TK_AS data_type:type TK_EQUALS expression:expr               {: :}
-                            |TK_DIM TK_ID TK_EQUALS expression:expr                             {: :}
-                            |TK_ID TK_EQUALS expression:expr                                    {: :}
+variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expression:expr                  {: if(!foundError){RESULT = new VariableDeclarator("Dim",id,"As",type,"=",expr);}:}
+                            |TK_ID:id TK_AS data_type:type TK_EQUALS expression:expr                        {: if(!foundError){RESULT = new VariableDeclarator(id,"As",type,"=",expr);}:}
+                            |TK_DIM TK_ID:id TK_EQUALS expression:expr                                      {: if(!foundError){RESULT = new VariableDeclarator("Dim",id,"=",expr);} :}
+                            |TK_ID:id TK_EQUALS expression:expr                                             {: if(!foundError){RESULT = new VariableDeclarator(id,"=",expr);}:}
 ;   
 
 

@@ -16,6 +16,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.sun.corba.se.impl.orbutil.ObjectWriter;
+import java.io.File;
 /**
  *
  * @author Jose Alberto Pejuan
@@ -27,9 +28,17 @@ public class VisualBasicCompilador {
      */
     public static void main(String[] args) {
         try{
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+            mapper.setVisibilityChecker(mapper.getSerializationConfig().getDefaultVisibilityChecker()
+                .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+                .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
             parser p = new parser(new VisualBasicLexer(new FileReader("./int2.txt")));
             p.parse();
             System.out.println(p.FINALOBJECT.getDeclarations().size());
+            mapper.writeValue(new File("./AST.json"), p.FINALOBJECT);
             
         }catch(Exception e){
             e.printStackTrace();

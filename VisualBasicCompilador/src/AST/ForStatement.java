@@ -5,6 +5,8 @@
  */
 package AST;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Jose Alberto Pejuan
@@ -15,12 +17,14 @@ public class ForStatement extends Statements{
     private String To;
     private Expression expression;
     private String Next;
+    private ArrayList<Statements> listastatements = new ArrayList();
 
-    public ForStatement(String For, VariableDeclaration variableDeclaration, String To, Expression expression, String Next) {
+    public ForStatement(String For, VariableDeclaration variableDeclaration, String To, Expression expression,ArrayList<Statements> listastatements, String Next) {
         this.For = For;
         this.variableDeclaration = variableDeclaration;
         this.To = To;
         this.expression = expression;
+        this.listastatements = listastatements;
         this.Next = Next;
     }
     
@@ -63,5 +67,13 @@ public class ForStatement extends Statements{
 
     public void setNext(String Next) {
         this.Next = Next;
+    }
+
+    public ArrayList<Statements> getListastatements() {
+        return listastatements;
+    }
+
+    public void setListastatements(ArrayList<Statements> listastatements) {
+        this.listastatements = listastatements;
     }
 }

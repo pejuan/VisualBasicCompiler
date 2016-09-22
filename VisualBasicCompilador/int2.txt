@@ -1,47 +1,7 @@
 Sub main()
-	+
-	Dim k As Integer = 0
-	Dim n As Boolean = False
-	Dim m As String = "Hola Mundo"
-    Dim a As Integer = 0
-    llamadaAFuncion (1,2,3
-    o = 1+2+
-    Do
-        
-        While i>10
-			
-		End While
-		a = k + n+
-    Loop Until index > 10
-
-	For index As Integer = 1 To 100000
-    	' If index is between 5 and 7, continue
-    	' with the next iteration.
-    	If index >= 5 And index <= 8 Then
-            While index <= 10 Or index > 0
-                Dim u As Boolean = False
-            End While
-    	End If
-
-    	' If index is 10, exit the loop.
-    	
-    	
-	Next
-	If index = 10 Then
-        	
-    End If
-	While i>10
-		
-	End While
 	
-	jun()
-	While i>10
-		
-	End While
-	While i>10
-		
-	End Whle
-	
+	i>1
+	A And B
 
 End Sub
 Sub algo()

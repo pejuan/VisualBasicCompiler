@@ -1126,7 +1126,7 @@ class CUP$parser$actions {
 		int functionStatementleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int functionStatementright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		FunctionDeclaration functionStatement = (FunctionDeclaration)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		  
+		if(!foundError){RESULT = new FunctionStatement(((FunctionStatement)functionStatement).getFunction(),((FunctionStatement)functionStatement).getId(),((FunctionStatement)functionStatement).getParameters(),((FunctionStatement)functionStatement).getStatements(),((FunctionStatement)functionStatement).getDataType(),"End Function");FINALOBJECT.getDeclarations().add(RESULT);  }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_declaration",4, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1518,7 +1518,7 @@ class CUP$parser$actions {
               Statements RESULT =null;
 		int var_declareleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int var_declareright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		Statements var_declare = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		VariableDeclaration var_declare = (VariableDeclaration)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("statement",12, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1734,14 +1734,14 @@ class CUP$parser$actions {
               Statements RESULT =null;
 		int var_declareleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
 		int var_declareright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
-		Statements var_declare = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
+		VariableDeclaration var_declare = (VariableDeclaration)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
 		int exprleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int exprright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Expression expr = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		int stmntsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int stmntsright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Statements stmnts = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 
+		if(!foundError){RESULT = new ForStatement("For",var_declare,"To",expr,listastatements,"Next"); listastatements = new ArrayList(); } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("for_statement",18, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1767,7 +1767,7 @@ class CUP$parser$actions {
               Statements RESULT =null;
 		int var_declareleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).left;
 		int var_declareright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).right;
-		Statements var_declare = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
+		VariableDeclaration var_declare = (VariableDeclaration)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
 		int exprleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
 		int exprright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
 		Expression expr = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
@@ -1884,14 +1884,14 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 65: // variable_declaration ::= variable_declarator TK_COMMA variable_declaration 
             {
-              Statements RESULT =null;
+              VariableDeclaration RESULT =null;
 		int varleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int varright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		VariableDeclarator var = (VariableDeclarator)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		int var_declareleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int var_declareright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		Statements var_declare = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 
+		VariableDeclaration var_declare = (VariableDeclaration)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(!foundError){RESULT = new VariableDeclaration(var,var_declare);}
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable_declaration",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1899,11 +1899,11 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 66: // variable_declaration ::= variable_declarator 
             {
-              Statements RESULT =null;
+              VariableDeclaration RESULT =null;
 		int varleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int varright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		VariableDeclarator var = (VariableDeclarator)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 
+		 if(!foundError){RESULT = new VariableDeclaration(var,null);}
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable_declaration",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

@@ -1,0 +1,1 @@
+{"declarations":[{"Sub":"Sub","id":"main","parameters":null,"statements":[{"Id":null,"value":null,"operador":"And","expression1":{"Id":"A"},"expression2":{"Id":"B"}},{"Id":null,"expression1":{"Id":"i"},"operador":">","expression2":{"Id":null,"stringval":null,"number":1}}],"endSub":"End Sub"}]}
