@@ -6,7 +6,7 @@ Sub main()
     Dim a As Integer = 0
     llamadaAFuncion (1,2,3
    	i<5
-    o = 1+2
+    o = 1+2+
     Do
         
         While i>10
