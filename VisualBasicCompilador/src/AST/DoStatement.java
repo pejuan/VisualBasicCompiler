@@ -5,6 +5,8 @@
  */
 package AST;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Jose Alberto Pejuan
@@ -12,20 +14,21 @@ package AST;
 public class DoStatement extends Statements{
     private String Do;
     private String While;
-    private Statements statement;
+    private ArrayList<Statements> statements;
     private String Loop;
     private String Until;
     private Expression expression;
 
-    public DoStatement(String Do, String While, Statements statement, String Loop, String Until, Expression expression) {
+    public DoStatement(String Do, String While, ArrayList<Statements> statements, String Loop, String Until, Expression expression) {
         this.Do = Do;
         this.While = While;
-        this.statement = statement;
+        this.statements = statements;
         this.Loop = Loop;
         this.Until = Until;
         this.expression = expression;
     }
 
+    
     
     public String getDo() {
         return Do;
@@ -43,13 +46,7 @@ public class DoStatement extends Statements{
         this.While = While;
     }
 
-    public Statements getStatement() {
-        return statement;
-    }
 
-    public void setStatement(Statements statement) {
-        this.statement = statement;
-    }
 
     public String getLoop() {
         return Loop;
@@ -73,6 +70,14 @@ public class DoStatement extends Statements{
 
     public void setExpression(Expression expression) {
         this.expression = expression;
+    }
+
+    public ArrayList<Statements> getStatements() {
+        return statements;
+    }
+
+    public void setStatements(ArrayList<Statements> statements) {
+        this.statements = statements;
     }
     
 }

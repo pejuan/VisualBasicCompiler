@@ -269,7 +269,7 @@ structure_statement ::= TK_STRUCTURE TK_ID:i statements:stmnts TK_END TK_STRUCTU
                         |TK_STRUCTURE TK_ID:i statements:stmnts error TK_END TK_STRUCTURE     {:System.err.println("Error inside Structure statement");foundError=true; :}
 ;
 
-sub_statement ::=   TK_SUB TK_ID TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_SUB            {: :}
+sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_SUB            {:if(!foundError){RESULT = new SubStatement("Sub",i,listaparameters,listastatements,"End Sub");listastatements = new ArrayList();listaparameters = new ArrayList();} :}
                     |TK_SUB TK_ID:i TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                          {:if(!foundError){RESULT = new SubStatement("Sub",i,null,listastatements,"End Sub");listastatements = new ArrayList();} :}
                     |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts TK_END TK_SUB                      {:System.err.println("Error inside Sub statement");foundError=true;:}
                     |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts error TK_END TK_SUB                {:System.err.println("Several errors inside Sub statement");foundError=true;:}
@@ -305,10 +305,10 @@ statements ::=	statement:stmnt statements:stmnts       {:if(!foundError){listast
 		| /* Vacio */                      
 ;
 
-statement ::=	if_statement:ifStatement                {:if(!foundError){} :}
-                |while_statement:whileStatement         {:if(!foundError){} :}
-		|for_statement:forStatement             {:if(!foundError){} :}
-		|do_statement:doStatement               {:if(!foundError){} :}
+statement ::=	if_statement:ifStatement                {:if(!foundError){RESULT = ifStatement;} :}
+                |while_statement:whileStatement         {:if(!foundError){RESULT = whileStatement;} :}
+		|for_statement:forStatement             {:if(!foundError){RESULT = forStatement;} :}
+		|do_statement:doStatement               {:if(!foundError){RESULT = doStatement;} :}
                 |write_statement:writeStatement         {:if(!foundError){RESULT = writeStatement;} :}
                 |read_statement:readStatement           {:if(!foundError){RESULT = readStatement;} :}
                 |variable_declaration:var_declare       {:if(!foundError){RESULT = var_declare;} :}
@@ -349,8 +349,8 @@ while_statement ::=     TK_WHILE expression:expr statements:stmnts TK_END TK_WHI
                         |TK_WHILE expression:expr statements:stmnts TK_END error                    {:foundError=true; :}
 ;
 
-do_statement ::=    TK_DO TK_WHILE expression:expr statements:stmnts TK_LOOP                    {: :}
-                    |TK_DO statements:stmnts TK_LOOP TK_UNTIL expression:expr                   {: :}
+do_statement ::=    TK_DO TK_WHILE expression:expr statements:stmnts TK_LOOP                    {:if(!foundError){ RESULT = new DoStatement("Do","While",listastatements,"Loop",null,expr);listastatements = new ArrayList();} :}
+                    |TK_DO statements:stmnts TK_LOOP TK_UNTIL expression:expr                   {:if(!foundError){ RESULT = new DoStatement("Do",null,listastatements,"Loop","Until",expr);listastatements = new ArrayList();} :}
                     |TK_DO error TK_LOOP TK_UNTIL expression:expr                               {:System.err.println("Error inside Do Loop");foundError=true;:} 
                     |TK_DO TK_WHILE error TK_LOOP                                               {:System.err.println("Error in Do While");foundError=true;:}
                     |TK_DO TK_WHILE expression:expr error                                       {:System.err.println("Error after Do While statement ");foundError=true;:}
