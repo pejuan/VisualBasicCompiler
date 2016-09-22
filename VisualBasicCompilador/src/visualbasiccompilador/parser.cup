@@ -230,10 +230,10 @@ non terminal Statements do_statement;
 non terminal VariableDeclaration variable_declaration;
 non terminal VariableDeclarator variable_declarator;
 non terminal Expression expression;
-non terminal Expression numeric_expression;
-non terminal Expression boolean_expression;
-non terminal Expression literal_expression;
-non terminal Expression logical_expression;
+non terminal NumericExpression numeric_expression;
+non terminal BooleanExpression boolean_expression;
+non terminal LiteralExpression literal_expression;
+non terminal LogicalExpression logical_expression;
 non terminal Expression function_call;
 non terminal Argument arguments;
 non terminal Argument argument;
@@ -305,22 +305,22 @@ statements ::=	statement:stmnt statements:stmnts       {:if(!foundError){listast
 		| /* Vacio */                      
 ;
 
-statement ::=	if_statement:ifStatement                {:  :}
-                |while_statement:whileStatement         {:  :}
-		|for_statement:forStatement             {:  :}
-		|do_statement:doStatement               {:  :}
-                |write_statement:writeStatement         {:  :}
-                |read_statement:readStatement           {:  :}
-                |variable_declaration:var_declare       {:  :}
+statement ::=	if_statement:ifStatement                {:if(!foundError){} :}
+                |while_statement:whileStatement         {:if(!foundError){} :}
+		|for_statement:forStatement             {:if(!foundError){} :}
+		|do_statement:doStatement               {:if(!foundError){} :}
+                |write_statement:writeStatement         {:if(!foundError){RESULT = writeStatement;} :}
+                |read_statement:readStatement           {:if(!foundError){RESULT = readStatement;} :}
+                |variable_declaration:var_declare       {:if(!foundError){RESULT = var_declare;} :}
 		|expression:expr                        {:if(!foundError){RESULT = expr;}:}
 		|TK_RETURN expression:exp               {:if(!foundError){RESULT = new ReturnExpression("Return",exp);}:}
 		|TK_EXIT                                {:if(!foundError){RESULT = new ExitStatement("Exit");} :}
 ;
-write_statement ::= TK_WRITE TK_PARIN literal_expression TK_PAROUT              {: :}
-                    |TK_WRITE TK_PARIN TK_ID TK_PAROUT                          {: :}
+write_statement ::= TK_WRITE TK_PARIN literal_expression:le TK_PAROUT           {:if(!foundError){RESULT = new WriteStatement("Write",le,null);} :}
+                    |TK_WRITE TK_PARIN TK_ID:i TK_PAROUT                        {:if(!foundError){RESULT = new WriteStatement("Write",null,i);}  :}
                     |TK_WRITE TK_PARIN error TK_PAROUT                          {:System.err.println("\t\t\t\t\t  Problem near Console.Write()"); foundError=true;:}
 ;
-read_statement  ::= TK_READ TK_PARIN TK_ID TK_PAROUT               {: :}
+read_statement  ::= TK_READ TK_PARIN TK_ID:i TK_PAROUT               {:if(!foundError){RESULT = new ReadStatement("Read",i);} :}
                     |TK_READ TK_PARIN error TK_PAROUT              {:System.err.println("\t\t\t\t\t  Problem near Console.Read().");foundError=true; :}
 ;
 if_statement ::=    TK_IF expression:expr TK_THEN statements:stmnts TK_END TK_IF                                                                {:if(!foundError){RESULT = new IfStatement("If",expr,"Then",null,listastatements,null,null,"End IF");listastatements = new ArrayList();} :}
