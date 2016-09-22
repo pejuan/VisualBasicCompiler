@@ -16,16 +16,45 @@ public class VariableDeclarator {
     private String Equals;
     private Expression expression;
     private String dataType;
-
-    public VariableDeclarator(String Dim, String Id, String As, String Equals, Expression expression, String dataType) {
+    
+    public VariableDeclarator(String Dim, String Id, String As, String dataType, String Equals, Expression expression){
         this.Dim = Dim;
         this.Id = Id;
         this.As = As;
+        this.dataType = dataType;
         this.Equals = Equals;
         this.expression = expression;
-        this.dataType = dataType;
     }
-
+    
+    public VariableDeclarator(String Id, String As, String dataType, String Equals, Expression expression){
+        this.Id = Id;
+        this.As = As;
+        this.dataType = dataType;
+        this.Equals = Equals;
+        this.expression = expression;
+        
+        this.Dim = null;
+    }
+    
+    public VariableDeclarator(String Dim, String Id, String Equals, Expression expression){
+        this.Dim = Dim;
+        this.Id = Id;
+        this.Equals = Equals;
+        this.expression = expression;
+        
+        this.As = null;
+        this.dataType = null;
+    }
+    
+    public VariableDeclarator(String Id, String Equals, Expression expression){
+        this.Id = Id;
+        this.Equals = Equals;
+        this.expression = expression;
+        
+        this.Dim = null;
+        this.As = null;
+        this.dataType = null;
+    }
     
     public String getDim() {
         return Dim;
