@@ -361,7 +361,7 @@ variable_declaration ::=    variable_declarator:var TK_COMMA variable_declaratio
 variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expression:expr                  {: if(!foundError){RESULT = new VariableDeclarator("Dim",id,"As",type,"=",expr);}:}
                             |TK_ID:id TK_AS data_type:type TK_EQUALS expression:expr                        {: if(!foundError){RESULT = new VariableDeclarator(id,"As",type,"=",expr);}:}
                             |TK_DIM TK_ID:id TK_EQUALS expression:expr                                      {: if(!foundError){RESULT = new VariableDeclarator("Dim",id,"=",expr);} :}
-                            |TK_ID:id TK_EQUALS expression:expr                                             {: if(!foundError){RESULT = new VariableDeclarator(id,"=",expr,);}:}
+                            |TK_ID:id TK_EQUALS expression:expr                                             {: if(!foundError){RESULT = new VariableDeclarator(id,"=",expr);}:}
 ;   
 
 

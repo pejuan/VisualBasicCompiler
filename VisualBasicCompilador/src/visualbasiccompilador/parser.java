@@ -1969,7 +1969,7 @@ class CUP$parser$actions {
 		int exprleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int exprright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression expr = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(!foundError){RESULT = new VariableDeclarator(id,"=",expr,);}
+		 if(!foundError){RESULT = new VariableDeclarator(id,"=",expr);}
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable_declarator",22, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
