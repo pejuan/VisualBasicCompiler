@@ -11,6 +11,7 @@ parser code {:
         public ArrayList<Statements> listastatements = new ArrayList();
         public ArrayList<Argument> listaarguments = new ArrayList();
         public ArrayList<Parameter> listaparameters = new ArrayList();
+        public ArrayList<ElseIfStatement> listaelseifs = new ArrayList();
         public boolean foundError = false;
 	public void syntax_error(Symbol s){
             if(s.sym==0){
@@ -221,7 +222,8 @@ non terminal Statements write_statement;
 non terminal Statements read_statement;
 non terminal Statements if_statement;
 non terminal Statements elseif_statements;
-non terminal Statements elseif_statement;
+non terminal ElseIfStatement elseif_statement;
+non terminal ElseStatement else_statement;
 non terminal Statements for_statement;
 non terminal Statements while_statement; 
 non terminal Statements do_statement;
@@ -321,18 +323,19 @@ write_statement ::= TK_WRITE TK_PARIN literal_expression TK_PAROUT              
 read_statement  ::= TK_READ TK_PARIN TK_ID TK_PAROUT               {: :}
                     |TK_READ TK_PARIN error TK_PAROUT              {:System.err.println("\t\t\t\t\t  Problem near Console.Read().");foundError=true; :}
 ;
-if_statement ::=    TK_IF expression:expr TK_THEN statements:stmnts TK_END TK_IF                                                                {: :}
-                    |TK_IF expression:expr TK_THEN statements:stmnts TK_ELSE statements:stmnts1 TK_END TK_IF                                    {: :}
-                    |TK_IF expression:expr TK_THEN statements:stmnts elseif_statements:elseifStmnts TK_END TK_IF                                {: :}
-                    |TK_IF expression:expr TK_THEN statements:stmnts elseif_statements:elseifStmnts TK_ELSE statements:stmnts1 TK_END TK_IF     {: :}
+if_statement ::=    TK_IF expression:expr TK_THEN statements:stmnts TK_END TK_IF                                                                {:if(!foundError){RESULT = new IfStatement("If",expr,"Then",null,listastatements,null,null,"End IF");listastatements = new ArrayList();} :}
+                    |TK_IF expression:expr TK_THEN statements:stmnts else_statement:elseStmnt TK_END TK_IF                                      {:if(!foundError){RESULT = new IfStatement("If",expr,"Then","Else",listastatements,null,elseStmnt,"End IF");listastatements = new ArrayList();} :}
+                    |TK_IF expression:expr TK_THEN statements:stmnts elseif_statements:elseifStmnts TK_END TK_IF                                {:if(!foundError){RESULT = new IfStatement("If",expr,"Then",null,listastatements,listaelseifs,null,"End IF");listastatements = new ArrayList();listaelseifs = new ArrayList();} :}
+                    |TK_IF expression:expr TK_THEN statements:stmnts elseif_statements:elseifStmnts else_statement:elseStmnt TK_END TK_IF       {:if(!foundError){RESULT = new IfStatement("If",expr,"Then","Else",listastatements,listaelseifs,elseStmnt,"End IF");listastatements = new ArrayList();listaelseifs = new ArrayList();} :}
                     |TK_IF expression:expr TK_THEN statements:stmnts error                                                                      {:System.err.print("Error in If.");foundError=true; :}
 ; 
 
-elseif_statements ::=	elseif_statement:elseifStmnt elseif_statements:elseifStmnts                     {: :}
-			|elseif_statement:elseifStmnt                                                   {: :}
+elseif_statements ::=	elseif_statement:elseifStmnt elseif_statements:elseifStmnts                     {:if(!foundError){listaelseifs.add(elseifStmnt);} :}
+			|elseif_statement:elseifStmnt                                                   {:if(!foundError){listaelseifs.add(elseifStmnt);}:}
 ;
-
-elseif_statement ::=	TK_ELSEIF expression:expr TK_THEN           {: :}
+else_statement   ::=    TK_ELSE statements:stmnts                   {:if(!foundError){RESULT = new ElseStatement("Else",listastatements);listastatements = new ArrayList();}:}
+;
+elseif_statement ::=	TK_ELSEIF expression:expr TK_THEN statements:stmnts           {:if(!foundError){ RESULT = new ElseIfStatement("ElseIf",expr,"Then",listastatements);listastatements = new ArrayList();} :}
 ;
 
 
@@ -341,7 +344,7 @@ for_statement ::=	TK_FOR variable_declaration:var_declare TK_TO expression:expr 
                         |TK_FOR variable_declaration:var_declare TK_TO expression:expr error statements:stmnts TK_NEXT                  {:System.err.println("Check syntax inside For.");foundError=true;:}
 ;
 
-while_statement ::=     TK_WHILE expression:expr statements:stmnts TK_END TK_WHILE                  {: :}
+while_statement ::=     TK_WHILE expression:expr statements:stmnts TK_END TK_WHILE                  {:if(!foundError){ RESULT = new WhileStatement("While",expr,listastatements,"End While");listastatements = new ArrayList();} :}
                         |TK_WHILE error TK_END TK_WHILE                                             {:System.err.println("Error inside While block");foundError=true;:}
                         |TK_WHILE expression:expr statements:stmnts TK_END error                    {:foundError=true; :}
 ;
@@ -371,7 +374,7 @@ expression ::=	numeric_expression:num_exp      {: if(!foundError){RESULT = new N
 		|logical_expression:logic_exp   {:if(!foundError){RESULT = new LogicalExpression(((LogicalExpression)logic_exp).isValue(),((LogicalExpression)logic_exp).getOperador(),((LogicalExpression)logic_exp).getExpression1(),((LogicalExpression)logic_exp).getExpression2(),null);} :}
 		|literal_expression:lit_exp     {:if(!foundError){RESULT = new LiteralExpression(((LiteralExpression)lit_exp).getStringval(),((LiteralExpression)lit_exp).getNumber(),null);} :}
 		|TK_ID:id                       {:if(!foundError){RESULT = new Expression(id);} :}
-		|function_call:call             {:if(!foundError){RESULT = new FunctionCall(((FunctionCall)call).getArguments(),null);} :}
+		|function_call:call             {:if(!foundError){RESULT = new FunctionCall(((FunctionCall)call).getArguments(),((FunctionCall)call).getId());} :}
 ;
 
 boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2       {: if(!foundError){RESULT = new BooleanExpression(e1,">",e2,null);} :}

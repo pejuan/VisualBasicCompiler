@@ -1,7 +1,6 @@
 Sub main()
 	
-	i>1
-	A And B
+	llamada()
 
 End Sub
 Sub algo()

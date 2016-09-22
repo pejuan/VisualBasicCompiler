@@ -17,20 +17,22 @@ public class IfStatement extends Statements{
     private String Then;
     private String Else;
     private ArrayList<Statements> statements;
-    private ArrayList<Statements> elseStatements;
     private ArrayList<ElseIfStatement> elseIfStatements;
+    private ElseStatement elseStatements;   
     private String endIf;
 
-    public IfStatement(String IF, Expression expression, String Then, String Else, ArrayList<Statements> statements, ArrayList<Statements> elseStatements, ArrayList<ElseIfStatement> elseIfStatements, String endIf) {
+    public IfStatement(String IF, Expression expression, String Then, String Else, ArrayList<Statements> statements, ArrayList<ElseIfStatement> elseIfStatements, ElseStatement elseStatements, String endIf) {
         this.IF = IF;
         this.expression = expression;
         this.Then = Then;
         this.Else = Else;
         this.statements = statements;
-        this.elseStatements = elseStatements;
         this.elseIfStatements = elseIfStatements;
+        this.elseStatements = elseStatements;
         this.endIf = endIf;
     }
+
+    
     
     public String getIF() {
         return IF;
@@ -72,13 +74,6 @@ public class IfStatement extends Statements{
         this.statements = statements;
     }
 
-    public ArrayList<Statements> getElseStatements() {
-        return elseStatements;
-    }
-
-    public void setElseStatements(ArrayList<Statements> elseStatements) {
-        this.elseStatements = elseStatements;
-    }
 
     public ArrayList<ElseIfStatement> getElseIfStatements() {
         return elseIfStatements;
@@ -94,5 +89,13 @@ public class IfStatement extends Statements{
 
     public void setEndIf(String endIf) {
         this.endIf = endIf;
+    }
+
+    public ElseStatement getElseStatements() {
+        return elseStatements;
+    }
+
+    public void setElseStatements(ElseStatement elseStatements) {
+        this.elseStatements = elseStatements;
     }
 }

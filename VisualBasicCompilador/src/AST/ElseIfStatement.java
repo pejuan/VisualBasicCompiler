@@ -5,6 +5,8 @@
  */
 package AST;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Jose Alberto Pejuan
@@ -13,11 +15,12 @@ public class ElseIfStatement {
     private String ElseIf;
     private Expression expression;
     private String Then;
-
-    public ElseIfStatement(String ElseIf, Expression expression, String Then) {
+    private ArrayList<Statements> listastatements;
+    public ElseIfStatement(String ElseIf, Expression expression, String Then, ArrayList<Statements> listastatements) {
         this.ElseIf = ElseIf;
         this.expression = expression;
         this.Then = Then;
+        this.listastatements = listastatements;
     }
     
     
@@ -43,5 +46,13 @@ public class ElseIfStatement {
 
     public void setThen(String Then) {
         this.Then = Then;
+    }
+
+    public ArrayList<Statements> getListastatements() {
+        return listastatements;
+    }
+
+    public void setListastatements(ArrayList<Statements> listastatements) {
+        this.listastatements = listastatements;
     }
 }
