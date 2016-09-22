@@ -394,6 +394,11 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                        |expression:e1 TK_PRODUCT expression:e2          {:if(!foundError){RESULT = new NumericExpression(e1,e2,"*",null);} :}
                        |expression:e1 TK_DIVISION expression:e2         {:if(!foundError){RESULT = new NumericExpression(e1,e2,"/",null);} :}
                        |expression:e1 TK_AMPERSAND expression:e2        {:if(!foundError){RESULT = new NumericExpression(e1,e2,"&",null);} :}
+                       |expression:e1 TK_SUM error expression:e2              {: System.err.println("Error in numeric expression.");foundError=true;:}
+                       |expression:e1 TK_MINUS error expression:e2            {: System.err.println("Error in numeric expression.");foundError=true;:}
+                       |expression:e1 TK_PRODUCT error expression:e2          {: System.err.println("Error in numeric expression.");foundError=true;:}
+                       |expression:e1 TK_DIVISION error expression:e2         {: System.err.println("Error in numeric expression.");foundError=true;:}
+                       |expression:e1 TK_AMPERSAND error expression:e2        {: System.err.println("Error in numeric expression.");foundError=true;:}
 ;   
 
 literal_expression ::= 	TK_NUMBER:num                                       {:if(!foundError){RESULT = new LiteralExpression(null,num,null);} :}

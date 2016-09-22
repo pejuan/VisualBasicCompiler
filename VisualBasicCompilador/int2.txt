@@ -1,11 +1,10 @@
 Sub main()
-
+	+
 	Dim k As Integer = 0
 	Dim n As Boolean = False
 	Dim m As String = "Hola Mundo"
     Dim a As Integer = 0
     llamadaAFuncion (1,2,3
-   	i<5
     o = 1+2+
     Do
         
@@ -41,11 +40,8 @@ Sub main()
 	End While
 	While i>10
 		
-	End While
+	End Whle
 	
-
-End Sub
-Sub mere()
 
 End Sub
 Sub algo()

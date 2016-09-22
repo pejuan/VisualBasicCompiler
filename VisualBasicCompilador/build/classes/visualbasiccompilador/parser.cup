@@ -258,48 +258,48 @@ program ::= function_declarations:functionDeclarations {:System.out.println("Pro
 function_declarations ::= function_declaration:functionDeclaration function_declarations:functionDeclarations       {: System.out.println("Func decls");FINALOBJECT.getDeclarations().add(functionDeclaration);:}
 ;
 
-function_declaration ::= structure_statement:structureStatement                             {:RESULT = new StructureStatement(((StructureStatement)structureStatement).getStructure(),((StructureStatement)structureStatement).getId(),((StructureStatement)structureStatement).getEnd_structure(),((StructureStatement)structureStatement).getStatements());FINALOBJECT.getDeclarations().add(RESULT); :}
-			 |sub_statement:subStatement                                        {:RESULT = new SubStatement(((SubStatement)subStatement).getSub(),((SubStatement)subStatement).getId(),((SubStatement)subStatement).getParameters(),((SubStatement)subStatement).getStatements(),((SubStatement)subStatement).getEndSub());FINALOBJECT.getDeclarations().add(RESULT);:}
+function_declaration ::= structure_statement:structureStatement                             {:if(!foundError){RESULT = new StructureStatement(((StructureStatement)structureStatement).getStructure(),((StructureStatement)structureStatement).getId(),((StructureStatement)structureStatement).getEnd_structure(),((StructureStatement)structureStatement).getStatements());FINALOBJECT.getDeclarations().add(RESULT);} :}
+			 |sub_statement:subStatement                                        {:if(!foundError){RESULT = new SubStatement(((SubStatement)subStatement).getSub(),((SubStatement)subStatement).getId(),((SubStatement)subStatement).getParameters(),((SubStatement)subStatement).getStatements(),((SubStatement)subStatement).getEndSub());FINALOBJECT.getDeclarations().add(RESULT);}:}
 			 |function_statement:functionStatement                              {:  :}
 ;
 
-structure_statement ::= TK_STRUCTURE TK_ID:i statements:stmnts TK_END TK_STRUCTURE            {:RESULT = new StructureStatement("Structure",i,"End Structure",listastatements);listastatements = new ArrayList();:}
+structure_statement ::= TK_STRUCTURE TK_ID:i statements:stmnts TK_END TK_STRUCTURE            {:if(!foundError){RESULT = new StructureStatement("Structure",i,"End Structure",listastatements);listastatements = new ArrayList();}:}
                         |TK_STRUCTURE TK_ID:i statements:stmnts error TK_END TK_STRUCTURE     {:System.err.println("Error inside Structure statement");foundError=true; :}
 ;
 
 sub_statement ::=   TK_SUB TK_ID TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_SUB            {: :}
-                    |TK_SUB TK_ID:i TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                          {:RESULT = new SubStatement("Sub",i,null,listastatements,"End Sub");listastatements = new ArrayList(); :}
+                    |TK_SUB TK_ID:i TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                          {:if(!foundError){RESULT = new SubStatement("Sub",i,null,listastatements,"End Sub");listastatements = new ArrayList();} :}
                     |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts TK_END TK_SUB                      {:System.err.println("Error inside Sub statement");foundError=true;:}
                     |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts error TK_END TK_SUB                {:System.err.println("Several errors inside Sub statement");foundError=true;:}
                     |TK_SUB error TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                            {:System.err.println("Erroneous Sub declaration.");foundError=true;:}
 ;
 
 
-function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_FUNCTION                        {:RESULT = new FunctionStatement("Function",i,listaparameters,listastatements,null,"End Function"); listaparameters = new ArrayList();listastatements = new ArrayList();:}
-			|TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT TK_AS data_type:type statements:stmnts TK_END TK_FUNCTION  {:RESULT = new FunctionStatement("Function",i,listaparameters,listastatements,type,"End Function"); listaparameters = new ArrayList();listastatements = new ArrayList(); :}
-                        |TK_FUNCTION TK_ID:i TK_PARIN TK_PAROUT TK_AS data_type:type statements:stmnts TK_END TK_FUNCTION                   {:RESULT = new FunctionStatement("Function",i,null,listastatements,type,"End Function"); listastatements = new ArrayList(); :}
-                        |TK_FUNCTION TK_ID:i TK_PARIN TK_PAROUT statements:stmnts TK_END TK_FUNCTION                                          {:RESULT = new FunctionStatement("Function",i,null,listastatements,null,"End Function"); listastatements = new ArrayList(); :}
+function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_FUNCTION                        {:if(!foundError){RESULT = new FunctionStatement("Function",i,listaparameters,listastatements,null,"End Function"); listaparameters = new ArrayList();listastatements = new ArrayList();}:}
+			|TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT TK_AS data_type:type statements:stmnts TK_END TK_FUNCTION  {:if(!foundError){RESULT = new FunctionStatement("Function",i,listaparameters,listastatements,type,"End Function"); listaparameters = new ArrayList();listastatements = new ArrayList();} :}
+                        |TK_FUNCTION TK_ID:i TK_PARIN TK_PAROUT TK_AS data_type:type statements:stmnts TK_END TK_FUNCTION                   {:if(!foundError){RESULT = new FunctionStatement("Function",i,null,listastatements,type,"End Function"); listastatements = new ArrayList();} :}
+                        |TK_FUNCTION TK_ID:i TK_PARIN TK_PAROUT statements:stmnts TK_END TK_FUNCTION                                        {:if(!foundError){RESULT = new FunctionStatement("Function",i,null,listastatements,null,"End Function"); listastatements = new ArrayList();} :}
                         |TK_FUNCTION TK_ID TK_PARIN parameters:prmts error TK_PAROUT statements:stmnts TK_END TK_FUNCTION                   {:System.err.println("Erroneous Function declaration.");foundError=true; :}
                         |TK_FUNCTION TK_ID TK_PARIN TK_PAROUT statements:stmnts error TK_END TK_FUNCTION                                    {:System.err.println("Error inside Function statement.");foundError=true;:}
 ;
 
-parameters ::= 	parameter:prmt TK_COMMA parameters:prmts        {: listaparameters.add(prmt);:}
-		|parameter:prmt                                 {: listaparameters.add(prmt);:}
+parameters ::= 	parameter:prmt TK_COMMA parameters:prmts        {: if(!foundError){listaparameters.add(prmt);}:}
+		|parameter:prmt                                 {: if(!foundError){listaparameters.add(prmt);}:}
 ;
 
-parameter ::=	parameter_type:prmt_type TK_ID:i TK_AS data_type:type {:RESULT = new Parameter(prmt_type, type,i); :}
+parameter ::=	parameter_type:prmt_type TK_ID:i TK_AS data_type:type {:if(!foundError){RESULT = new Parameter(prmt_type, type,i);} :}
 ;
 
-parameter_type ::=  TK_BYVAL                    {: RESULT = "ByVal";:}
-                    |TK_BYREF                   {: RESULT = "ByRef";:}
+parameter_type ::=  TK_BYVAL                    {: if(!foundError){RESULT = "ByVal";}:}
+                    |TK_BYREF                   {: if(!foundError){RESULT = "ByRef";}:}
 ;
 
-data_type ::=	TK_INTEGER          {: RESULT = "Integer"; :}
-		|TK_BOOLEAN         {: RESULT = "Boolean"; :}
-		|TK_STRING          {: RESULT = "String"; :}
+data_type ::=	TK_INTEGER          {: if(!foundError){RESULT = "Integer";} :}
+		|TK_BOOLEAN         {: if(!foundError){RESULT = "Boolean";} :}
+		|TK_STRING          {: if(!foundError){RESULT = "String";} :}
 ;
 
-statements ::=	statement:stmnt statements:stmnts       {:listastatements.add(stmnt);:}  
+statements ::=	statement:stmnt statements:stmnts       {:if(!foundError){listastatements.add(stmnt);}:}  
 		| /* Vacio */                      
 ;
 
@@ -310,9 +310,9 @@ statement ::=	if_statement:ifStatement                {:  :}
                 |write_statement:writeStatement         {:  :}
                 |read_statement:readStatement           {:  :}
                 |variable_declaration:var_declare       {:  :}
-		|expression:expr                        {:RESULT = expr;:}
-		|TK_RETURN expression:exp               {:RESULT = new ReturnExpression("Return",exp);:}
-		|TK_EXIT                                {:RESULT = new ExitStatement("Exit"); :}
+		|expression:expr                        {:if(!foundError){RESULT = expr;}:}
+		|TK_RETURN expression:exp               {:if(!foundError){RESULT = new ReturnExpression("Return",exp);}:}
+		|TK_EXIT                                {:if(!foundError){RESULT = new ExitStatement("Exit");} :}
 ;
 write_statement ::= TK_WRITE TK_PARIN literal_expression TK_PAROUT              {: :}
                     |TK_WRITE TK_PARIN TK_ID TK_PAROUT                          {: :}
@@ -366,42 +366,47 @@ variable_declarator  ::=    TK_DIM TK_ID TK_AS data_type:type TK_EQUALS expressi
 
 
 
-expression ::=	numeric_expression:num_exp      {:RESULT = new NumericExpression(((NumericExpression)num_exp).getExpression1(),((NumericExpression)num_exp).getExpression2(),((NumericExpression)num_exp).getOperador(),null); :}
-		|boolean_expression:bool_exp    {:RESULT = new BooleanExpression(((BooleanExpression)bool_exp).getExpression1(), ((BooleanExpression)bool_exp).getOperador(), ((BooleanExpression)bool_exp).getExpression2(),null); :}
-		|logical_expression:logic_exp   {:RESULT = new LogicalExpression(((LogicalExpression)logic_exp).isValue(),((LogicalExpression)logic_exp).getOperador(),((LogicalExpression)logic_exp).getExpression1(),((LogicalExpression)logic_exp).getExpression2(),null); :}
-		|literal_expression:lit_exp     {:RESULT = new LiteralExpression(((LiteralExpression)lit_exp).getStringval(),((LiteralExpression)lit_exp).getNumber(),null); :}
-		|TK_ID:id                       {:RESULT = new Expression(id); :}
+expression ::=	numeric_expression:num_exp      {: if(!foundError){RESULT = new NumericExpression(((NumericExpression)num_exp).getExpression1(),((NumericExpression)num_exp).getExpression2(),((NumericExpression)num_exp).getOperador(),null);} :}
+		|boolean_expression:bool_exp    {:if(!foundError){RESULT = new BooleanExpression(((BooleanExpression)bool_exp).getExpression1(), ((BooleanExpression)bool_exp).getOperador(), ((BooleanExpression)bool_exp).getExpression2(),null);} :}
+		|logical_expression:logic_exp   {:if(!foundError){RESULT = new LogicalExpression(((LogicalExpression)logic_exp).isValue(),((LogicalExpression)logic_exp).getOperador(),((LogicalExpression)logic_exp).getExpression1(),((LogicalExpression)logic_exp).getExpression2(),null);} :}
+		|literal_expression:lit_exp     {:if(!foundError){RESULT = new LiteralExpression(((LiteralExpression)lit_exp).getStringval(),((LiteralExpression)lit_exp).getNumber(),null);} :}
+		|TK_ID:id                       {:if(!foundError){RESULT = new Expression(id);} :}
 		|function_call:call             {:if(!foundError){RESULT = new FunctionCall(((FunctionCall)call).getArguments(),null);} :}
 ;
 
-boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2       {: RESULT = new BooleanExpression(e1,">",e2,null); :}
-                       |expression:e1 TK_LESSTHAN expression:e2         {: RESULT = new BooleanExpression(e1,"<",e2,null); :}
-                       |expression:e1 TK_GREATEREQUAL expression:e2     {: RESULT = new BooleanExpression(e1,">=",e2,null); :}
-                       |expression:e1 TK_LESSEQUAL expression:e2        {: RESULT = new BooleanExpression(e1,"<=",e2,null); :}
-                       |expression:e1 TK_EQUALS expression:e2           {: RESULT = new BooleanExpression(e1,"=",e2,null); :}
-                       |expression:e1 TK_NOTEQUAL expression:e2         {: RESULT = new BooleanExpression(e1,"<>",e2,null); :}
+boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2       {: if(!foundError){RESULT = new BooleanExpression(e1,">",e2,null);} :}
+                       |expression:e1 TK_LESSTHAN expression:e2         {: if(!foundError){RESULT = new BooleanExpression(e1,"<",e2,null);} :}
+                       |expression:e1 TK_GREATEREQUAL expression:e2     {: if(!foundError){RESULT = new BooleanExpression(e1,">=",e2,null);} :}
+                       |expression:e1 TK_LESSEQUAL expression:e2        {: if(!foundError){RESULT = new BooleanExpression(e1,"<=",e2,null);} :}
+                       |expression:e1 TK_EQUALS expression:e2           {: if(!foundError){RESULT = new BooleanExpression(e1,"=",e2,null);} :}
+                       |expression:e1 TK_NOTEQUAL expression:e2         {: if(!foundError){RESULT = new BooleanExpression(e1,"<>",e2,null);} :}
 ;
 
-logical_expression ::= TK_NOT expression:e1                             {:RESULT = new LogicalExpression("Not",e1,null);:}
-                       |expression:e1 TK_OR expression:e2               {:RESULT = new LogicalExpression("Or",e1,e2,null);:}
-                       |expression:e1 TK_AND expression:e2              {:RESULT = new LogicalExpression("And",e1,e2,null); :}
-                       |expression:e1 TK_XOR expression:e2              {:RESULT = new LogicalExpression("Xor",e1,e2,null); :}
-                       |TK_TRUE                                         {:RESULT = new LogicalExpression(true,null); :}
-                       |TK_FALSE                                        {:RESULT = new LogicalExpression(false,null); :}
+logical_expression ::= TK_NOT expression:e1                             {:if(!foundError){RESULT = new LogicalExpression("Not",e1,null);}:}
+                       |expression:e1 TK_OR expression:e2               {:if(!foundError){RESULT = new LogicalExpression("Or",e1,e2,null);} :}
+                       |expression:e1 TK_AND expression:e2              {:if(!foundError){RESULT = new LogicalExpression("And",e1,e2,null);} :}
+                       |expression:e1 TK_XOR expression:e2              {:if(!foundError){RESULT = new LogicalExpression("Xor",e1,e2,null);} :}
+                       |TK_TRUE                                         {:if(!foundError){RESULT = new LogicalExpression(true,null);} :}
+                       |TK_FALSE                                        {:if(!foundError){RESULT = new LogicalExpression(false,null);} :}
 ;
-numeric_expression ::= expression:e1 TK_SUM expression:e2               {:RESULT = new NumericExpression(e1,e2,"+",null); :}
-                       |expression:e1 TK_MINUS expression:e2            {:RESULT = new NumericExpression(e1,e2,"-",null); :}
-                       |expression:e1 TK_PRODUCT expression:e2          {:RESULT = new NumericExpression(e1,e2,"*",null); :}
-                       |expression:e1 TK_DIVISION expression:e2         {:RESULT = new NumericExpression(e1,e2,"/",null); :}
-                       |expression:e1 TK_AMPERSAND expression:e2        {:RESULT = new NumericExpression(e1,e2,"&",null); :}
+numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!foundError){RESULT = new NumericExpression(e1,e2,"+",null);} :}
+                       |expression:e1 TK_MINUS expression:e2            {:if(!foundError){RESULT = new NumericExpression(e1,e2,"-",null);} :}
+                       |expression:e1 TK_PRODUCT expression:e2          {:if(!foundError){RESULT = new NumericExpression(e1,e2,"*",null);} :}
+                       |expression:e1 TK_DIVISION expression:e2         {:if(!foundError){RESULT = new NumericExpression(e1,e2,"/",null);} :}
+                       |expression:e1 TK_AMPERSAND expression:e2        {:if(!foundError){RESULT = new NumericExpression(e1,e2,"&",null);} :}
+                       |expression:e1 TK_SUM error expression:e2              {: System.err.println("Error in numeric expression.");foundError=true;:}
+                       |expression:e1 TK_MINUS error expression:e2            {: System.err.println("Error in numeric expression.");foundError=true;:}
+                       |expression:e1 TK_PRODUCT error expression:e2          {: System.err.println("Error in numeric expression.");foundError=true;:}
+                       |expression:e1 TK_DIVISION error expression:e2         {: System.err.println("Error in numeric expression.");foundError=true;:}
+                       |expression:e1 TK_AMPERSAND error expression:e2        {: System.err.println("Error in numeric expression.");foundError=true;:}
 ;   
 
-literal_expression ::= 	TK_NUMBER:num                                       {: RESULT = new LiteralExpression(null,num,null); :}
-			|TK_STRINGVAL:strVal                                {: RESULT = new LiteralExpression(strVal,null,null); :}
+literal_expression ::= 	TK_NUMBER:num                                       {:if(!foundError){RESULT = new LiteralExpression(null,num,null);} :}
+			|TK_STRINGVAL:strVal                                {:if(!foundError){RESULT = new LiteralExpression(strVal,null,null);} :}
 ;
 
-function_call ::=   TK_ID:i TK_PARIN arguments:args TK_PAROUT             {:RESULT = new FunctionCall(listaarguments,i); listaarguments = new ArrayList(); :}
-                    |TK_ID:i TK_PARIN TK_PAROUT                           {:RESULT = new FunctionCall(null,i); :}
+function_call ::=   TK_ID:i TK_PARIN arguments:args TK_PAROUT             {:if(!foundError){RESULT = new FunctionCall(listaarguments,i); listaarguments = new ArrayList();} :}
+                    |TK_ID:i TK_PARIN TK_PAROUT                           {:if(!foundError){RESULT = new FunctionCall(null,i);} :}
                     |TK_ID TK_PARIN error                                 {:System.err.println("Function call expects ')'");foundError=true;:}
                     |TK_ID:i TK_PARIN arguments:args error                {:System.err.println("Function call expects2 ')'");foundError=true;:}
 ;
