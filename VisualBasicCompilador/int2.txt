@@ -42,8 +42,4 @@ Sub main()
 		
 	End While
 	
-
-End Sub
-Sub algo()
-
 End Sub

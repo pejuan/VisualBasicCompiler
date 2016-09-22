@@ -28,6 +28,8 @@ public class VisualBasicCompilador {
      */
     public static void main(String[] args) {
         try{
+            InputFile file = new InputFile();
+            file.run();
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
             mapper.setVisibilityChecker(mapper.getSerializationConfig().getDefaultVisibilityChecker()
@@ -39,7 +41,7 @@ public class VisualBasicCompilador {
             p.parse();
             System.out.println(p.FINALOBJECT.getDeclarations().size());
             mapper.writeValue(new File("./AST.json"), p.FINALOBJECT);
-            
+            file.finish();
         }catch(Exception e){
             e.printStackTrace();
         }
