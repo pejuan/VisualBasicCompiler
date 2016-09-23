@@ -970,19 +970,22 @@ public class parser extends java_cup.runtime.lr_parser {
                     System.err.println("Expected symbol "+expectedSymbol );
                 }else{
                     if(s.sym == sym.TK_ID){
-                        System.err.println("Expected definition of type for ID.");
+                        System.err.println("Expected definition of type for ID or found a mispelled reserved word.");
                     }
-                    if(s.sym == sym.TK_PARIN || s.sym == sym.TK_PAROUT){
+                    else if(s.sym == sym.TK_PARIN || s.sym == sym.TK_PAROUT){
                         System.err.println("Expected an expression or call.");
                     }
-                    if(s.sym == sym.TK_SUM || s.sym == sym.TK_MINUS || s.sym == sym.TK_DIVISION || s.sym == sym.TK_PRODUCT  ||s.sym == sym.TK_AMPERSAND){
+                    else if(s.sym == sym.TK_SUM || s.sym == sym.TK_MINUS || s.sym == sym.TK_DIVISION || s.sym == sym.TK_PRODUCT  ||s.sym == sym.TK_AMPERSAND){
                         System.err.println("Unplaced, lacking or unexpected expression.");
                     }
-                    if(s.sym == sym.TK_GREATERTHAN || s.sym == sym.TK_GREATEREQUAL || s.sym == sym.TK_LESSTHAN || s.sym == sym.TK_LESSEQUAL ||s.sym == sym.TK_NOTEQUAL ){
+                    else if(s.sym == sym.TK_GREATERTHAN || s.sym == sym.TK_GREATEREQUAL || s.sym == sym.TK_LESSTHAN || s.sym == sym.TK_LESSEQUAL ||s.sym == sym.TK_NOTEQUAL ){
                         System.err.println("Unexpected evaluation.");
                     }
-                    if(s.sym == sym.TK_EQUALS){
+                    else if(s.sym == sym.TK_EQUALS){
                         System.err.println("Unexpected evaluation or assignation");
+                    }
+                    else{
+                        System.err.println("Check code's syntax;");
                     }
 
                 }
