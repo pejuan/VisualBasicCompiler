@@ -396,8 +396,18 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                                                                                                                         System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
                                                                                                                }
                                                                                                             }:}
-                            |TK_DIM TK_ID:id TK_EQUALS expression:expr                                      {: if(!foundError){RESULT = new VariableDeclarator("Dim",id,"=",expr);} :}
-                            |TK_ID:id TK_EQUALS expression:expr                                             {: if(!foundError){RESULT = new VariableDeclarator(id,"=",expr);}:}
+                            |TK_DIM TK_ID:id TK_EQUALS expression:expr                                      {: if(!foundError){RESULT = new VariableDeclarator("Dim",id,"=",expr);
+                                                                                                               String auxtype1 =tableIds.searchNodeType(id,"none");
+                                                                                                               String auxtype2 = expr.bringType();
+                                                                                                               if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),"none");}
+                                                                                                               if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
+                                                                                                            } :}
+                            |TK_ID:id TK_EQUALS expression:expr                                             {: if(!foundError){RESULT = new VariableDeclarator(id,"=",expr);
+                                                                                                               String auxtype1 =tableIds.searchNodeType(id,"none");
+                                                                                                               String auxtype2 = expr.bringType();
+                                                                                                               if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),"none");}
+                                                                                                               if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
+                                                                                                            }:}
 ;   
 
 
