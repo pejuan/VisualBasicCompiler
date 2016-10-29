@@ -2017,7 +2017,12 @@ class CUP$parser$actions {
 		int exprleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int exprright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression expr = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(!foundError){RESULT = new VariableDeclarator("Dim",id,"=",expr);} 
+		 if(!foundError){RESULT = new VariableDeclarator("Dim",id,"=",expr);
+                                                                                                               String auxtype1 =tableIds.searchNodeType(id,"none");
+                                                                                                               String auxtype2 = expr.bringType();
+                                                                                                               if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),"none");}
+                                                                                                               if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
+                                                                                                            } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable_declarator",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2032,7 +2037,12 @@ class CUP$parser$actions {
 		int exprleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int exprright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression expr = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(!foundError){RESULT = new VariableDeclarator(id,"=",expr);}
+		 if(!foundError){RESULT = new VariableDeclarator(id,"=",expr);
+                                                                                                               String auxtype1 =tableIds.searchNodeType(id,"none");
+                                                                                                               String auxtype2 = expr.bringType();
+                                                                                                               if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),"none");}
+                                                                                                               if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
+                                                                                                            }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable_declarator",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
