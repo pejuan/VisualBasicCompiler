@@ -372,12 +372,29 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                                                                                                                     if(!tableIds.addNode(new IdNode(id,type))){//revisar si expr tiene el mismo type que id
                                                                                                                          System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
                                                                                                                     }
-                                                                                                               }else{ System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");}
+                                                                                                               }else{ 
+                                                                                                                    if(auxtype=="none"){ 
+                                                                                                                        auxtype = tableIds.searchNodeType(expr.getId(),"none");
+                                                                                                                        if(!(auxtype==type))
+                                                                                                                            System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
+                                                                                                                    }else   
+                                                                                                                        System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
+                                                                                                               }
                                                                                                             }:}
                             |TK_ID:id TK_AS data_type:type TK_EQUALS expression:expr                        {: if(!foundError){RESULT = new VariableDeclarator(id,"As",type,"=",expr);
-                                                                                                                if(!tableIds.addNode(new IdNode(id,type))){
-                                                                                                                     System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
-                                                                                                                }//hacer funcion en expression que me devuelva el tipo
+                                                                                                                String auxtype = expr.bringType();
+                                                                                                               if(auxtype==type){
+                                                                                                                    if(!tableIds.addNode(new IdNode(id,type))){//revisar si expr tiene el mismo type que id
+                                                                                                                         System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
+                                                                                                                    }
+                                                                                                               }else{ 
+                                                                                                                    if(auxtype=="none"){ 
+                                                                                                                        auxtype = tableIds.searchNodeType(expr.getId(),"none");
+                                                                                                                        if(!(auxtype==type))
+                                                                                                                            System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
+                                                                                                                    }else   
+                                                                                                                        System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
+                                                                                                               }
                                                                                                             }:}
                             |TK_DIM TK_ID:id TK_EQUALS expression:expr                                      {: if(!foundError){RESULT = new VariableDeclarator("Dim",id,"=",expr);} :}
                             |TK_ID:id TK_EQUALS expression:expr                                             {: if(!foundError){RESULT = new VariableDeclarator(id,"=",expr);}:}
