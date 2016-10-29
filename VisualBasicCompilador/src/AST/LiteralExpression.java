@@ -36,4 +36,12 @@ public class LiteralExpression extends Expression{
     public void setNumber(Integer number) {
         this.number = number;
     }
+    public String bringType(){
+        if (number == null) {
+            return "String";
+        }else{
+            return "Integer";
+        }
+        
+    }
 }

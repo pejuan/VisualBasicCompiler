@@ -860,11 +860,13 @@ public class parser extends java_cup.runtime.lr_parser {
 
 
         public Program FINALOBJECT = new Program();
+        public IdTable tableIds = new IdTable();
         public ArrayList<Statements> listastatements = new ArrayList();
         public ArrayList<Argument> listaarguments = new ArrayList();
         public ArrayList<Parameter> listaparameters = new ArrayList();
         public ArrayList<ElseIfStatement> listaelseifs = new ArrayList();
         public boolean foundError = false;
+        public boolean foundTypeError = false;
 	public void syntax_error(Symbol s){
             if(s.sym==0){
 
@@ -1954,7 +1956,14 @@ class CUP$parser$actions {
 		int exprleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int exprright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression expr = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(!foundError){RESULT = new VariableDeclarator("Dim",id,"As",type,"=",expr);}
+		 if(!foundError){RESULT = new VariableDeclarator("Dim",id,"As",type,"=",expr);
+                                                                                                               String auxtype = expr.bringType();
+                                                                                                               if(auxtype==type){
+                                                                                                                    if(!tableIds.addNode(new IdNode(id,type))){//revisar si expr tiene el mismo type que id
+                                                                                                                         System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
+                                                                                                                    }
+                                                                                                               }else{ System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");}
+                                                                                                            }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable_declarator",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1972,7 +1981,11 @@ class CUP$parser$actions {
 		int exprleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int exprright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression expr = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(!foundError){RESULT = new VariableDeclarator(id,"As",type,"=",expr);}
+		 if(!foundError){RESULT = new VariableDeclarator(id,"As",type,"=",expr);
+                                                                                                                if(!tableIds.addNode(new IdNode(id,type))){
+                                                                                                                     System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
+                                                                                                                }//hacer funcion en expression que me devuelva el tipo
+                                                                                                            }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable_declarator",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

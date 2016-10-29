@@ -8,11 +8,13 @@ import AST.*;
 
 parser code {:
         public Program FINALOBJECT = new Program();
+        public IdTable tableIds = new IdTable();
         public ArrayList<Statements> listastatements = new ArrayList();
         public ArrayList<Argument> listaarguments = new ArrayList();
         public ArrayList<Parameter> listaparameters = new ArrayList();
         public ArrayList<ElseIfStatement> listaelseifs = new ArrayList();
         public boolean foundError = false;
+        public boolean foundTypeError = false;
 	public void syntax_error(Symbol s){
             if(s.sym==0){
 
@@ -364,8 +366,19 @@ variable_declaration ::=    variable_declarator:var TK_COMMA variable_declaratio
 ;
 
 
-variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expression:expr                  {: if(!foundError){RESULT = new VariableDeclarator("Dim",id,"As",type,"=",expr);}:}
-                            |TK_ID:id TK_AS data_type:type TK_EQUALS expression:expr                        {: if(!foundError){RESULT = new VariableDeclarator(id,"As",type,"=",expr);}:}
+variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expression:expr                  {: if(!foundError){RESULT = new VariableDeclarator("Dim",id,"As",type,"=",expr);
+                                                                                                               String auxtype = expr.bringType();
+                                                                                                               if(auxtype==type){
+                                                                                                                    if(!tableIds.addNode(new IdNode(id,type))){//revisar si expr tiene el mismo type que id
+                                                                                                                         System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
+                                                                                                                    }
+                                                                                                               }else{ System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");}
+                                                                                                            }:}
+                            |TK_ID:id TK_AS data_type:type TK_EQUALS expression:expr                        {: if(!foundError){RESULT = new VariableDeclarator(id,"As",type,"=",expr);
+                                                                                                                if(!tableIds.addNode(new IdNode(id,type))){
+                                                                                                                     System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
+                                                                                                                }//hacer funcion en expression que me devuelva el tipo
+                                                                                                            }:}
                             |TK_DIM TK_ID:id TK_EQUALS expression:expr                                      {: if(!foundError){RESULT = new VariableDeclarator("Dim",id,"=",expr);} :}
                             |TK_ID:id TK_EQUALS expression:expr                                             {: if(!foundError){RESULT = new VariableDeclarator(id,"=",expr);}:}
 ;   

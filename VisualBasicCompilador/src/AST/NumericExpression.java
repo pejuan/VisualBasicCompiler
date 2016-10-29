@@ -46,4 +46,9 @@ public class NumericExpression extends Expression{
     public void setOperador(String operador) {
         this.operador = operador;
     }
+    
+    @Override
+    public String bringType(){
+        return "Integer";
+    }
 }

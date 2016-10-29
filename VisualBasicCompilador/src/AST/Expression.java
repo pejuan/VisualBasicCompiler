@@ -16,7 +16,6 @@ public class Expression extends Statements{
         this.Id = Id;
     }
     
-    
     public String getId() {
         return Id;
     }
@@ -24,5 +23,10 @@ public class Expression extends Statements{
     public void setId(String Id) {
         this.Id = Id;
     }
+    public String bringType(){
+        return "none";
+    }
+
+    
     
 }

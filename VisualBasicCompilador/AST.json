@@ -1,1 +1,1 @@
-{"declarations":[]}
+{"declarations":[{"Sub":"Sub","id":"main","parameters":null,"statements":[{"variableDeclarator":{"Dim":"Dim","Id":"k","As":"As","Equals":"=","expression":{"Id":null,"stringval":null,"number":9},"dataType":"Integer"},"variableDeclaration":null}],"endSub":"End Sub"}]}

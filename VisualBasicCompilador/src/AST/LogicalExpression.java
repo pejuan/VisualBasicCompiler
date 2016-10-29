@@ -81,4 +81,8 @@ public class LogicalExpression extends Expression{
     public void setExpression2(Expression expression2) {
         this.expression2 = expression2;
     }
+    @Override
+    public String bringType(){
+        return "Boolean";
+    }
 }
