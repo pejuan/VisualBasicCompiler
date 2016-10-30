@@ -246,7 +246,7 @@ non terminal Argument argument;
 /* Precedencia */
 precedence left TK_EQUALS;
 precedence left TK_OR;
-precedence right TK_XOR;
+precedence left TK_XOR;
 precedence left TK_AND;
 precedence left TK_LESSTHAN, TK_LESSEQUAL,TK_GREATERTHAN, TK_GREATEREQUAL, TK_EQUALS, TK_NOTEQUAL;
 precedence left TK_SUM, TK_MINUS, TK_AMPERSAND;
@@ -447,8 +447,38 @@ logical_expression ::= TK_NOT expression:e1                             {:if(!fo
                                                                             }
                                                                                 
                                                                         }:}
-                       |expression:e1 TK_OR expression:e2               {:if(!foundError){RESULT = new LogicalExpression("Or",e1,e2,null);} :}
-                       |expression:e1 TK_AND expression:e2              {:if(!foundError){RESULT = new LogicalExpression("And",e1,e2,null);} :}
+                       |expression:e1 TK_OR expression:e2               {:if(!foundError){RESULT = new LogicalExpression("Or",e1,e2,null);
+                                                                            String auxtype = e1.bringType();
+                                                                            if(auxtype != "Boolean"){
+                                                                                if(auxtype == "none"){
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
+                                                                                }else{System.err.println("Error at *expression* Or *expression*, not a boolean expression. Is "+auxtype+".");}
+                                                                            }
+                                                                            String auxtype2 = e2.bringType();
+                                                                            if(auxtype2 != "Boolean"){
+                                                                                if(auxtype2 == "none"){
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    if(auxtype2 != "Boolean"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
+                                                                                }else{System.err.println("Error at *expression* Or *expression*, not a boolean expression. Is "+auxtype2+".");}
+                                                                            }
+                                                                        }:}
+                       |expression:e1 TK_AND expression:e2              {:if(!foundError){RESULT = new LogicalExpression("And",e1,e2,null);
+                                                                            String auxtype = e1.bringType();
+                                                                            if(auxtype != "Boolean"){
+                                                                                if(auxtype == "none"){
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
+                                                                                }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype+".");}
+                                                                            }
+                                                                            String auxtype2 = e2.bringType();
+                                                                            if(auxtype2 != "Boolean"){
+                                                                                if(auxtype2 == "none"){
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    if(auxtype2 != "Boolean"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
+                                                                                }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype2+".");}
+                                                                            }
+                                                                        } :}
                        |expression:e1 TK_XOR expression:e2              {:if(!foundError){RESULT = new LogicalExpression("Xor",e1,e2,null);} :}
                        |TK_TRUE                                         {:if(!foundError){RESULT = new LogicalExpression(true,null);} :}
                        |TK_FALSE                                        {:if(!foundError){RESULT = new LogicalExpression(false,null);} :}

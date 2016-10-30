@@ -340,7 +340,7 @@ public class parser extends java_cup.runtime.lr_parser {
     "\063\uffa1\064\uffa1\001\002\000\120\003\uffa9\011\uffa9\012" +
     "\uffa9\013\uffa9\014\uffa9\015\uffa9\016\uffa9\017\uffa9\020\uffa9" +
     "\021\uffa9\023\uffa9\024\uffa9\025\uffa9\031\112\032\116\033" +
-    "\105\034\113\035\121\036\107\037\uffa9\040\uffa9\041\111" +
+    "\105\034\113\035\121\036\107\037\uffa9\040\uffa9\041\uffa9" +
     "\042\110\043\114\044\117\045\104\046\106\047\120\051" +
     "\uffa9\052\uffa9\053\uffa9\055\uffa9\056\uffa9\057\uffa9\060\uffa9" +
     "\061\uffa9\062\uffa9\063\uffa9\064\uffa9\001\002\000\120\003" +
@@ -2274,7 +2274,22 @@ class CUP$parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		if(!foundError){RESULT = new LogicalExpression("Or",e1,e2,null);} 
+		if(!foundError){RESULT = new LogicalExpression("Or",e1,e2,null);
+                                                                            String auxtype = e1.bringType();
+                                                                            if(auxtype != "Boolean"){
+                                                                                if(auxtype == "none"){
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
+                                                                                }else{System.err.println("Error at *expression* Or *expression*, not a boolean expression. Is "+auxtype+".");}
+                                                                            }
+                                                                            String auxtype2 = e2.bringType();
+                                                                            if(auxtype2 != "Boolean"){
+                                                                                if(auxtype2 == "none"){
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    if(auxtype2 != "Boolean"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
+                                                                                }else{System.err.println("Error at *expression* Or *expression*, not a boolean expression. Is "+auxtype2+".");}
+                                                                            }
+                                                                        }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("logical_expression",28, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2289,7 +2304,22 @@ class CUP$parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		if(!foundError){RESULT = new LogicalExpression("And",e1,e2,null);} 
+		if(!foundError){RESULT = new LogicalExpression("And",e1,e2,null);
+                                                                            String auxtype = e1.bringType();
+                                                                            if(auxtype != "Boolean"){
+                                                                                if(auxtype == "none"){
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
+                                                                                }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype+".");}
+                                                                            }
+                                                                            String auxtype2 = e2.bringType();
+                                                                            if(auxtype2 != "Boolean"){
+                                                                                if(auxtype2 == "none"){
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    if(auxtype2 != "Boolean"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
+                                                                                }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype2+".");}
+                                                                            }
+                                                                        } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("logical_expression",28, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
