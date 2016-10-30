@@ -1,7 +1,11 @@
 Sub main()
 	
+	
+
 	k As Integer = 9
-	o As Boolean = k 
+	
+	o As Boolean = k<9 
+	Not (k+9)
 	'Cuando se asigna un Id, expression regresa como tipo el tipo none, hay que hacer una busqueda.
 	
 
