@@ -479,15 +479,105 @@ logical_expression ::= TK_NOT expression:e1                             {:if(!fo
                                                                                 }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype2+".");}
                                                                             }
                                                                         } :}
-                       |expression:e1 TK_XOR expression:e2              {:if(!foundError){RESULT = new LogicalExpression("Xor",e1,e2,null);} :}
+                       |expression:e1 TK_XOR expression:e2              {:if(!foundError){RESULT = new LogicalExpression("Xor",e1,e2,null);
+                                                                            String auxtype = e1.bringType();
+                                                                            if(auxtype != "Boolean"){
+                                                                                if(auxtype == "none"){
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
+                                                                                }else{System.err.println("Error at *expression* Xor *expression*, not a boolean expression. Is "+auxtype+".");}
+                                                                            }
+                                                                            String auxtype2 = e2.bringType();
+                                                                            if(auxtype2 != "Boolean"){
+                                                                                if(auxtype2 == "none"){
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    if(auxtype2 != "Boolean"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
+                                                                                }else{System.err.println("Error at *expression* Xor *expression*, not a boolean expression. Is "+auxtype2+".");}
+                                                                            }
+                                                                        } :}
                        |TK_TRUE                                         {:if(!foundError){RESULT = new LogicalExpression(true,null);} :}
                        |TK_FALSE                                        {:if(!foundError){RESULT = new LogicalExpression(false,null);} :}
 ;
-numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!foundError){RESULT = new NumericExpression(e1,e2,"+",null);} :}
-                       |expression:e1 TK_MINUS expression:e2            {:if(!foundError){RESULT = new NumericExpression(e1,e2,"-",null);} :}
-                       |expression:e1 TK_PRODUCT expression:e2          {:if(!foundError){RESULT = new NumericExpression(e1,e2,"*",null);} :}
-                       |expression:e1 TK_DIVISION expression:e2         {:if(!foundError){RESULT = new NumericExpression(e1,e2,"/",null);} :}
-                       |expression:e1 TK_AMPERSAND expression:e2        {:if(!foundError){RESULT = new NumericExpression(e1,e2,"&",null);} :}
+numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!foundError){RESULT = new NumericExpression(e1,e2,"+",null);
+                                                                            String auxtype = e1.bringType();
+                                                                            if(auxtype != "Integer"){
+                                                                                if(auxtype == "none"){
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");}
+                                                                                }else{System.err.println("Error at *expression* + *expression*, not a numeric expression. Is "+auxtype+".");}
+                                                                            }
+                                                                            String auxtype2 = e2.bringType();
+                                                                            if(auxtype2 != "Integer"){
+                                                                                if(auxtype2 == "none"){
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");}
+                                                                                }else{System.err.println("Error at *expression* + *expression*, not a numeric expression. Is "+auxtype2+".");}
+                                                                            }
+                                                                        } :}
+                       |expression:e1 TK_MINUS expression:e2            {:if(!foundError){RESULT = new NumericExpression(e1,e2,"-",null);
+                                                                            String auxtype = e1.bringType();
+                                                                            if(auxtype != "Integer"){
+                                                                                if(auxtype == "none"){
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");}
+                                                                                }else{System.err.println("Error at *expression* - *expression*, not a numeric expression. Is "+auxtype+".");}
+                                                                            }
+                                                                            String auxtype2 = e2.bringType();
+                                                                            if(auxtype2 != "Integer"){
+                                                                                if(auxtype2 == "none"){
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");}
+                                                                                }else{System.err.println("Error at *expression* - *expression*, not a numeric expression. Is "+auxtype2+".");}
+                                                                            }
+                                                                        } :}
+                       |expression:e1 TK_PRODUCT expression:e2          {:if(!foundError){RESULT = new NumericExpression(e1,e2,"*",null);
+                                                                            String auxtype = e1.bringType();
+                                                                            if(auxtype != "Integer"){
+                                                                                if(auxtype == "none"){
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");}
+                                                                                }else{System.err.println("Error at *expression* * *expression*, not a numeric expression. Is "+auxtype+".");}
+                                                                            }
+                                                                            String auxtype2 = e2.bringType();
+                                                                            if(auxtype2 != "Integer"){
+                                                                                if(auxtype2 == "none"){
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");}
+                                                                                }else{System.err.println("Error at *expression* * *expression*, not a numeric expression. Is "+auxtype2+".");}
+                                                                            }
+                                                                        } :}
+                       |expression:e1 TK_DIVISION expression:e2         {:if(!foundError){RESULT = new NumericExpression(e1,e2,"/",null);
+                                                                            String auxtype = e1.bringType();
+                                                                            if(auxtype != "Integer"){
+                                                                                if(auxtype == "none"){
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");}
+                                                                                }else{System.err.println("Error at *expression* / *expression*, not a numeric expression. Is "+auxtype+".");}
+                                                                            }
+                                                                            String auxtype2 = e2.bringType();
+                                                                            if(auxtype2 != "Integer"){
+                                                                                if(auxtype2 == "none"){
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");}
+                                                                                }else{System.err.println("Error at *expression* / *expression*, not a numeric expression. Is "+auxtype2+".");}
+                                                                            }
+                                                                        } :}
+                       |expression:e1 TK_AMPERSAND expression:e2        {:if(!foundError){RESULT = new NumericExpression(e1,e2,"&",null);
+                                                                            String auxtype = e1.bringType();
+                                                                            if(auxtype != "String"){
+                                                                                if(auxtype == "none"){
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    if(auxtype != "String"){System.err.println("Error with variable "+e1.getId()+", not a String. Is "+auxtype+".");}
+                                                                                }else{System.err.println("Error at *expression* & *expression*, first expression is not a String. Is "+auxtype+".");}
+                                                                            }
+                                                                            String auxtype2 = e2.bringType();
+                                                                            if(auxtype2 != "String"){
+                                                                                if(auxtype2 == "none"){
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    if(auxtype2 != "String"){System.err.println("Error with variable "+e2.getId()+", not a String. Is "+auxtype2+".");}
+                                                                                }else{System.err.println("Error at *expression* & *expression*, second expression is not a String. Is "+auxtype2+".");}
+                                                                            }
+                                                                        } :}
                        |expression:e1 TK_SUM error expression:e2              {: System.err.println("Error in numeric expression.");foundError=true;:}
                        |expression:e1 TK_MINUS error expression:e2            {: System.err.println("Error in numeric expression.");foundError=true;:}
                        |expression:e1 TK_PRODUCT error expression:e2          {: System.err.println("Error in numeric expression.");foundError=true;:}

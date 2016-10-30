@@ -2334,7 +2334,22 @@ class CUP$parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		if(!foundError){RESULT = new LogicalExpression("Xor",e1,e2,null);} 
+		if(!foundError){RESULT = new LogicalExpression("Xor",e1,e2,null);
+                                                                            String auxtype = e1.bringType();
+                                                                            if(auxtype != "Boolean"){
+                                                                                if(auxtype == "none"){
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
+                                                                                }else{System.err.println("Error at *expression* Xor *expression*, not a boolean expression. Is "+auxtype+".");}
+                                                                            }
+                                                                            String auxtype2 = e2.bringType();
+                                                                            if(auxtype2 != "Boolean"){
+                                                                                if(auxtype2 == "none"){
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    if(auxtype2 != "Boolean"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
+                                                                                }else{System.err.println("Error at *expression* Xor *expression*, not a boolean expression. Is "+auxtype2+".");}
+                                                                            }
+                                                                        } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("logical_expression",28, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2367,7 +2382,22 @@ class CUP$parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		if(!foundError){RESULT = new NumericExpression(e1,e2,"+",null);} 
+		if(!foundError){RESULT = new NumericExpression(e1,e2,"+",null);
+                                                                            String auxtype = e1.bringType();
+                                                                            if(auxtype != "Integer"){
+                                                                                if(auxtype == "none"){
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");}
+                                                                                }else{System.err.println("Error at *expression* + *expression*, not a numeric expression. Is "+auxtype+".");}
+                                                                            }
+                                                                            String auxtype2 = e2.bringType();
+                                                                            if(auxtype2 != "Integer"){
+                                                                                if(auxtype2 == "none"){
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");}
+                                                                                }else{System.err.println("Error at *expression* + *expression*, not a numeric expression. Is "+auxtype2+".");}
+                                                                            }
+                                                                        } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2382,7 +2412,22 @@ class CUP$parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		if(!foundError){RESULT = new NumericExpression(e1,e2,"-",null);} 
+		if(!foundError){RESULT = new NumericExpression(e1,e2,"-",null);
+                                                                            String auxtype = e1.bringType();
+                                                                            if(auxtype != "Integer"){
+                                                                                if(auxtype == "none"){
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");}
+                                                                                }else{System.err.println("Error at *expression* - *expression*, not a numeric expression. Is "+auxtype+".");}
+                                                                            }
+                                                                            String auxtype2 = e2.bringType();
+                                                                            if(auxtype2 != "Integer"){
+                                                                                if(auxtype2 == "none"){
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");}
+                                                                                }else{System.err.println("Error at *expression* - *expression*, not a numeric expression. Is "+auxtype2+".");}
+                                                                            }
+                                                                        } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2397,7 +2442,22 @@ class CUP$parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		if(!foundError){RESULT = new NumericExpression(e1,e2,"*",null);} 
+		if(!foundError){RESULT = new NumericExpression(e1,e2,"*",null);
+                                                                            String auxtype = e1.bringType();
+                                                                            if(auxtype != "Integer"){
+                                                                                if(auxtype == "none"){
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");}
+                                                                                }else{System.err.println("Error at *expression* * *expression*, not a numeric expression. Is "+auxtype+".");}
+                                                                            }
+                                                                            String auxtype2 = e2.bringType();
+                                                                            if(auxtype2 != "Integer"){
+                                                                                if(auxtype2 == "none"){
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");}
+                                                                                }else{System.err.println("Error at *expression* * *expression*, not a numeric expression. Is "+auxtype2+".");}
+                                                                            }
+                                                                        } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2412,7 +2472,22 @@ class CUP$parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		if(!foundError){RESULT = new NumericExpression(e1,e2,"/",null);} 
+		if(!foundError){RESULT = new NumericExpression(e1,e2,"/",null);
+                                                                            String auxtype = e1.bringType();
+                                                                            if(auxtype != "Integer"){
+                                                                                if(auxtype == "none"){
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");}
+                                                                                }else{System.err.println("Error at *expression* / *expression*, not a numeric expression. Is "+auxtype+".");}
+                                                                            }
+                                                                            String auxtype2 = e2.bringType();
+                                                                            if(auxtype2 != "Integer"){
+                                                                                if(auxtype2 == "none"){
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");}
+                                                                                }else{System.err.println("Error at *expression* / *expression*, not a numeric expression. Is "+auxtype2+".");}
+                                                                            }
+                                                                        } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2427,7 +2502,22 @@ class CUP$parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		if(!foundError){RESULT = new NumericExpression(e1,e2,"&",null);} 
+		if(!foundError){RESULT = new NumericExpression(e1,e2,"&",null);
+                                                                            String auxtype = e1.bringType();
+                                                                            if(auxtype != "String"){
+                                                                                if(auxtype == "none"){
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    if(auxtype != "String"){System.err.println("Error with variable "+e1.getId()+", not a String. Is "+auxtype+".");}
+                                                                                }else{System.err.println("Error at *expression* & *expression*, first expression is not a String. Is "+auxtype+".");}
+                                                                            }
+                                                                            String auxtype2 = e2.bringType();
+                                                                            if(auxtype2 != "String"){
+                                                                                if(auxtype2 == "none"){
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    if(auxtype2 != "String"){System.err.println("Error with variable "+e2.getId()+", not a String. Is "+auxtype2+".");}
+                                                                                }else{System.err.println("Error at *expression* & *expression*, second expression is not a String. Is "+auxtype2+".");}
+                                                                            }
+                                                                        } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

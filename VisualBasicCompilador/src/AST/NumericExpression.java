@@ -49,6 +49,11 @@ public class NumericExpression extends Expression{
     
     @Override
     public String bringType(){
-        return "Integer";
+        if (operador=="&") {
+            return "String";
+        }else{
+            return "Integer";
+        }
+        
     }
 }
