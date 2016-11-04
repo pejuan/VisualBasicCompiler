@@ -272,7 +272,7 @@ function_declaration ::= structure_statement:structureStatement                 
 			 |function_statement:functionStatement                              {:if(!foundError){RESULT = new FunctionStatement(((FunctionStatement)functionStatement).getFunction(),((FunctionStatement)functionStatement).getId(),((FunctionStatement)functionStatement).getParameters(),((FunctionStatement)functionStatement).getStatements(),((FunctionStatement)functionStatement).getDataType(),"End Function");FINALOBJECT.getDeclarations().add(RESULT);  }:}
 ;
 
-structure_statement ::= TK_STRUCTURE TK_ID:i statements:stmnts TK_END TK_STRUCTURE            {:if(!foundError){RESULT = new StructureStatement("Structure",i,"End Structure",listastatements);listastatements = new ArrayList();}:}
+structure_statement ::= TK_STRUCTURE TK_ID:i statements:stmnts {:if(!foundError){bloque = 0;ambito_actual = Integer.toString(bloque);tableIds.addNode(new IdNode(i,"record",ambito_actual));}:} TK_END TK_STRUCTURE            {:if(!foundError){RESULT = new StructureStatement("Structure",i,"End Structure",listastatements);listastatements = new ArrayList();}:}
                         |TK_STRUCTURE TK_ID:i statements:stmnts error TK_END TK_STRUCTURE     {:System.err.println("Error inside Structure statement");foundError=true; :}
 ;
 
