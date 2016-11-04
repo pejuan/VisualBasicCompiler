@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/parser.cup</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/parser.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/VariableDeclaration.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/ForStatement.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/VisualBasicCompilador.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/NumericExpression.java</file>
+            <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/parser.cup</file>
+            <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/parser.java</file>
+            <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/AST/IdNode.java</file>
         </group>
     </open-files>
 </project-private>
