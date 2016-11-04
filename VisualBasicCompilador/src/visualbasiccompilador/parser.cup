@@ -15,6 +15,8 @@ parser code {:
         public ArrayList<ElseIfStatement> listaelseifs = new ArrayList();
         public boolean foundError = false;
         public boolean foundTypeError = false;
+        public int bloque = 0;
+        public String ambito_actual = "";
 	public void syntax_error(Symbol s){
             if(s.sym==0){
 
@@ -282,7 +284,7 @@ sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT statement
 ;
 
 
-function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT statements:stmnts TK_END TK_FUNCTION                        {:if(!foundError){RESULT = new FunctionStatement("Function",i,listaparameters,listastatements,null,"End Function"); listaparameters = new ArrayList();listastatements = new ArrayList();}:}
+function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!foundError){bloque = 0;ambito_actual = Integer.toString(bloque);tableIds.addNode(new IdNode(i,"void->void",ambito_actual));}:} statements:stmnts TK_END TK_FUNCTION                        {:if(!foundError){RESULT = new FunctionStatement("Function",i,listaparameters,listastatements,null,"End Function"); listaparameters = new ArrayList();listastatements = new ArrayList();}:}
 			|TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT TK_AS data_type:type statements:stmnts TK_END TK_FUNCTION  {:if(!foundError){RESULT = new FunctionStatement("Function",i,listaparameters,listastatements,type,"End Function"); listaparameters = new ArrayList();listastatements = new ArrayList();} :}
                         |TK_FUNCTION TK_ID:i TK_PARIN TK_PAROUT TK_AS data_type:type statements:stmnts TK_END TK_FUNCTION                   {:if(!foundError){RESULT = new FunctionStatement("Function",i,null,listastatements,type,"End Function"); listastatements = new ArrayList();} :}
                         |TK_FUNCTION TK_ID:i TK_PARIN TK_PAROUT statements:stmnts TK_END TK_FUNCTION                                        {:if(!foundError){RESULT = new FunctionStatement("Function",i,null,listastatements,null,"End Function"); listastatements = new ArrayList();} :}
