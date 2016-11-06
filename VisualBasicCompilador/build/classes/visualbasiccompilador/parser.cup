@@ -421,12 +421,102 @@ expression ::=	numeric_expression:num_exp      {: if(!foundError){RESULT = new N
 		|function_call:call             {:if(!foundError){RESULT = new FunctionCall(((FunctionCall)call).getArguments(),((FunctionCall)call).getId());} :}
 ;
 
-boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2                       {: if(!foundError){RESULT = new BooleanExpression(e1,">",e2,null);} :}
-                       |expression:e1 TK_LESSTHAN expression:e2                         {: if(!foundError){RESULT = new BooleanExpression(e1,"<",e2,null);} :}
-                       |expression:e1 TK_GREATEREQUAL expression:e2                     {: if(!foundError){RESULT = new BooleanExpression(e1,">=",e2,null);} :}
-                       |expression:e1 TK_LESSEQUAL expression:e2                        {: if(!foundError){RESULT = new BooleanExpression(e1,"<=",e2,null);} :}
-                       |expression:e1 TK_EQUALS expression:e2                           {: if(!foundError){RESULT = new BooleanExpression(e1,"=",e2,null);} :}
-                       |expression:e1 TK_NOTEQUAL expression:e2                         {: if(!foundError){RESULT = new BooleanExpression(e1,"<>",e2,null);} :}
+boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2                       {: if(!foundError){RESULT = new BooleanExpression(e1,">",e2,null);
+                                                                                            String auxtype = e1.bringType();
+                                                                                            if(auxtype != "Integer"){
+                                                                                                if(auxtype == "none"){
+                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");}
+                                                                                                }else{System.err.println("Error at *expression1* > *expression2*, expression1 is not an Integer. Is "+auxtype+".");}
+                                                                                            }
+                                                                                            String auxtype2 = e2.bringType();
+                                                                                            if(auxtype2 != "Integer"){
+                                                                                                if(auxtype2 == "none"){
+                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");}
+                                                                                                }else{System.err.println("Error at *expression1* > *expression2*,expression2 not an Integer. Is "+auxtype2+".");}
+                                                                                            }                                                                                     
+                                                                                        }:}
+                       |expression:e1 TK_LESSTHAN expression:e2                         {: if(!foundError){RESULT = new BooleanExpression(e1,"<",e2,null);
+                                                                                            String auxtype = e1.bringType();
+                                                                                            if(auxtype != "Integer"){
+                                                                                                if(auxtype == "none"){
+                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");}
+                                                                                                }else{System.err.println("Error at *expression1* > *expression2*, expression1 is not an Integer. Is "+auxtype+".");}
+                                                                                            }
+                                                                                            String auxtype2 = e2.bringType();
+                                                                                            if(auxtype2 != "Integer"){
+                                                                                                if(auxtype2 == "none"){
+                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");}
+                                                                                                }else{System.err.println("Error at *expression1* < *expression2*,expression2 not an Integer. Is "+auxtype2+".");}
+                                                                                            } 
+                                                                                        }:}
+                       |expression:e1 TK_GREATEREQUAL expression:e2                     {: if(!foundError){RESULT = new BooleanExpression(e1,">=",e2,null);
+                                                                                            String auxtype = e1.bringType();
+                                                                                            if(auxtype != "Integer"){
+                                                                                                if(auxtype == "none"){
+                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");}
+                                                                                                }else{System.err.println("Error at *expression1* >= *expression2*, expression1 is not an Integer. Is "+auxtype+".");}
+                                                                                            }
+                                                                                            String auxtype2 = e2.bringType();
+                                                                                            if(auxtype2 != "Integer"){
+                                                                                                if(auxtype2 == "none"){
+                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");}
+                                                                                                }else{System.err.println("Error at *expression1* >= *expression2*,expression2 not an Integer. Is "+auxtype2+".");}
+                                                                                            } 
+                                                                                        }:}
+                       |expression:e1 TK_LESSEQUAL expression:e2                        {: if(!foundError){RESULT = new BooleanExpression(e1,"<=",e2,null);
+                                                                                            String auxtype = e1.bringType();
+                                                                                            if(auxtype != "Integer"){
+                                                                                                if(auxtype == "none"){
+                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");}
+                                                                                                }else{System.err.println("Error at *expression1* <= *expression2*, expression1 is not an Integer. Is "+auxtype+".");}
+                                                                                            }
+                                                                                            String auxtype2 = e2.bringType();
+                                                                                            if(auxtype2 != "Integer"){
+                                                                                                if(auxtype2 == "none"){
+                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");}
+                                                                                                }else{System.err.println("Error at *expression1* <= *expression2*,expression2 not an Integer. Is "+auxtype2+".");}
+                                                                                            }
+                                                                                        }:}
+                       |expression:e1 TK_EQUALS expression:e2                           {: if(!foundError){RESULT = new BooleanExpression(e1,"=",e2,null);
+                                                                                            String auxtype = e1.bringType();
+                                                                                            if(auxtype != "Integer"){
+                                                                                                if(auxtype == "none"){
+                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");}
+                                                                                                }else{System.err.println("Error at *expression1* = *expression2*, expression1 is not an Integer. Is "+auxtype+".");}
+                                                                                            }
+                                                                                            String auxtype2 = e2.bringType();
+                                                                                            if(auxtype2 != "Integer"){
+                                                                                                if(auxtype2 == "none"){
+                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");}
+                                                                                                }else{System.err.println("Error at *expression1* = *expression2*,expression2 not an Integer. Is "+auxtype2+".");}
+                                                                                            }
+                                                                                        }:}
+                       |expression:e1 TK_NOTEQUAL expression:e2                         {: if(!foundError){RESULT = new BooleanExpression(e1,"<>",e2,null);
+                                                                                            String auxtype = e1.bringType();
+                                                                                            if(auxtype != "Integer"){
+                                                                                                if(auxtype == "none"){
+                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");}
+                                                                                                }else{System.err.println("Error at *expression1* <> *expression2*, expression1 is not an Integer. Is "+auxtype+".");}
+                                                                                            }
+                                                                                            String auxtype2 = e2.bringType();
+                                                                                            if(auxtype2 != "Integer"){
+                                                                                                if(auxtype2 == "none"){
+                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");}
+                                                                                                }else{System.err.println("Error at *expression1* <> *expression2*,expression2 not an Integer. Is "+auxtype2+".");}
+                                                                                            }
+                                                                                        } :}
 ;
 
 logical_expression ::= TK_NOT expression:e1                             {:if(!foundError){RESULT = new LogicalExpression("Not",e1,null);
