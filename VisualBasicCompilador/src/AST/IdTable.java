@@ -25,7 +25,7 @@ public class IdTable {
     public IdTable() {
         
     }
-    public boolean searchNode(IdNode nodo){
+    public boolean searchNode(IdNode nodo){//a esta busqueda habra que incluirle el ambito
         for (IdNode idlist1 : this.idlist) {
             if (idlist1.getName().equals(nodo.getName()) && idlist1.getAmbito().equals(nodo.getAmbito())) {
                 return true;
@@ -33,7 +33,7 @@ public class IdTable {
         }
         return false;
     }
-    public String searchNodeType(String id,String ambito){
+    public String searchNodeType(String id,String ambito){//a esta busqueda habra que incluirle el ambito
         
         for (IdNode idlist1 : this.idlist) {
             if (idlist1.getName().equals(id) && idlist1.getAmbito().equals(ambito)) {
