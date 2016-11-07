@@ -1346,7 +1346,7 @@ if(!foundError){
                                                                                     }
                                                                                     ambito_actual = Integer.toString(bloque);
                                                                                     if (!tableIds.addNode(new IdNode(i, tipo_funcion+"->void", ambito_actual))){
-                                                                                        System.err.println("Function "+i+" already exists");
+                                                                                        System.err.println("Function "+i+" already exists "+tipo_funcion+"->void");
                                                                                     }
                                                                                  }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$3",35, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -1398,7 +1398,7 @@ if(!foundError){
                                                                                                             }
                                                                                                             ambito_actual = Integer.toString(bloque);
                                                                                                             if(!tableIds.addNode(new IdNode(i, tipo_funcion+"->"+type,ambito_actual))){
-                                                                                                                System.err.println("Function "+i+" already exists");
+                                                                                                                System.err.println("Function "+i+" already exists "+tipo_funcion+"->"+type);
                                                                                                             }
                                                                                                       }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$4",36, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -1442,7 +1442,7 @@ if(!foundError){
                                                                                             bloque = 0;
                                                                                             ambito_actual = Integer.toString(bloque);
                                                                                             if(!tableIds.addNode(new IdNode(i, "void->"+type,ambito_actual))){
-                                                                                                System.err.println("Function "+i+" already exists");
+                                                                                                System.err.println("Function "+i+" already exists "+"void->"+type);
                                                                                             }
                                                                                       }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$5",37, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -1483,7 +1483,7 @@ if(!foundError){
                                                                                         bloque = 0;
                                                                                         ambito_actual = Integer.toString(bloque);
                                                                                         if(!tableIds.addNode(new IdNode(i, "void->void",ambito_actual))){
-                                                                                             System.err.println("Function "+i+" already exists");
+                                                                                             System.err.println("Function "+i+" already exists "+" void->void");
                                                                                         }
                                                                                   }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$6",38, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);

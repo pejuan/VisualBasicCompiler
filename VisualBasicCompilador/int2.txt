@@ -2,10 +2,10 @@ Sub main()
 	
 End Sub
 
-Function hola(ByVal a As Integer) As Integer
+Function hola()
 	Dim B As Boolean = False
 End Function
 
-Function hola(ByVal a As Integer)
+Function hola()
 	Dim B As Boolean = False
 End Function
