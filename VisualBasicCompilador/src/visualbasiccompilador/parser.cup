@@ -272,7 +272,11 @@ function_declaration ::= structure_statement:structureStatement                 
 			 |function_statement:functionStatement                              {:if(!foundError){RESULT = new FunctionStatement(((FunctionStatement)functionStatement).getFunction(),((FunctionStatement)functionStatement).getId(),((FunctionStatement)functionStatement).getParameters(),((FunctionStatement)functionStatement).getStatements(),((FunctionStatement)functionStatement).getDataType(),"End Function");FINALOBJECT.getDeclarations().add(RESULT);  }:}
 ;
 
-structure_statement ::= TK_STRUCTURE TK_ID:i statements:stmnts {:if(!foundError){bloque = 0;ambito_actual = Integer.toString(bloque);tableIds.addNode(new IdNode(i,"record",ambito_actual));}:} TK_END TK_STRUCTURE            {:if(!foundError){RESULT = new StructureStatement("Structure",i,"End Structure",listastatements);listastatements = new ArrayList();}:}
+structure_statement ::= TK_STRUCTURE TK_ID:i statements:stmnts {:if(!foundError){bloque = 0;
+                                                                ambito_actual = Integer.toString(bloque);
+                                                                tableIds.addNode(new IdNode(i,"record",ambito_actual));}
+                                                                :} 
+                                                                TK_END TK_STRUCTURE            {:if(!foundError){RESULT = new StructureStatement("Structure",i,"End Structure",listastatements);listastatements = new ArrayList();}:}
                         |TK_STRUCTURE TK_ID:i statements:stmnts error TK_END TK_STRUCTURE     {:System.err.println("Error inside Structure statement");foundError=true; :}
 ;
 
@@ -284,10 +288,57 @@ sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!fou
 ;
 
 
-function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!foundError){bloque = 0;ambito_actual = Integer.toString(bloque);tableIds.addNode(new IdNode(i,"void->void",ambito_actual));}:} statements:stmnts TK_END TK_FUNCTION                        {:if(!foundError){RESULT = new FunctionStatement("Function",i,listaparameters,listastatements,null,"End Function"); listaparameters = new ArrayList();listastatements = new ArrayList();}:}
-			|TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT TK_AS data_type:type {:if(!foundError){bloque = 0;ambito_actual = Integer.toString(bloque);tableIds.addNode(new IdNode(i,"void->"+type,ambito_actual));}:} statements:stmnts TK_END TK_FUNCTION  {:if(!foundError){RESULT = new FunctionStatement("Function",i,listaparameters,listastatements,type,"End Function"); listaparameters = new ArrayList();listastatements = new ArrayList();} :}
-                        |TK_FUNCTION TK_ID:i TK_PARIN TK_PAROUT TK_AS data_type:type {:if(!foundError){bloque = 0;ambito_actual = Integer.toString(bloque);tableIds.addNode(new IdNode(i, "void->"+type,ambito_actual));}:} statements:stmnts TK_END TK_FUNCTION                   {:if(!foundError){RESULT = new FunctionStatement("Function",i,null,listastatements,type,"End Function"); listastatements = new ArrayList();} :}
-                        |TK_FUNCTION TK_ID:i TK_PARIN TK_PAROUT statements:stmnts {:if(!foundError){bloque = 0;ambito_actual = Integer.toString(bloque);tableIds.addNode(new IdNode(i,"void->void",ambito_actual));}:} TK_END TK_FUNCTION /* Si lo pongo antes de statements, tira shift reduce no se porque */                                       {:if(!foundError){RESULT = new FunctionStatement("Function",i,null,listastatements,null,"End Function"); listastatements = new ArrayList();} :}
+function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!foundError){
+                                                                                    bloque = 0;
+                                                                                    String tipo_funcion = "";
+                                                                                    for(int k = 0; k < listaparameters.size(); k++){
+                                                                                        if(k != listaparameters.size()-1){
+                                                                                            tipo_funcion += listaparameters.get(k).getDataType() + "x";
+                                                                                        }else{
+                                                                                            tipo_funcion += listaparameters.get(k).getDataType();
+                                                                                        }
+                                                                                    }
+                                                                                    ambito_actual = Integer.toString(bloque);
+                                                                                    if (!tableIds.addNode(new IdNode(i, tipo_funcion+"->void", ambito_actual))){
+                                                                                        System.err.println("Function "+i+" already exists");
+                                                                                    }
+                                                                                 }:} 
+                                                                                statements:stmnts TK_END TK_FUNCTION                        {:if(!foundError){RESULT = new FunctionStatement("Function",i,listaparameters,listastatements,null,"End Function"); listaparameters = new ArrayList();listastatements = new ArrayList();}:}
+
+			|TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT TK_AS data_type:type {:if(!foundError){
+                                                                                                            bloque = 0;
+                                                                                                            String tipo_funcion = "";
+                                                                                                            for(int k = 0; k < listaparameters.size(); k++){
+                                                                                                                if(k != listaparameters.size()-1){
+                                                                                                                    tipo_funcion += listaparameters.get(k).getDataType() + "x";
+                                                                                                                }else{
+                                                                                                                    tipo_funcion += listaparameters.get(k).getDataType();
+                                                                                                                }
+                                                                                                            }
+                                                                                                            ambito_actual = Integer.toString(bloque);
+                                                                                                            if(!tableIds.addNode(new IdNode(i, tipo_funcion+"->"+type,ambito_actual))){
+                                                                                                                System.err.println("Function "+i+" already exists");
+                                                                                                            }
+                                                                                                      }:} 
+                                                                                                      statements:stmnts TK_END TK_FUNCTION  {:if(!foundError){RESULT = new FunctionStatement("Function",i,listaparameters,listastatements,type,"End Function"); listaparameters = new ArrayList();listastatements = new ArrayList();} :}
+                        
+                        |TK_FUNCTION TK_ID:i TK_PARIN TK_PAROUT TK_AS data_type:type {:if(!foundError){
+                                                                                            bloque = 0;
+                                                                                            ambito_actual = Integer.toString(bloque);
+                                                                                            if(!tableIds.addNode(new IdNode(i, "void->"+type,ambito_actual))){
+                                                                                                System.err.println("Function "+i+" already exists");
+                                                                                            }
+                                                                                      }:} 
+                                                                                      statements:stmnts TK_END TK_FUNCTION                   {:if(!foundError){RESULT = new FunctionStatement("Function",i,null,listastatements,type,"End Function"); listastatements = new ArrayList();} :}
+                        
+                        |TK_FUNCTION TK_ID:i TK_PARIN TK_PAROUT statements:stmnts {:if(!foundError){
+                                                                                        bloque = 0;
+                                                                                        ambito_actual = Integer.toString(bloque);
+                                                                                        if(!tableIds.addNode(new IdNode(i, "void->void",ambito_actual))){
+                                                                                             System.err.println("Function "+i+" already exists");
+                                                                                        }
+                                                                                  }:} 
+                                                                                  TK_END TK_FUNCTION /* Si lo pongo antes de statements, tira shift reduce no se porque */                                       {:if(!foundError){RESULT = new FunctionStatement("Function",i,null,listastatements,null,"End Function"); listastatements = new ArrayList();} :}
                         |TK_FUNCTION TK_ID TK_PARIN parameters:prmts error TK_PAROUT statements:stmnts TK_END TK_FUNCTION                   {:System.err.println("Erroneous Function declaration.");foundError=true; :}
                         |TK_FUNCTION TK_ID TK_PARIN TK_PAROUT statements:stmnts error TK_END TK_FUNCTION                                    {:System.err.println("Error inside Function statement.");foundError=true;:}
 ;
