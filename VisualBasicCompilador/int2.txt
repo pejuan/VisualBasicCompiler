@@ -1,11 +1,17 @@
 Sub main()
-	
 End Sub
 
-Function hola()
-	Dim B As Boolean = False
+Sub hola1(ByVal a As Integer)
+End Sub
+
+Sub prueba()
+End Sub
+
+Function funcion1(ByVal a As Boolean) As Boolean
 End Function
 
-Function hola()
-	Dim B As Boolean = False
+Function funcion2() As Integer
+End Function
+
+Function funcion3(ByRef b As Integer)
 End Function

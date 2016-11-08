@@ -901,7 +901,8 @@ public class parser extends java_cup.runtime.lr_parser {
         public boolean foundError = false;
         public boolean foundTypeError = false;
         public int bloque = 0;
-        public String ambito_actual = "";
+        public String ambito_actual = Integer.toString(bloque);
+        public String partir_ambito[];
 	public void syntax_error(Symbol s){
             if(s.sym==0){
 
@@ -1234,7 +1235,25 @@ if(!foundError){bloque = 0;
 		int prmtsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int prmtsright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object prmts = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-if(!foundError){bloque = 0;ambito_actual = Integer.toString(bloque);tableIds.addNode(new IdNode(i,"sub",ambito_actual));}
+if(!foundError){
+                                                                            bloque++;
+                                                                            ambito_actual += "." + Integer.toString(bloque);
+                                                                            String tipo_sub = "";
+                                                                            for(int k = 0; k < listaparameters.size(); k++){
+                                                                                if(k != listaparameters.size()-1){
+                                                                                    tipo_sub += listaparameters.get(k).getDataType() + "x";
+                                                                                }else{
+                                                                                    tipo_sub += listaparameters.get(k).getDataType();
+                                                                                }
+                                                                            }
+                                                                            if (!tableIds.addNode(new IdNode(i,tipo_sub+"->void",ambito_actual))){
+                                                                                System.err.println("Function or Sub"+i+" has already been defined");
+                                                                            }else{
+                                                                                System.out.println("Sub "+i+" with data type "+tipo_sub+" and scope "+ambito_actual+" has been added to symbol table");
+                                                                            }
+                                                                            partir_ambito = ambito_actual.split("\\.");
+                                                                            ambito_actual = partir_ambito[0];
+                                                                        }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$1",33, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1266,7 +1285,17 @@ if(!foundError){bloque = 0;ambito_actual = Integer.toString(bloque);tableIds.add
 		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-if(!foundError){bloque = 0;ambito_actual = Integer.toString(bloque);tableIds.addNode(new IdNode(i,"sub",ambito_actual));}
+if(!foundError){
+                                                            bloque++;
+                                                            ambito_actual += "." + Integer.toString(bloque);
+                                                            if (!tableIds.addNode(new IdNode(i, "void->void", ambito_actual))){
+                                                                System.err.println("Function or Sub "+i+" has already been defined");
+                                                            }else{
+                                                                System.out.println("Sub "+i+" with data type void->void and scope "+ambito_actual+" has been added to symbol table");
+                                                            }
+                                                            partir_ambito = ambito_actual.split("\\.");
+                                                            ambito_actual = partir_ambito[0];
+                                                        }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$2",34, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1335,7 +1364,8 @@ if(!foundError){bloque = 0;ambito_actual = Integer.toString(bloque);tableIds.add
 		int prmtsright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object prmts = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 if(!foundError){
-                                                                                    bloque = 0;
+                                                                                    bloque++;
+                                                                                    ambito_actual += "." + Integer.toString(bloque);
                                                                                     String tipo_funcion = "";
                                                                                     for(int k = 0; k < listaparameters.size(); k++){
                                                                                         if(k != listaparameters.size()-1){
@@ -1344,10 +1374,13 @@ if(!foundError){
                                                                                             tipo_funcion += listaparameters.get(k).getDataType();
                                                                                         }
                                                                                     }
-                                                                                    ambito_actual = Integer.toString(bloque);
                                                                                     if (!tableIds.addNode(new IdNode(i, tipo_funcion+"->void", ambito_actual))){
                                                                                         System.err.println("Function "+i+" already exists "+tipo_funcion+"->void");
+                                                                                    }else{
+                                                                                        System.out.println("Function "+i+" with data type "+tipo_funcion+"->void and scope "+ambito_actual+" has been added to symbol table");
                                                                                     }
+                                                                                    partir_ambito = ambito_actual.split("\\.");
+                                                                                    ambito_actual = partir_ambito[0];
                                                                                  }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$3",35, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1387,7 +1420,8 @@ if(!foundError){
 		int typeright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String type = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 if(!foundError){
-                                                                                                            bloque = 0;
+                                                                                                            bloque++;
+                                                                                                            ambito_actual += "."+Integer.toString(bloque);
                                                                                                             String tipo_funcion = "";
                                                                                                             for(int k = 0; k < listaparameters.size(); k++){
                                                                                                                 if(k != listaparameters.size()-1){
@@ -1396,10 +1430,13 @@ if(!foundError){
                                                                                                                     tipo_funcion += listaparameters.get(k).getDataType();
                                                                                                                 }
                                                                                                             }
-                                                                                                            ambito_actual = Integer.toString(bloque);
                                                                                                             if(!tableIds.addNode(new IdNode(i, tipo_funcion+"->"+type,ambito_actual))){
                                                                                                                 System.err.println("Function "+i+" already exists "+tipo_funcion+"->"+type);
+                                                                                                            }else{
+                                                                                                                System.out.println("Function "+i+" with data type "+tipo_funcion+"->"+type+" and scope "+ambito_actual+" has been added ot symbol table");
                                                                                                             }
+                                                                                                            partir_ambito = ambito_actual.split("\\.");
+                                                                                                            ambito_actual = partir_ambito[0];
                                                                                                       }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$4",36, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1439,11 +1476,14 @@ if(!foundError){
 		int typeright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String type = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 if(!foundError){
-                                                                                            bloque = 0;
-                                                                                            ambito_actual = Integer.toString(bloque);
+                                                                                            bloque++;
+                                                                                            ambito_actual += "."+Integer.toString(bloque);
                                                                                             if(!tableIds.addNode(new IdNode(i, "void->"+type,ambito_actual))){
                                                                                                 System.err.println("Function "+i+" already exists "+"void->"+type);
+                                                                                            }else{
+                                                                                                System.out.println("Function "+i+" with data type void->"+type+" and scope "+ambito_actual+" has been added to symbol table");
                                                                                             }
+                                                                                            
                                                                                       }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$5",37, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1464,7 +1504,12 @@ if(!foundError){
 		int stmntsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int stmntsright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Statements stmnts = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		if(!foundError){RESULT = new FunctionStatement("Function",i,null,listastatements,type,"End Function"); listastatements = new ArrayList();} 
+		if(!foundError){
+                                                                                                                                RESULT = new FunctionStatement("Function",i,null,listastatements,type,"End Function"); 
+                                                                                                                                listastatements = new ArrayList();
+                                                                                                                                partir_ambito = ambito_actual.split("\\.");
+                                                                                                                                ambito_actual = partir_ambito[0];
+                                                                                                                             }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_statement",7, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-9)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1484,6 +1529,8 @@ if(!foundError){
                                                                                         ambito_actual = Integer.toString(bloque);
                                                                                         if(!tableIds.addNode(new IdNode(i, "void->void",ambito_actual))){
                                                                                              System.err.println("Function "+i+" already exists "+" void->void");
+                                                                                        } else {
+                                                                                            System.out.println("Function "+i+" with data type void->void and scope "+ambito_actual+" has been added to symbol table");
                                                                                         }
                                                                                   }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$6",38, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
