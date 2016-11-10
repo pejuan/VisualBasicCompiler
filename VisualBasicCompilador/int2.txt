@@ -1,17 +1,30 @@
 Sub main()
+	Dim a As Integer = 0
+	Dim b As Integer = 10
+	For i As Integer = 10 To 100
+		For z As Integer = 90 To 1000
+		Next
+	Next
+	For k As Integer = 10 To 100
+		For h As Integer = 90 To 1000
+		Next
+	Next
+	
+	For m As Integer = 10 To 100
+		
+	Next
 End Sub
 
 Sub hola1(ByVal a As Integer)
+	For y As Integer = 10 To 100
+		For u As Integer = 10 To 100
+		
+		Next
+	Next
 End Sub
 
 Sub prueba()
 End Sub
 
-Function funcion1(ByVal a As Boolean) As Boolean
-End Function
-
-Function funcion2() As Integer
-End Function
-
-Function funcion3(ByRef b As Integer)
+Function hol2(ByVal b As Boolean) As Boolean
 End Function
