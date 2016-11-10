@@ -2018,12 +2018,12 @@ if(!foundError){
 		 if(!foundError){RESULT = new VariableDeclarator("Dim",id,"As",type,"=",expr);
                                                                                                                String auxtype = expr.bringType();
                                                                                                                if(auxtype==type){
-                                                                                                                    if(!tableIds.addNode(new IdNode(id,type))){//revisar si expr tiene el mismo type que id
+                                                                                                                    if(!tableIds.addNode(new IdNode(id,type,ambito_actual))){//revisar si expr tiene el mismo type que id
                                                                                                                          System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
                                                                                                                     }
                                                                                                                }else{ 
                                                                                                                     if(auxtype=="none"){ 
-                                                                                                                        auxtype = tableIds.searchNodeType(expr.getId(),"none");
+                                                                                                                        auxtype = tableIds.searchNodeType(expr.getId(),ambito_actual);
                                                                                                                         if(!(auxtype==type))
                                                                                                                             System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
                                                                                                                     }else   
@@ -2050,12 +2050,12 @@ if(!foundError){
 		 if(!foundError){RESULT = new VariableDeclarator(id,"As",type,"=",expr);
                                                                                                                 String auxtype = expr.bringType();
                                                                                                                if(auxtype==type){
-                                                                                                                    if(!tableIds.addNode(new IdNode(id,type))){//revisar si expr tiene el mismo type que id
+                                                                                                                    if(!tableIds.addNode(new IdNode(id,type,ambito_actual))){//revisar si expr tiene el mismo type que id
                                                                                                                          System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
                                                                                                                     }
                                                                                                                }else{ 
                                                                                                                     if(auxtype=="none"){ 
-                                                                                                                        auxtype = tableIds.searchNodeType(expr.getId(),"none");
+                                                                                                                        auxtype = tableIds.searchNodeType(expr.getId(),ambito_actual);
                                                                                                                         if(!(auxtype==type))
                                                                                                                             System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
                                                                                                                     }else   
@@ -2077,9 +2077,9 @@ if(!foundError){
 		int exprright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression expr = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if(!foundError){RESULT = new VariableDeclarator("Dim",id,"=",expr);
-                                                                                                               String auxtype1 =tableIds.searchNodeType(id,"none");
+                                                                                                               String auxtype1 =tableIds.searchNodeType(id,ambito_actual);
                                                                                                                String auxtype2 = expr.bringType();
-                                                                                                               if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),"none");}
+                                                                                                               if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),ambito_actual);}
                                                                                                                if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
                                                                                                             } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable_declarator",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -2097,9 +2097,9 @@ if(!foundError){
 		int exprright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression expr = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if(!foundError){RESULT = new VariableDeclarator(id,"=",expr);
-                                                                                                               String auxtype1 =tableIds.searchNodeType(id,"none");
+                                                                                                               String auxtype1 =tableIds.searchNodeType(id,ambito_actual);
                                                                                                                String auxtype2 = expr.bringType();
-                                                                                                               if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),"none");}
+                                                                                                               if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),ambito_actual);}
                                                                                                                if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
                                                                                                             }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable_declarator",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -2192,14 +2192,14 @@ if(!foundError){
                                                                                             String auxtype = e1.bringType();
                                                                                             if(auxtype != "Integer"){
                                                                                                 if(auxtype == "none"){
-                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                     if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");}
                                                                                                 }else{System.err.println("Error at *expression1* > *expression2*, expression1 is not an Integer. Is "+auxtype+".");}
                                                                                             }
                                                                                             String auxtype2 = e2.bringType();
                                                                                             if(auxtype2 != "Integer"){
                                                                                                 if(auxtype2 == "none"){
-                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                                     if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");}
                                                                                                 }else{System.err.println("Error at *expression1* > *expression2*,expression2 not an Integer. Is "+auxtype2+".");}
                                                                                             }                                                                                     
@@ -2222,14 +2222,14 @@ if(!foundError){
                                                                                             String auxtype = e1.bringType();
                                                                                             if(auxtype != "Integer"){
                                                                                                 if(auxtype == "none"){
-                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                     if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");}
                                                                                                 }else{System.err.println("Error at *expression1* > *expression2*, expression1 is not an Integer. Is "+auxtype+".");}
                                                                                             }
                                                                                             String auxtype2 = e2.bringType();
                                                                                             if(auxtype2 != "Integer"){
                                                                                                 if(auxtype2 == "none"){
-                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                                     if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");}
                                                                                                 }else{System.err.println("Error at *expression1* < *expression2*,expression2 not an Integer. Is "+auxtype2+".");}
                                                                                             } 
@@ -2252,14 +2252,14 @@ if(!foundError){
                                                                                             String auxtype = e1.bringType();
                                                                                             if(auxtype != "Integer"){
                                                                                                 if(auxtype == "none"){
-                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                     if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");}
                                                                                                 }else{System.err.println("Error at *expression1* >= *expression2*, expression1 is not an Integer. Is "+auxtype+".");}
                                                                                             }
                                                                                             String auxtype2 = e2.bringType();
                                                                                             if(auxtype2 != "Integer"){
                                                                                                 if(auxtype2 == "none"){
-                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                                     if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");}
                                                                                                 }else{System.err.println("Error at *expression1* >= *expression2*,expression2 not an Integer. Is "+auxtype2+".");}
                                                                                             } 
@@ -2282,14 +2282,14 @@ if(!foundError){
                                                                                             String auxtype = e1.bringType();
                                                                                             if(auxtype != "Integer"){
                                                                                                 if(auxtype == "none"){
-                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                     if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");}
                                                                                                 }else{System.err.println("Error at *expression1* <= *expression2*, expression1 is not an Integer. Is "+auxtype+".");}
                                                                                             }
                                                                                             String auxtype2 = e2.bringType();
                                                                                             if(auxtype2 != "Integer"){
                                                                                                 if(auxtype2 == "none"){
-                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                                     if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");}
                                                                                                 }else{System.err.println("Error at *expression1* <= *expression2*,expression2 not an Integer. Is "+auxtype2+".");}
                                                                                             }
@@ -2312,14 +2312,14 @@ if(!foundError){
                                                                                             String auxtype = e1.bringType();
                                                                                             if(auxtype != "Integer"){
                                                                                                 if(auxtype == "none"){
-                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                     if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");}
                                                                                                 }else{System.err.println("Error at *expression1* = *expression2*, expression1 is not an Integer. Is "+auxtype+".");}
                                                                                             }
                                                                                             String auxtype2 = e2.bringType();
                                                                                             if(auxtype2 != "Integer"){
                                                                                                 if(auxtype2 == "none"){
-                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                                     if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");}
                                                                                                 }else{System.err.println("Error at *expression1* = *expression2*,expression2 not an Integer. Is "+auxtype2+".");}
                                                                                             }
@@ -2342,14 +2342,14 @@ if(!foundError){
                                                                                             String auxtype = e1.bringType();
                                                                                             if(auxtype != "Integer"){
                                                                                                 if(auxtype == "none"){
-                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                     if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");}
                                                                                                 }else{System.err.println("Error at *expression1* <> *expression2*, expression1 is not an Integer. Is "+auxtype+".");}
                                                                                             }
                                                                                             String auxtype2 = e2.bringType();
                                                                                             if(auxtype2 != "Integer"){
                                                                                                 if(auxtype2 == "none"){
-                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                                     if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");}
                                                                                                 }else{System.err.println("Error at *expression1* <> *expression2*,expression2 not an Integer. Is "+auxtype2+".");}
                                                                                             }
@@ -2369,7 +2369,7 @@ if(!foundError){
                                                                            String auxtype = e1.bringType();
                                                                             if(auxtype != "Boolean"){
                                                                                 if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                     if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
                                                                                 }else{System.err.println("Error at NOT *expression*, not a boolean expression. Is "+auxtype+".");}
                                                                             }
@@ -2390,7 +2390,7 @@ if(!foundError){
                                                                            String auxtype = e1.bringType();
                                                                             if(auxtype != "Boolean"){
                                                                                 if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                     if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
                                                                                 }else{System.err.println("Error at NOT *(expression)*, not a boolean expression. Is "+auxtype+".");}
                                                                             }
@@ -2414,14 +2414,14 @@ if(!foundError){
                                                                             String auxtype = e1.bringType();
                                                                             if(auxtype != "Boolean"){
                                                                                 if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                     if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
                                                                                 }else{System.err.println("Error at *expression* Or *expression*, not a boolean expression. Is "+auxtype+".");}
                                                                             }
                                                                             String auxtype2 = e2.bringType();
                                                                             if(auxtype2 != "Boolean"){
                                                                                 if(auxtype2 == "none"){
-                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                     if(auxtype2 != "Boolean"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
                                                                                 }else{System.err.println("Error at *expression* Or *expression*, not a boolean expression. Is "+auxtype2+".");}
                                                                             }
@@ -2444,14 +2444,14 @@ if(!foundError){
                                                                             String auxtype = e1.bringType();
                                                                             if(auxtype != "Boolean"){
                                                                                 if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                     if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
                                                                                 }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype+".");}
                                                                             }
                                                                             String auxtype2 = e2.bringType();
                                                                             if(auxtype2 != "Boolean"){
                                                                                 if(auxtype2 == "none"){
-                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                     if(auxtype2 != "Boolean"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
                                                                                 }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype2+".");}
                                                                             }
@@ -2474,14 +2474,14 @@ if(!foundError){
                                                                             String auxtype = e1.bringType();
                                                                             if(auxtype != "Boolean"){
                                                                                 if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                     if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
                                                                                 }else{System.err.println("Error at *expression* Xor *expression*, not a boolean expression. Is "+auxtype+".");}
                                                                             }
                                                                             String auxtype2 = e2.bringType();
                                                                             if(auxtype2 != "Boolean"){
                                                                                 if(auxtype2 == "none"){
-                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                     if(auxtype2 != "Boolean"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
                                                                                 }else{System.err.println("Error at *expression* Xor *expression*, not a boolean expression. Is "+auxtype2+".");}
                                                                             }
@@ -2522,14 +2522,14 @@ if(!foundError){
                                                                             String auxtype = e1.bringType();
                                                                             if(auxtype != "Integer"){
                                                                                 if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                     if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");}
                                                                                 }else{System.err.println("Error at *expression* + *expression*, not a numeric expression. Is "+auxtype+".");}
                                                                             }
                                                                             String auxtype2 = e2.bringType();
                                                                             if(auxtype2 != "Integer"){
                                                                                 if(auxtype2 == "none"){
-                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                     if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");}
                                                                                 }else{System.err.println("Error at *expression* + *expression*, not a numeric expression. Is "+auxtype2+".");}
                                                                             }
@@ -2552,14 +2552,14 @@ if(!foundError){
                                                                             String auxtype = e1.bringType();
                                                                             if(auxtype != "Integer"){
                                                                                 if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                     if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");}
                                                                                 }else{System.err.println("Error at *expression* - *expression*, not a numeric expression. Is "+auxtype+".");}
                                                                             }
                                                                             String auxtype2 = e2.bringType();
                                                                             if(auxtype2 != "Integer"){
                                                                                 if(auxtype2 == "none"){
-                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                     if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");}
                                                                                 }else{System.err.println("Error at *expression* - *expression*, not a numeric expression. Is "+auxtype2+".");}
                                                                             }
@@ -2582,14 +2582,14 @@ if(!foundError){
                                                                             String auxtype = e1.bringType();
                                                                             if(auxtype != "Integer"){
                                                                                 if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                     if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");}
                                                                                 }else{System.err.println("Error at *expression* * *expression*, not a numeric expression. Is "+auxtype+".");}
                                                                             }
                                                                             String auxtype2 = e2.bringType();
                                                                             if(auxtype2 != "Integer"){
                                                                                 if(auxtype2 == "none"){
-                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                     if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");}
                                                                                 }else{System.err.println("Error at *expression* * *expression*, not a numeric expression. Is "+auxtype2+".");}
                                                                             }
@@ -2612,14 +2612,14 @@ if(!foundError){
                                                                             String auxtype = e1.bringType();
                                                                             if(auxtype != "Integer"){
                                                                                 if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                     if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");}
                                                                                 }else{System.err.println("Error at *expression* / *expression*, not a numeric expression. Is "+auxtype+".");}
                                                                             }
                                                                             String auxtype2 = e2.bringType();
                                                                             if(auxtype2 != "Integer"){
                                                                                 if(auxtype2 == "none"){
-                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                     if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");}
                                                                                 }else{System.err.println("Error at *expression* / *expression*, not a numeric expression. Is "+auxtype2+".");}
                                                                             }
@@ -2642,14 +2642,14 @@ if(!foundError){
                                                                             String auxtype = e1.bringType();
                                                                             if(auxtype != "String"){
                                                                                 if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),"none");
+                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                     if(auxtype != "String"){System.err.println("Error with variable "+e1.getId()+", not a String. Is "+auxtype+".");}
                                                                                 }else{System.err.println("Error at *expression* & *expression*, first expression is not a String. Is "+auxtype+".");}
                                                                             }
                                                                             String auxtype2 = e2.bringType();
                                                                             if(auxtype2 != "String"){
                                                                                 if(auxtype2 == "none"){
-                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),"none");
+                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                     if(auxtype2 != "String"){System.err.println("Error with variable "+e2.getId()+", not a String. Is "+auxtype2+".");}
                                                                                 }else{System.err.println("Error at *expression* & *expression*, second expression is not a String. Is "+auxtype2+".");}
                                                                             }

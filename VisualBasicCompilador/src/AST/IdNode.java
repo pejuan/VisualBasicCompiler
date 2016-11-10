@@ -12,7 +12,7 @@ package AST;
 public class IdNode {
     private String name;
     private String type;
-    private String ambito = "none";
+    private String ambito;
 
     public IdNode(String name, String type) {
         this.name = name;
