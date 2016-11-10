@@ -243,9 +243,7 @@ non terminal Statements statement;
 non terminal Statements write_statement;
 non terminal Statements read_statement;
 non terminal Statements if_statement;
-non terminal Statements elseif_statements;
-non terminal ElseIfStatement elseif_statement;
-non terminal ElseStatement else_statement;
+non terminal IfStatement begin_if;
 non terminal Statements for_statement;
 non terminal Statements while_statement; 
 non terminal Statements do_statement;
@@ -320,7 +318,6 @@ sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!fou
                                                                                                                 partir_ambito = ambito_actual.split("\\.");
                                                                                                                 ambito_actual = remove_scope(partir_ambito);
                                                                                                                 bloque = (int) pila_de_bloques.pop();
-                                                                                                                
                                                                                                             } :}
                     |TK_SUB TK_ID:i TK_PARIN TK_PAROUT {:if(!foundError){
                                                             bloque++;
@@ -439,21 +436,24 @@ write_statement ::= TK_WRITE TK_PARIN literal_expression:le TK_PAROUT           
 read_statement  ::= TK_READ TK_PARIN TK_ID:i TK_PAROUT               {:if(!foundError){RESULT = new ReadStatement("Read",i);} :}
                     |TK_READ TK_PARIN error TK_PAROUT              {:System.err.println("\t\t\t\t\t  Problem near Console.Read().");foundError=true; :}
 ;
-if_statement ::=    TK_IF expression:expr TK_THEN statements:stmnts TK_END TK_IF                                                                {:if(!foundError){RESULT = new IfStatement("If",expr,"Then",null,listastatements,null,null,"End IF");listastatements = new ArrayList();} :}
-                    |TK_IF expression:expr TK_THEN statements:stmnts else_statement:elseStmnt TK_END TK_IF                                      {:if(!foundError){RESULT = new IfStatement("If",expr,"Then","Else",listastatements,null,elseStmnt,"End IF");listastatements = new ArrayList();} :}
-                    |TK_IF expression:expr TK_THEN statements:stmnts elseif_statements:elseifStmnts TK_END TK_IF                                {:if(!foundError){RESULT = new IfStatement("If",expr,"Then",null,listastatements,listaelseifs,null,"End IF");listastatements = new ArrayList();listaelseifs = new ArrayList();} :}
-                    |TK_IF expression:expr TK_THEN statements:stmnts elseif_statements:elseifStmnts else_statement:elseStmnt TK_END TK_IF       {:if(!foundError){RESULT = new IfStatement("If",expr,"Then","Else",listastatements,listaelseifs,elseStmnt,"End IF");listastatements = new ArrayList();listaelseifs = new ArrayList();} :}
-                    |TK_IF expression:expr TK_THEN statements:stmnts error                                                                      {:System.err.print("Error in If.");foundError=true; :}
+if_statement ::=    begin_if:beg TK_END TK_IF                                                                {:if(!foundError){
+                                                                                                                 RESULT = new IfStatement("If",beg.getExpression(),"Then",null,listastatements,null,null,"End IF");
+                                                                                                                 listastatements = new ArrayList();
+                                                                                                                 partir_ambito = ambito_actual.split("\\.");
+                                                                                                                 ambito_actual = remove_scope(partir_ambito);
+                                                                                                                 bloque = (int) pila_de_bloques.pop();
+                                                                                                               }:}
+;
+
+begin_if ::= TK_IF expression:expr {:if(!foundError){
+                                                RESULT = new IfStatement("Begin If",expr,"","",null,null,null,"");
+                                                bloque++;
+                                                ambito_actual += "."+Integer.toString(bloque);
+                                                System.out.println(ambito_actual);
+                                                pila_de_bloques.push(bloque);
+                                                bloque = 0;
+                                             }:} TK_THEN statements:stmnts
 ; 
-
-elseif_statements ::=	elseif_statement:elseifStmnt elseif_statements:elseifStmnts                     {:if(!foundError){listaelseifs.add(elseifStmnt);} :}
-			|elseif_statement:elseifStmnt                                                   {:if(!foundError){listaelseifs.add(elseifStmnt);}:}
-;
-else_statement   ::=    TK_ELSE statements:stmnts                   {:if(!foundError){RESULT = new ElseStatement("Else",listastatements);listastatements = new ArrayList();}:}
-;
-elseif_statement ::=	TK_ELSEIF expression:expr TK_THEN statements:stmnts           {:if(!foundError){ RESULT = new ElseIfStatement("ElseIf",expr,"Then",listastatements);listastatements = new ArrayList();} :}
-;
-
 
 for_statement ::=	TK_FOR variable_declaration:var_declare TK_TO expression:expr {:if(!foundError){
                                                                                             bloque++;

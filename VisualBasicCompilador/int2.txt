@@ -1,30 +1,14 @@
 Sub main()
-	Dim a As Integer = 0
-	Dim b As Integer = 10
-	For i As Integer = 10 To 100
-		For z As Integer = 90 To 1000
-		Next
-	Next
-	For k As Integer = 10 To 100
-		For h As Integer = 90 To 1000
-		Next
-	Next
 	
-	For m As Integer = 10 To 100
-		
-	Next
+	
+	k As Integer = 9
+	
+	o As Boolean = k<9 
+	Not (k+9)
+	'Cuando se asigna un Id, expression regresa como tipo el tipo none, hay que hacer una busqueda.
+	k=o
+	If k=o Then
+	End If
+	Dim Hola As String = "Hell"
+	Dim ey As Integer = Hola
 End Sub
-
-Sub hola1(ByVal a As Integer)
-	For y As Integer = 10 To 100
-		For u As Integer = 10 To 100
-		
-		Next
-	Next
-End Sub
-
-Sub prueba()
-End Sub
-
-Function hol2(ByVal b As Boolean) As Boolean
-End Function
