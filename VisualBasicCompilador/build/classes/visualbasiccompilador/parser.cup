@@ -245,7 +245,6 @@ non terminal Statements read_statement;
 non terminal Statements if_statement;
 non terminal IfStatement begin_if;
 non terminal Statements for_statement;
-non terminal Statements while_statement; 
 non terminal Statements do_statement;
 non terminal VariableDeclaration variable_declaration;
 non terminal VariableDeclarator variable_declarator;
@@ -306,8 +305,6 @@ sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!fou
                                                                             }
                                                                             if (!tableIds.addNode(new IdNode(i,tipo_sub+"->void",ambito_actual))){
                                                                                 System.err.println("Function or Sub"+i+" has already been defined");
-                                                                            }else{
-                                                                                System.out.println("Sub "+i+" with data type "+tipo_sub+" and scope "+ambito_actual+" has been added to symbol table");
                                                                             }
                                                                             pila_de_bloques.push(bloque);
                                                                             bloque = 0;
@@ -324,10 +321,7 @@ sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!fou
                                                             ambito_actual += "." + Integer.toString(bloque);
                                                             if (!tableIds.addNode(new IdNode(i, "void->void", ambito_actual))){
                                                                 System.err.println("Function or Sub "+i+" has already been defined");
-                                                            }else{
-                                                                System.out.println("Sub "+i+" with data type void->void and scope "+ambito_actual+" has been added to symbol table");
                                                             }
-                                                            
                                                             pila_de_bloques.push(bloque);
                                                             bloque = 0;
                                                         }:} 
@@ -357,8 +351,6 @@ function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT 
                                                                                                             }
                                                                                                             if(!tableIds.addNode(new IdNode(i, tipo_funcion+"->"+type,ambito_actual))){
                                                                                                                 System.err.println("Function "+i+" already exists "+tipo_funcion+"->"+type);
-                                                                                                            }else{
-                                                                                                                System.out.println("Function "+i+" with data type "+tipo_funcion+"->"+type+" and scope "+ambito_actual+" has been added ot symbol table");
                                                                                                             }
                                                                                                             pila_de_bloques.push(bloque);
                                                                                                             bloque = 0;
@@ -376,8 +368,6 @@ function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT 
                                                                                             ambito_actual += "."+Integer.toString(bloque);
                                                                                             if(!tableIds.addNode(new IdNode(i, "void->"+type,ambito_actual))){
                                                                                                 System.err.println("Function "+i+" already exists "+"void->"+type);
-                                                                                            }else{
-                                                                                                System.out.println("Function "+i+" with data type void->"+type+" and scope "+ambito_actual+" has been added to symbol table");
                                                                                             }
                                                                                             pila_de_bloques.push(bloque);
                                                                                             bloque = 0;
@@ -419,7 +409,6 @@ statement ::=	if_statement:ifStatement                {:if(!foundError){
                                                             RESULT = ifStatement;
                                                           } 
                                                         :}
-                |while_statement:whileStatement         {:if(!foundError){RESULT = whileStatement;} :}
 		|for_statement:forStatement             {:if(!foundError){RESULT = forStatement;} :}
 		|do_statement:doStatement               {:if(!foundError){RESULT = doStatement;} :}
                 |write_statement:writeStatement         {:if(!foundError){RESULT = writeStatement;} :}
@@ -449,7 +438,6 @@ begin_if ::= TK_IF expression:expr {:if(!foundError){
                                                 RESULT = new IfStatement("Begin If",expr,"","",null,null,null,"");
                                                 bloque++;
                                                 ambito_actual += "."+Integer.toString(bloque);
-                                                System.out.println(ambito_actual);
                                                 pila_de_bloques.push(bloque);
                                                 bloque = 0;
                                              }:} TK_THEN statements:stmnts
@@ -458,7 +446,6 @@ begin_if ::= TK_IF expression:expr {:if(!foundError){
 for_statement ::=	TK_FOR variable_declaration:var_declare TK_TO expression:expr {:if(!foundError){
                                                                                             bloque++;
                                                                                             ambito_actual += "."+Integer.toString(bloque);
-                                                                                            System.out.println(ambito_actual);
                                                                                             pila_de_bloques.push(bloque);
                                                                                             bloque = 0;
                                                                                         }:} statements:stmnts TK_NEXT                         {:if(!foundError){
@@ -473,13 +460,31 @@ for_statement ::=	TK_FOR variable_declaration:var_declare TK_TO expression:expr 
                         |TK_FOR variable_declaration:var_declare TK_TO expression:expr error statements:stmnts TK_NEXT                  {:System.err.println("Check syntax inside For.");foundError=true;:}
 ; 
 
-while_statement ::=     TK_WHILE expression:expr statements:stmnts TK_END TK_WHILE                  {:if(!foundError){ RESULT = new WhileStatement("While",expr,listastatements,"End While");listastatements = new ArrayList();} :}
-                        |TK_WHILE error TK_END TK_WHILE                                             {:System.err.println("Error inside While block");foundError=true;:}
-                        |TK_WHILE expression:expr statements:stmnts TK_END error                    {:foundError=true; :}
-;
 
-do_statement ::=    TK_DO TK_WHILE expression:expr  statements:stmnts TK_LOOP                    {:if(!foundError){ RESULT = new DoStatement("Do","While",listastatements,"Loop",null,expr);listastatements = new ArrayList();} :}
-                    |TK_DO statements:stmnts TK_LOOP TK_UNTIL expression:expr                   {:if(!foundError){ RESULT = new DoStatement("Do",null,listastatements,"Loop","Until",expr);listastatements = new ArrayList();} :}
+do_statement ::=    TK_DO TK_WHILE expression:expr {:if(!foundError){
+                                                        bloque++;
+                                                        ambito_actual += "."+Integer.toString(bloque);
+                                                        pila_de_bloques.push(bloque);
+                                                        bloque = 0;
+                                                    }:} statements:stmnts TK_LOOP                    {:if(!foundError){ 
+                                                                                                            RESULT = new DoStatement("Do","While",listastatements,"Loop",null,expr);
+                                                                                                            listastatements = new ArrayList();
+                                                                                                            partir_ambito = ambito_actual.split("\\.");
+                                                                                                            ambito_actual = remove_scope(partir_ambito);
+                                                                                                            bloque = (int) pila_de_bloques.pop();
+                                                                                                      }:}
+                    |TK_DO {:if(!foundError){
+                                bloque++;
+                                ambito_actual += "."+Integer.toString(bloque);
+                                pila_de_bloques.push(bloque);
+                                bloque = 0;
+                            }:} statements:stmnts TK_LOOP TK_UNTIL expression:expr                   {:if(!foundError){
+                                                                                                           RESULT = new DoStatement("Do",null,listastatements,"Loop","Until",expr);
+                                                                                                           listastatements = new ArrayList();
+                                                                                                           partir_ambito = ambito_actual.split("\\.");
+                                                                                                           ambito_actual = remove_scope(partir_ambito);
+                                                                                                           bloque = (int) pila_de_bloques.pop();
+                                                                                                      }:}
                     |TK_DO error TK_LOOP TK_UNTIL expression:expr                               {:System.err.println("Error inside Do Loop");foundError=true;:} 
                     |TK_DO TK_WHILE error TK_LOOP                                               {:System.err.println("Error in Do While");foundError=true;:}
                     |TK_DO TK_WHILE expression:expr error                                       {:System.err.println("Error after Do While statement ");foundError=true;:}
