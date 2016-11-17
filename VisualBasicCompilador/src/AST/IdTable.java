@@ -36,7 +36,7 @@ public class IdTable {
     public String searchNodeType(String id,String ambito){//a esta busqueda habra que incluirle el ambito
         
         for (IdNode idlist1 : this.idlist) {
-            if (idlist1.getName().equals(id) && idlist1.getAmbito().equals(ambito)) {
+            if (idlist1.getName().equals(id) && ambito.contains(idlist1.getAmbito())) {
                 return idlist1.getType();
             }
         }

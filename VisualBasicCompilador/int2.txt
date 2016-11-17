@@ -1,21 +1,18 @@
-Sub presento()
-	Dim m As Integer = 10
-End Sub
-
 Sub main()
-	
 	
 	k As Integer = 9
 	
-	o As Boolean = k<9 
+	o As Boolean = k<20
+	
 	Not (k+9)
 	'Cuando se asigna un Id, expression regresa como tipo el tipo none, hay que hacer una busqueda.
-	o = m > 3
 	If k=o Then
 		Dim ty As Integer = 10
+		Dim probar As Boolean = k<0
 	End If
 	Dim Hola As String = "Hell"
 	Dim ey As Integer = Hola
 	
+	o=ty<8
 	presento(5)
 End Sub
