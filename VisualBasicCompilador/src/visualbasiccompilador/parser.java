@@ -2136,6 +2136,12 @@ if(!foundError){
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if(!foundError){RESULT = new BooleanExpression(e1,">",e2,null);
                                                                                             String auxtype = e1.bringType();
+                                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                                }
+                                                                                            }
+                                                                                            
                                                                                             if(auxtype != "Integer"){
                                                                                                 if(auxtype == "none"){
                                                                                                     auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
@@ -2143,6 +2149,12 @@ if(!foundError){
                                                                                                 }else{System.err.println("Error at *expression1* > *expression2*, expression1 is not an Integer. Is "+auxtype+".");}
                                                                                             }
                                                                                             String auxtype2 = e2.bringType();
+                                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                                                if(!tableIds.searchScope(e2.getId(),ambito_actual)){
+                                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                                }
+                                                                                            }
+                                                                                            
                                                                                             if(auxtype2 != "Integer"){
                                                                                                 if(auxtype2 == "none"){
                                                                                                     auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);

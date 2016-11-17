@@ -42,6 +42,16 @@ public class IdTable {
         }
         return "none";
     }
+    
+    public boolean searchScope(String id, String ambito){
+        for(IdNode idlist1:this.idlist){
+            if(idlist1.getName().equals(id) && ambito.contains(idlist1.getAmbito())){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public boolean addNode(IdNode nodo){
         if (!searchNode(nodo)) {
             this.idlist.add(nodo);

@@ -43,7 +43,7 @@ public class VisualBasicCompilador {
             //System.out.println(p.FINALOBJECT.getDeclarations().size());
             mapper.writeValue(new File("./AST.json"), p.FINALOBJECT);
             file.finish();
-            for (int i = 0; i < p.tableIds.getIdlist().size(); i++) {
+            for (int i = 0; i < p.tableIds.getIdlist().size()-1; i++) {
                 IdNode nodo = p.tableIds.getIdlist().get(i);
                 System.out.println(nodo.getName()+", "+nodo.getType()+", "+nodo.getAmbito());
             }
