@@ -2160,9 +2160,11 @@ if(!foundError){
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
                                                                                                     if(auxtype2 != "Integer"){
-                                                                                                        auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
-                                                                                                        if(auxtype2 != "Integer"){
-                                                                                                            System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                        if(auxtype2 == "none"){
+                                                                                                            auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
+                                                                                                            if(auxtype2 != "Integer"){
+                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                            }
                                                                                                         }
                                                                                                     }else{
                                                                                                         System.err.println("Error at *expression1* > *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
@@ -2208,15 +2210,17 @@ if(!foundError){
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
                                                                                                     if(auxtype2 != "Integer"){
-                                                                                                        auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
-                                                                                                        if(auxtype2 != "Integer"){
-                                                                                                            System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                        if(auxtype2 == "none"){
+                                                                                                            auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
+                                                                                                            if(auxtype2 != "Integer"){
+                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                            }
                                                                                                         }
                                                                                                     }else{
                                                                                                         System.err.println("Error at *expression1* < *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
                                                                                                     }
                                                                                                 }
-                                                                                            } 
+                                                                                            }
                                                                                         }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2256,9 +2260,11 @@ if(!foundError){
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
                                                                                                     if(auxtype2 != "Integer"){
-                                                                                                        auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
-                                                                                                        if(auxtype2 != "Integer"){
-                                                                                                            System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                        if(auxtype2 == "none"){
+                                                                                                            auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
+                                                                                                            if(auxtype2 != "Integer"){
+                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                            }
                                                                                                         }
                                                                                                     }else{
                                                                                                         System.err.println("Error at *expression1* >= *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
@@ -2304,9 +2310,11 @@ if(!foundError){
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
                                                                                                     if(auxtype2 != "Integer"){
-                                                                                                        auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
-                                                                                                        if(auxtype2 != "Integer"){
-                                                                                                            System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                        if(auxtype2 == "none"){
+                                                                                                            auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
+                                                                                                            if(auxtype2 != "Integer"){
+                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                            }
                                                                                                         }
                                                                                                     }else{
                                                                                                         System.err.println("Error at *expression1* <= *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
@@ -2352,9 +2360,11 @@ if(!foundError){
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
                                                                                                     if(auxtype2 != "Integer"){
-                                                                                                        auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
-                                                                                                        if(auxtype2 != "Integer"){
-                                                                                                            System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                        if(auxtype2 == "none"){
+                                                                                                            auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
+                                                                                                            if(auxtype2 != "Integer"){
+                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                            }
                                                                                                         }
                                                                                                     }else{
                                                                                                         System.err.println("Error at *expression1* = *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
@@ -2400,9 +2410,11 @@ if(!foundError){
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
                                                                                                     if(auxtype2 != "Integer"){
-                                                                                                        auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
-                                                                                                        if(auxtype2 != "Integer"){
-                                                                                                            System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                        if(auxtype2 == "none"){
+                                                                                                            auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
+                                                                                                            if(auxtype2 != "Integer"){
+                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                            }
                                                                                                         }
                                                                                                     }else{
                                                                                                         System.err.println("Error at *expression1* <> *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
@@ -2575,20 +2587,41 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new NumericExpression(e1,e2,"+",null);
-                                                                            String auxtype = e1.bringType();
-                                                                            if(auxtype != "Integer"){
-                                                                                if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
-                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");}
-                                                                                }else{System.err.println("Error at *expression* + *expression*, not a numeric expression. Is "+auxtype+".");}
+                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                }else{
+                                                                                    String auxtype = e1.bringType();
+                                                                                    if(auxtype != "Integer"){
+                                                                                        if(auxtype == "none"){
+                                                                                            auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
+                                                                                                if(auxtype != "Integer"){
+                                                                                                    System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");
+                                                                                                }
+                                                                                        }else{
+                                                                                            System.err.println("Error at *expression1* + *expression2*, not a numeric expression. Is "+auxtype+".");
+                                                                                        }
+                                                                                    }
+                                                                                }
                                                                             }
-                                                                            String auxtype2 = e2.bringType();
-                                                                            if(auxtype2 != "Integer"){
-                                                                                if(auxtype2 == "none"){
-                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
-                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");}
-                                                                                }else{System.err.println("Error at *expression* + *expression*, not a numeric expression. Is "+auxtype2+".");}
+                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                }else{
+                                                                                    String auxtype2 = e2.bringType();
+                                                                                    if(auxtype2 != "Integer"){
+                                                                                        if(auxtype2 == "none"){
+                                                                                            auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
+                                                                                            if(auxtype2 != "Integer"){
+                                                                                                System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");
+                                                                                            }
+                                                                                        } 
+                                                                                    }else{
+                                                                                        System.err.println("Error at *expression1* + *expression2*, not a numeric expression. Is "+auxtype2+".");
+                                                                                    }
+                                                                                }
                                                                             }
+                                                                            
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",22, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2605,19 +2638,39 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new NumericExpression(e1,e2,"-",null);
-                                                                            String auxtype = e1.bringType();
-                                                                            if(auxtype != "Integer"){
-                                                                                if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
-                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");}
-                                                                                }else{System.err.println("Error at *expression* - *expression*, not a numeric expression. Is "+auxtype+".");}
+                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                }else{
+                                                                                    String auxtype = e1.bringType();
+                                                                                    if(auxtype != "Integer"){
+                                                                                        if(auxtype == "none"){
+                                                                                            auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
+                                                                                                if(auxtype != "Integer"){
+                                                                                                    System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");
+                                                                                                }
+                                                                                        }else{
+                                                                                            System.err.println("Error at *expression1* - *expression2*, not a numeric expression. Is "+auxtype+".");
+                                                                                        }
+                                                                                    }
+                                                                                }
                                                                             }
-                                                                            String auxtype2 = e2.bringType();
-                                                                            if(auxtype2 != "Integer"){
-                                                                                if(auxtype2 == "none"){
-                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
-                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");}
-                                                                                }else{System.err.println("Error at *expression* - *expression*, not a numeric expression. Is "+auxtype2+".");}
+                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                }else{
+                                                                                    String auxtype2 = e2.bringType();
+                                                                                    if(auxtype2 != "Integer"){
+                                                                                        if(auxtype2 == "none"){
+                                                                                            auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
+                                                                                            if(auxtype2 != "Integer"){
+                                                                                                System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");
+                                                                                            }
+                                                                                        } 
+                                                                                    }else{
+                                                                                        System.err.println("Error at *expression1* - *expression2*, not a numeric expression. Is "+auxtype2+".");
+                                                                                    }
+                                                                                }
                                                                             }
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",22, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -2635,19 +2688,39 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new NumericExpression(e1,e2,"*",null);
-                                                                            String auxtype = e1.bringType();
-                                                                            if(auxtype != "Integer"){
-                                                                                if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
-                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");}
-                                                                                }else{System.err.println("Error at *expression* * *expression*, not a numeric expression. Is "+auxtype+".");}
+                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                }else{
+                                                                                    String auxtype = e1.bringType();
+                                                                                    if(auxtype != "Integer"){
+                                                                                        if(auxtype == "none"){
+                                                                                            auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
+                                                                                                if(auxtype != "Integer"){
+                                                                                                    System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");
+                                                                                                }
+                                                                                        }else{
+                                                                                            System.err.println("Error at *expression1* * *expression2*, not a numeric expression. Is "+auxtype+".");
+                                                                                        }
+                                                                                    }
+                                                                                }
                                                                             }
-                                                                            String auxtype2 = e2.bringType();
-                                                                            if(auxtype2 != "Integer"){
-                                                                                if(auxtype2 == "none"){
-                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
-                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");}
-                                                                                }else{System.err.println("Error at *expression* * *expression*, not a numeric expression. Is "+auxtype2+".");}
+                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                }else{
+                                                                                    String auxtype2 = e2.bringType();
+                                                                                    if(auxtype2 != "Integer"){
+                                                                                        if(auxtype2 == "none"){
+                                                                                            auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
+                                                                                            if(auxtype2 != "Integer"){
+                                                                                                System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");
+                                                                                            }
+                                                                                        } 
+                                                                                    }else{
+                                                                                        System.err.println("Error at *expression1* * *expression2*, not a numeric expression. Is "+auxtype2+".");
+                                                                                    }
+                                                                                }
                                                                             }
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",22, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -2665,19 +2738,39 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new NumericExpression(e1,e2,"/",null);
-                                                                            String auxtype = e1.bringType();
-                                                                            if(auxtype != "Integer"){
-                                                                                if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
-                                                                                    if(auxtype != "Integer"){System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");}
-                                                                                }else{System.err.println("Error at *expression* / *expression*, not a numeric expression. Is "+auxtype+".");}
+                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                }else{
+                                                                                    String auxtype = e1.bringType();
+                                                                                    if(auxtype != "Integer"){
+                                                                                        if(auxtype == "none"){
+                                                                                            auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
+                                                                                                if(auxtype != "Integer"){
+                                                                                                    System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");
+                                                                                                }
+                                                                                        }else{
+                                                                                            System.err.println("Error at *expression1* / *expression2*, not a numeric expression. Is "+auxtype+".");
+                                                                                        }
+                                                                                    }
+                                                                                }
                                                                             }
-                                                                            String auxtype2 = e2.bringType();
-                                                                            if(auxtype2 != "Integer"){
-                                                                                if(auxtype2 == "none"){
-                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
-                                                                                    if(auxtype2 != "Integer"){System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");}
-                                                                                }else{System.err.println("Error at *expression* / *expression*, not a numeric expression. Is "+auxtype2+".");}
+                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                }else{
+                                                                                    String auxtype2 = e2.bringType();
+                                                                                    if(auxtype2 != "Integer"){
+                                                                                        if(auxtype2 == "none"){
+                                                                                            auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
+                                                                                            if(auxtype2 != "Integer"){
+                                                                                                System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");
+                                                                                            }
+                                                                                        } 
+                                                                                    }else{
+                                                                                        System.err.println("Error at *expression1* / *expression2*, not a numeric expression. Is "+auxtype2+".");
+                                                                                    }
+                                                                                }
                                                                             }
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",22, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -2695,19 +2788,39 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new NumericExpression(e1,e2,"&",null);
-                                                                            String auxtype = e1.bringType();
-                                                                            if(auxtype != "String"){
-                                                                                if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
-                                                                                    if(auxtype != "String"){System.err.println("Error with variable "+e1.getId()+", not a String. Is "+auxtype+".");}
-                                                                                }else{System.err.println("Error at *expression* & *expression*, first expression is not a String. Is "+auxtype+".");}
+                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                }else{
+                                                                                    String auxtype = e1.bringType();
+                                                                                    if(auxtype != "String"){
+                                                                                        if(auxtype == "none"){
+                                                                                            auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
+                                                                                                if(auxtype != "String"){
+                                                                                                    System.err.println("Error with variable "+e1.getId()+", not a String. Is "+auxtype+".");
+                                                                                                }
+                                                                                        }else{
+                                                                                            System.err.println("Error at *expression1* & *expression2*, first expression is not a String. Is "+auxtype+".");
+                                                                                        }
+                                                                                    }
+                                                                                }
                                                                             }
-                                                                            String auxtype2 = e2.bringType();
-                                                                            if(auxtype2 != "String"){
-                                                                                if(auxtype2 == "none"){
-                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
-                                                                                    if(auxtype2 != "String"){System.err.println("Error with variable "+e2.getId()+", not a String. Is "+auxtype2+".");}
-                                                                                }else{System.err.println("Error at *expression* & *expression*, second expression is not a String. Is "+auxtype2+".");}
+                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                }else{
+                                                                                    String auxtype2 = e2.bringType();
+                                                                                    if(auxtype2 != "String"){
+                                                                                        if(auxtype2 == "none"){
+                                                                                            auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
+                                                                                            if(auxtype2 != "String"){
+                                                                                                System.err.println("Error with variable "+e2.getId()+", is not a String Is "+auxtype2+".");
+                                                                                            }
+                                                                                        } 
+                                                                                    }else{
+                                                                                        System.err.println("Error at *expression1* / *expression2*, second expression is not a String. Is "+auxtype2+".");
+                                                                                    }
+                                                                                }
                                                                             }
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",22, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);

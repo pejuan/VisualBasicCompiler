@@ -4,7 +4,7 @@ Sub main()
 	
 	o As Boolean = k<20
 	
-	Not (k+9)
+	k = k*10
 	'Cuando se asigna un Id, expression regresa como tipo el tipo none, hay que hacer una busqueda.
 	If k=o Then
 		Dim ty As Integer = 10
@@ -15,4 +15,9 @@ Sub main()
 	
 	o=ty<8
 	presento(5)
+End Sub
+
+
+Sub Probar()
+	Dim a1 As Integer = 0
 End Sub
