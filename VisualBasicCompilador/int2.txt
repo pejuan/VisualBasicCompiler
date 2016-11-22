@@ -1,8 +1,10 @@
+
+
 Sub main()
 	m As String = "Hell"
 	k As Integer = 9
 	
-	o As Boolean = True And 10
+	o As Boolean = Not (a Xor b)
 	
 	
 	'Cuando se asigna un Id, expression regresa como tipo el tipo none, hay que hacer una busqueda.
@@ -14,4 +16,6 @@ End Sub
 
 
 
-
+Sub hola1()
+	a As Boolean = False
+End Sub

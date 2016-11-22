@@ -2405,7 +2405,7 @@ if(!foundError){
                                                                                                 }
                                                                                             
                                                                                             
-                                                                                                if(e1.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
+                                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
@@ -2434,14 +2434,19 @@ if(!foundError){
 		int e1right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e1 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new LogicalExpression("Not",e1,null);
-                                                                           String auxtype = e1.bringType();
-                                                                            if(auxtype != "Boolean"){
-                                                                                if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
-                                                                                    if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
-                                                                                }else{System.err.println("Error at NOT *expression*, not a boolean expression. Is "+auxtype+".");}
+                                                                            if(e1.getId() != null && !tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                            }else{
+                                                                                String auxtype = e1.bringType();
+                                                                                if(auxtype != "Boolean"){
+                                                                                    if(auxtype == "none"){
+                                                                                        auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
+                                                                                        if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
+                                                                                    }else{
+                                                                                        System.err.println("Error at NOT *expression*, not a boolean expression. Is "+auxtype+".");
+                                                                                    }
+                                                                                }
                                                                             }
-                                                                                
                                                                         }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("logical_expression",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2455,14 +2460,19 @@ if(!foundError){
 		int e1right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Expression e1 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		if(!foundError){RESULT = new LogicalExpression("Not",e1,null);
-                                                                           String auxtype = e1.bringType();
-                                                                            if(auxtype != "Boolean"){
-                                                                                if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
-                                                                                    if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
-                                                                                }else{System.err.println("Error at NOT *(expression)*, not a boolean expression. Is "+auxtype+".");}
+                                                                           if(e1.getId() != null && !tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                           }else{
+                                                                                String auxtype = e1.bringType();
+                                                                                if(auxtype != "Boolean"){
+                                                                                    if(auxtype == "none"){
+                                                                                        auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
+                                                                                        if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
+                                                                                    }else{
+                                                                                        System.err.println("Error at NOT *(expression)*, not a boolean expression. Is "+auxtype+".");
+                                                                                    }
+                                                                                }
                                                                             }
-                                                                                
                                                                         }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("logical_expression",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2479,20 +2489,30 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new LogicalExpression("Or",e1,e2,null);
-                                                                            String auxtype = e1.bringType();
-                                                                            if(auxtype != "Boolean"){
-                                                                                if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
-                                                                                    if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
-                                                                                }else{System.err.println("Error at *expression* Or *expression*, not a boolean expression. Is "+auxtype+".");}
+                                                                            if(e1.getId() != null && !tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                System.err.println("Variable "+e1.getId()+" has not been declared in this scope"); 
+                                                                            }else{
+                                                                                String auxtype = e1.bringType();
+                                                                                if(auxtype != "Boolean"){
+                                                                                    if(auxtype == "none"){
+                                                                                        auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
+                                                                                        if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
+                                                                                    }else{System.err.println("Error at *expression* Or *expression*, not a boolean expression. Is "+auxtype+".");}
+                                                                                }
                                                                             }
-                                                                            String auxtype2 = e2.bringType();
-                                                                            if(auxtype2 != "Boolean"){
-                                                                                if(auxtype2 == "none"){
-                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
-                                                                                    if(auxtype2 != "Boolean"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
-                                                                                }else{System.err.println("Error at *expression* Or *expression*, not a boolean expression. Is "+auxtype2+".");}
+                                                                            
+                                                                            if(e2.getId() != null && !tableIds.searchScope(e2.getId(),ambito_actual)){
+                                                                                System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                            }else{
+                                                                                String auxtype2 = e2.bringType();
+                                                                                if(auxtype2 != "Boolean"){
+                                                                                    if(auxtype2 == "none"){
+                                                                                        auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
+                                                                                        if(auxtype2 != "Boolean"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
+                                                                                    }else{System.err.println("Error at *expression* Or *expression*, not a boolean expression. Is "+auxtype2+".");}
+                                                                                }
                                                                             }
+                                                                            
                                                                         }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("logical_expression",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2509,20 +2529,30 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new LogicalExpression("And",e1,e2,null);
-                                                                            String auxtype = e1.bringType();
-                                                                            if(auxtype != "Boolean"){
-                                                                                if(auxtype == "none"){
-                                                                                    auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
-                                                                                    if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
-                                                                                }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype+".");}
+                                                                            if(e1.getId() != null && !tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                            }else{
+                                                                                String auxtype = e1.bringType();
+                                                                                if(auxtype != "Boolean"){
+                                                                                    if(auxtype == "none"){
+                                                                                        auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
+                                                                                        if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
+                                                                                    }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype+".");}
+                                                                                }
                                                                             }
-                                                                            String auxtype2 = e2.bringType();
-                                                                            if(auxtype2 != "Boolean"){
-                                                                                if(auxtype2 == "none"){
-                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
-                                                                                    if(auxtype2 != "Boolean"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
-                                                                                }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype2+".");}
+                                                                            
+                                                                            if(e2.getId() != null && !tableIds.searchScope(e2.getId(), ambito_actual)){
+                                                                                System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                            }else{
+                                                                                String auxtype2 = e2.bringType();
+                                                                                if(auxtype2 != "Boolean"){
+                                                                                    if(auxtype2 == "none"){
+                                                                                        auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
+                                                                                        if(auxtype2 != "Boolean"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
+                                                                                    }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype2+".");}
+                                                                                }
                                                                             }
+                                                                            
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("logical_expression",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2539,19 +2569,28 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new LogicalExpression("Xor",e1,e2,null);
-                                                                            String auxtype = e1.bringType();
-                                                                            if(auxtype != "Boolean"){
-                                                                                if(auxtype == "none"){
+                                                                            if(e1.getId() != null && !tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                            }else{
+                                                                               String auxtype = e1.bringType();
+                                                                                if(auxtype != "Boolean"){
+                                                                                    if(auxtype == "none"){
                                                                                     auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                     if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
-                                                                                }else{System.err.println("Error at *expression* Xor *expression*, not a boolean expression. Is "+auxtype+".");}
+                                                                                    }else{System.err.println("Error at *expression* Xor *expression*, not a boolean expression. Is "+auxtype+".");}
+                                                                                } 
                                                                             }
-                                                                            String auxtype2 = e2.bringType();
-                                                                            if(auxtype2 != "Boolean"){
-                                                                                if(auxtype2 == "none"){
-                                                                                    auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
-                                                                                    if(auxtype2 != "Boolean"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
-                                                                                }else{System.err.println("Error at *expression* Xor *expression*, not a boolean expression. Is "+auxtype2+".");}
+                                                                            
+                                                                            if(e2.getId() != null && !tableIds.searchScope(e2.getId(),ambito_actual)){
+                                                                                System.err.println("variable "+e2.getId()+"has not been declared in this scope");
+                                                                            }else{
+                                                                                String auxtype2 = e2.bringType();
+                                                                                if(auxtype2 != "Boolean"){
+                                                                                    if(auxtype2 == "none"){
+                                                                                        auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
+                                                                                        if(auxtype2 != "Boolean"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
+                                                                                    }else{System.err.println("Error at *expression* Xor *expression*, not a boolean expression. Is "+auxtype2+".");}
+                                                                                }
                                                                             }
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("logical_expression",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
