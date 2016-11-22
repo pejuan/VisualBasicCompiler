@@ -552,7 +552,7 @@ expression ::=	numeric_expression:num_exp      {: if(!foundError){RESULT = new N
 boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2                       {: if(!foundError){RESULT = new BooleanExpression(e1,">",e2,null);
                                                                                             
                                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
@@ -570,7 +570,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                             }
                                                                                             
                                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e2.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
@@ -589,7 +589,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                         }:}
                        |expression:e1 TK_LESSTHAN expression:e2                         {: if(!foundError){RESULT = new BooleanExpression(e1,"<",e2,null);
                                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
@@ -606,7 +606,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                 }
                                                                                             }
                                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
@@ -625,7 +625,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                         }:}
                        |expression:e1 TK_GREATEREQUAL expression:e2                     {: if(!foundError){RESULT = new BooleanExpression(e1,">=",e2,null);
                                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
@@ -642,7 +642,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                 }
                                                                                             }
                                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
@@ -661,7 +661,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                         }:}
                        |expression:e1 TK_LESSEQUAL expression:e2                        {: if(!foundError){RESULT = new BooleanExpression(e1,"<=",e2,null);
                                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
@@ -678,7 +678,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                 }
                                                                                             }
                                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
@@ -697,7 +697,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                         }:}
                        |expression:e1 TK_EQUALS expression:e2                           {: if(!foundError){RESULT = new BooleanExpression(e1,"=",e2,null);
                                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
@@ -714,7 +714,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                 }
                                                                                             }
                                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
@@ -733,7 +733,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                         }:}
                        |expression:e1 TK_NOTEQUAL expression:e2                         {: if(!foundError){RESULT = new BooleanExpression(e1,"<>",e2,null);
                                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
@@ -750,7 +750,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                 }
                                                                                             }
                                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e1.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
@@ -842,7 +842,7 @@ logical_expression ::= TK_NOT expression:e1                             {:if(!fo
 ;
 numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!foundError){RESULT = new NumericExpression(e1,e2,"+",null);
                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype = e1.bringType();
@@ -859,7 +859,7 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                                                                                 }
                                                                             }
                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype2 = e2.bringType();
@@ -879,7 +879,7 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                                                                         } :}
                        |expression:e1 TK_MINUS expression:e2            {:if(!foundError){RESULT = new NumericExpression(e1,e2,"-",null);
                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype = e1.bringType();
@@ -896,7 +896,7 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                                                                                 }
                                                                             }
                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype2 = e2.bringType();
@@ -915,7 +915,7 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                                                                         } :}
                        |expression:e1 TK_PRODUCT expression:e2          {:if(!foundError){RESULT = new NumericExpression(e1,e2,"*",null);
                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype = e1.bringType();
@@ -932,7 +932,7 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                                                                                 }
                                                                             }
                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype2 = e2.bringType();
@@ -951,7 +951,7 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                                                                         } :}
                        |expression:e1 TK_DIVISION expression:e2         {:if(!foundError){RESULT = new NumericExpression(e1,e2,"/",null);
                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype = e1.bringType();
@@ -968,7 +968,7 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                                                                                 }
                                                                             }
                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype2 = e2.bringType();
@@ -987,7 +987,7 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                                                                         } :}
                        |expression:e1 TK_AMPERSAND expression:e2        {:if(!foundError){RESULT = new NumericExpression(e1,e2,"&",null);
                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype = e1.bringType();
@@ -1004,7 +1004,7 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                                                                                 }
                                                                             }
                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype2 = e2.bringType();

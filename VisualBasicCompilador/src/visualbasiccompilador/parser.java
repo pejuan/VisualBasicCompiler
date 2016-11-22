@@ -2137,7 +2137,7 @@ if(!foundError){
 		 if(!foundError){RESULT = new BooleanExpression(e1,">",e2,null);
                                                                                             
                                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
@@ -2155,7 +2155,7 @@ if(!foundError){
                                                                                             }
                                                                                             
                                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e2.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
@@ -2188,7 +2188,7 @@ if(!foundError){
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if(!foundError){RESULT = new BooleanExpression(e1,"<",e2,null);
                                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
@@ -2205,7 +2205,7 @@ if(!foundError){
                                                                                                 }
                                                                                             }
                                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
@@ -2238,7 +2238,7 @@ if(!foundError){
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if(!foundError){RESULT = new BooleanExpression(e1,">=",e2,null);
                                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
@@ -2255,7 +2255,7 @@ if(!foundError){
                                                                                                 }
                                                                                             }
                                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
@@ -2288,7 +2288,7 @@ if(!foundError){
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if(!foundError){RESULT = new BooleanExpression(e1,"<=",e2,null);
                                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
@@ -2305,7 +2305,7 @@ if(!foundError){
                                                                                                 }
                                                                                             }
                                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
@@ -2338,7 +2338,7 @@ if(!foundError){
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if(!foundError){RESULT = new BooleanExpression(e1,"=",e2,null);
                                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
@@ -2355,7 +2355,7 @@ if(!foundError){
                                                                                                 }
                                                                                             }
                                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
@@ -2388,7 +2388,7 @@ if(!foundError){
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if(!foundError){RESULT = new BooleanExpression(e1,"<>",e2,null);
                                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
@@ -2405,7 +2405,7 @@ if(!foundError){
                                                                                                 }
                                                                                             }
                                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                                if(e1.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
@@ -2588,7 +2588,7 @@ if(!foundError){
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new NumericExpression(e1,e2,"+",null);
                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype = e1.bringType();
@@ -2605,7 +2605,7 @@ if(!foundError){
                                                                                 }
                                                                             }
                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype2 = e2.bringType();
@@ -2639,7 +2639,7 @@ if(!foundError){
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new NumericExpression(e1,e2,"-",null);
                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype = e1.bringType();
@@ -2656,7 +2656,7 @@ if(!foundError){
                                                                                 }
                                                                             }
                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype2 = e2.bringType();
@@ -2689,7 +2689,7 @@ if(!foundError){
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new NumericExpression(e1,e2,"*",null);
                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype = e1.bringType();
@@ -2706,7 +2706,7 @@ if(!foundError){
                                                                                 }
                                                                             }
                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype2 = e2.bringType();
@@ -2739,7 +2739,7 @@ if(!foundError){
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new NumericExpression(e1,e2,"/",null);
                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype = e1.bringType();
@@ -2756,7 +2756,7 @@ if(!foundError){
                                                                                 }
                                                                             }
                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype2 = e2.bringType();
@@ -2789,7 +2789,7 @@ if(!foundError){
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new NumericExpression(e1,e2,"&",null);
                                                                             if(!(e1 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype = e1.bringType();
@@ -2806,7 +2806,7 @@ if(!foundError){
                                                                                 }
                                                                             }
                                                                             if(!(e2 instanceof LiteralExpression)){
-                                                                                if(!tableIds.searchScope(e1.getId(),ambito_actual)){
+                                                                                if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                 }else{
                                                                                     String auxtype2 = e2.bringType();

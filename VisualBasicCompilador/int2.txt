@@ -1,23 +1,14 @@
 Sub main()
+	k As Integer = 9+t
 	
-	k As Integer = 9
+	'o As Boolean = k<20
 	
-	o As Boolean = k<20
-	
-	k = k*10
+	'k = k*10
 	'Cuando se asigna un Id, expression regresa como tipo el tipo none, hay que hacer una busqueda.
-	If k=o Then
-		Dim ty As Integer = 10
-		Dim probar As Boolean = k<0
-	End If
-	Dim Hola As String = "Hell"
-	Dim ey As Integer = Hola
+	'Dim Hola As String = "Hell"
+	'Dim ey As Integer = Hola
 	
-	o=ty<8
-	presento(5)
+	
 End Sub
 
 
-Sub Probar()
-	Dim a1 As Integer = 0
-End Sub
