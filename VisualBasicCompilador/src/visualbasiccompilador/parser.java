@@ -2587,7 +2587,7 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new NumericExpression(e1,e2,"+",null);
-                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                            
                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                 }else{
@@ -2603,8 +2603,8 @@ if(!foundError){
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            }
-                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                            
+                                                                            
                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                 }else{
@@ -2615,12 +2615,12 @@ if(!foundError){
                                                                                             if(auxtype2 != "Integer"){
                                                                                                 System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");
                                                                                             }
-                                                                                        } 
-                                                                                    }else{
-                                                                                        System.err.println("Error at *expression1* + *expression2*, not a numeric expression. Is "+auxtype2+".");
+                                                                                        }else{
+                                                                                           System.err.println("Error at *expression1* + *expression2*, not a numeric expression. Is "+auxtype2+"."); 
+                                                                                        }
                                                                                     }
                                                                                 }
-                                                                            }
+                                                                            
                                                                             
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",22, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -2638,7 +2638,7 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new NumericExpression(e1,e2,"-",null);
-                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                            
                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                 }else{
@@ -2654,8 +2654,8 @@ if(!foundError){
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            }
-                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                            
+                                                                            
                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                 }else{
@@ -2666,12 +2666,12 @@ if(!foundError){
                                                                                             if(auxtype2 != "Integer"){
                                                                                                 System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");
                                                                                             }
-                                                                                        } 
-                                                                                    }else{
-                                                                                        System.err.println("Error at *expression1* - *expression2*, not a numeric expression. Is "+auxtype2+".");
+                                                                                        }else{
+                                                                                           System.err.println("Error at *expression1* - *expression2*, not a numeric expression. Is "+auxtype2+"."); 
+                                                                                        }
                                                                                     }
                                                                                 }
-                                                                            }
+                                                                            
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",22, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2688,7 +2688,7 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new NumericExpression(e1,e2,"*",null);
-                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                            
                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                 }else{
@@ -2704,8 +2704,8 @@ if(!foundError){
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            }
-                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                            
+                                                                            
                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                 }else{
@@ -2716,12 +2716,12 @@ if(!foundError){
                                                                                             if(auxtype2 != "Integer"){
                                                                                                 System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");
                                                                                             }
-                                                                                        } 
-                                                                                    }else{
-                                                                                        System.err.println("Error at *expression1* * *expression2*, not a numeric expression. Is "+auxtype2+".");
+                                                                                        }else{
+                                                                                            System.err.println("Error at *expression1* * *expression2*, not a numeric expression. Is "+auxtype2+".");
+                                                                                        }
                                                                                     }
                                                                                 }
-                                                                            }
+                                                                            
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",22, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2738,7 +2738,7 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new NumericExpression(e1,e2,"/",null);
-                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                            
                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                 }else{
@@ -2754,8 +2754,8 @@ if(!foundError){
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            }
-                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                            
+                                                                            
                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                 }else{
@@ -2766,12 +2766,12 @@ if(!foundError){
                                                                                             if(auxtype2 != "Integer"){
                                                                                                 System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");
                                                                                             }
-                                                                                        } 
-                                                                                    }else{
-                                                                                        System.err.println("Error at *expression1* / *expression2*, not a numeric expression. Is "+auxtype2+".");
+                                                                                        }else{
+                                                                                            System.err.println("Error at *expression1* / *expression2*, not a numeric expression. Is "+auxtype2+".");
+                                                                                        }
                                                                                     }
                                                                                 }
-                                                                            }
+                                                                            
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",22, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2788,7 +2788,7 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new NumericExpression(e1,e2,"&",null);
-                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                            
                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                 }else{
@@ -2800,12 +2800,12 @@ if(!foundError){
                                                                                                     System.err.println("Error with variable "+e1.getId()+", not a String. Is "+auxtype+".");
                                                                                                 }
                                                                                         }else{
-                                                                                            System.err.println("Error at *expression1* & *expression2*, first expression is not a String. Is "+auxtype+".");
+                                                                                            System.err.println("Error at *expression1* & *expression2*, first operand is not a String. Is "+auxtype+".");
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            }
-                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                            
+                                                                            
                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                 }else{
@@ -2816,12 +2816,12 @@ if(!foundError){
                                                                                             if(auxtype2 != "String"){
                                                                                                 System.err.println("Error with variable "+e2.getId()+", is not a String Is "+auxtype2+".");
                                                                                             }
-                                                                                        } 
-                                                                                    }else{
-                                                                                        System.err.println("Error at *expression1* / *expression2*, second expression is not a String. Is "+auxtype2+".");
+                                                                                        }else{
+                                                                                            System.err.println("Error at *expression1* / *expression2*, second operand is not a String. Is "+auxtype2+".");
+                                                                                        }
                                                                                     }
                                                                                 }
-                                                                            }
+                                                                            
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",22, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }

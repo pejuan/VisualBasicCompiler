@@ -5,7 +5,9 @@
         <group>
             <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/AST/IdTable.java</file>
             <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/AST/Program.java</file>
+            <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/AST/LiteralExpression.java</file>
             <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/AST/ReadStatement.java</file>
+            <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/AST/LogicalExpression.java</file>
             <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/parser.cup</file>
             <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/AST/Expression.java</file>
             <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/parser.java</file>
@@ -15,6 +17,7 @@
             <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/VisualBasicCompilador.java</file>
             <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/AST/IdNode.java</file>
             <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/AST/IfStatement.java</file>
+            <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/lexer.flex</file>
             <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/AST/Parameter.java</file>
         </group>
     </open-files>
