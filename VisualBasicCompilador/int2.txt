@@ -9,13 +9,19 @@ Sub main()
 	
 	'Cuando se asigna un Id, expression regresa como tipo el tipo none, hay que hacer una busqueda.
 	'Dim Hola As String = "Hell"
-	'Dim ey As Integer = Hola 
-	
+	'Dim ey As Integer = Hola
+
+	If True Then
+		Dim a As Integer = 0
+	ElseIf True Then
+		Dim b As Integer = 0
+	ElseIf True Then
+		Dim c As Integer = 0
+	Else
+		Dim d As Integer = 0
+	End If
 	
 End Sub
 
-
-
-Sub hola1()
-	a As Boolean = False
+Sub algo() 
 End Sub

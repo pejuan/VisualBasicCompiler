@@ -243,6 +243,9 @@ non terminal Statements statement;
 non terminal Statements write_statement;
 non terminal Statements read_statement;
 non terminal Statements if_statement;
+non terminal Statements elseif_statements;
+non terminal ElseIfStatement elseif_statement;
+non terminal ElseStatement else_statement;
 non terminal IfStatement begin_if;
 non terminal Statements for_statement;
 non terminal Statements do_statement;
@@ -431,7 +434,28 @@ if_statement ::=    begin_if:beg TK_END TK_IF                                   
                                                                                                                  partir_ambito = ambito_actual.split("\\.");
                                                                                                                  ambito_actual = remove_scope(partir_ambito);
                                                                                                                  bloque = (int) pila_de_bloques.pop();
-                                                                                                               }:}                                                                                                               
+                                                                                                               }:}
+                    |begin_if:beg else_statement:elseStmnt TK_END TK_IF                                          {:if(!foundError){
+                                                                                                                    RESULT = new IfStatement("If",beg.getExpression(),"Then","Else",listastatements,null,elseStmnt,"End IF");
+                                                                                                                   listastatements = new ArrayList();
+                                                                                                                   partir_ambito = ambito_actual.split("\\.");
+                                                                                                                   ambito_actual = remove_scope(partir_ambito);
+                                                                                                                   bloque = (int) pila_de_bloques.pop();
+                                                                                                                }:}
+                    |begin_if:beg elseif_statements:elseifStmnts TK_END TK_IF                                    {:if(!foundError){
+                                                                                                                     RESULT = new IfStatement("If",beg.getExpression(),"Then",null,listastatements,listaelseifs,null,"End IF");
+                                                                                                                    listastatements = new ArrayList();listaelseifs = new ArrayList();
+                                                                                                                    partir_ambito = ambito_actual.split("\\.");
+                                                                                                                    ambito_actual = remove_scope(partir_ambito);
+                                                                                                                    bloque = (int) pila_de_bloques.pop();   
+                                                                                                                }:}
+                    |begin_if:beg elseif_statements:elseifStmnts else_statement:elseStmnt TK_END TK_IF           {:if(!foundError){
+                                                                                                                    RESULT = new IfStatement("If",beg.getExpression(),"Then","Else",listastatements,listaelseifs,elseStmnt,"End IF");
+                                                                                                                    listastatements = new ArrayList();listaelseifs = new ArrayList();
+                                                                                                                    partir_ambito = ambito_actual.split("\\.");
+                                                                                                                    ambito_actual = remove_scope(partir_ambito);
+                                                                                                                    bloque = (int) pila_de_bloques.pop();
+                                                                                                                  } :}
 ;
 
 begin_if ::= TK_IF expression:expr {:if(!foundError){
@@ -440,7 +464,42 @@ begin_if ::= TK_IF expression:expr {:if(!foundError){
                                                 ambito_actual += "."+Integer.toString(bloque);
                                                 pila_de_bloques.push(bloque);
                                                 bloque = 0;
-                                             }:} TK_THEN statements:stmnts 
+                                             }:} TK_THEN statements:stmnts
+;
+
+elseif_statements ::=	elseif_statement:elseifStmnt elseif_statements:elseifStmnts                     {:if(!foundError){listaelseifs.add(elseifStmnt);} :}
+			|elseif_statement:elseifStmnt                                                   {:if(!foundError){listaelseifs.add(elseifStmnt);}:}
+;
+
+else_statement   ::=    {:if(!foundError){
+                            partir_ambito = ambito_actual.split("\\.");
+                            ambito_actual = remove_scope(partir_ambito);
+                            bloque = (int) pila_de_bloques.pop();
+                          }:} TK_ELSE {:if(!foundError){
+                                    bloque++;
+                                    ambito_actual += "."+Integer.toString(bloque);
+                                    pila_de_bloques.push(bloque);
+                                    bloque = 0;
+                                  }:} statements:stmnts                   {:if(!foundError){
+                                                                                RESULT = new ElseStatement("Else",listastatements);
+                                                                                listastatements = new ArrayList();
+                                                                                
+                                                                          }:}
+;
+elseif_statement ::=	{:if(!foundError){
+                            partir_ambito = ambito_actual.split("\\.");
+                            ambito_actual = remove_scope(partir_ambito);
+                            bloque = (int) pila_de_bloques.pop();
+                          }:} TK_ELSEIF expression:expr {:if(!foundError){
+                                                        bloque++;
+                                                        ambito_actual += "."+Integer.toString(bloque);
+                                                        pila_de_bloques.push(bloque);
+                                                        bloque = 0;
+                                                    }:} TK_THEN statements:stmnts           {:if(!foundError){ 
+                                                                                                RESULT = new ElseIfStatement("ElseIf",expr,"Then",listastatements);
+                                                                                                listastatements = new ArrayList();
+                                                                                               
+                                                                                            } :}
 ;
  
 
@@ -866,7 +925,7 @@ logical_expression ::= TK_NOT expression:e1                             {:if(!fo
                                                                             }
                                                                             
                                                                             if(e2.getId() != null && !tableIds.searchScope(e2.getId(),ambito_actual)){
-                                                                                System.err.println("variable "+e2.getId()+"has not been declared in this scope");
+                                                                                System.err.println("variable "+e2.getId()+" has not been declared in this scope");
                                                                             }else{
                                                                                 String auxtype2 = e2.bringType();
                                                                                 if(auxtype2 != "Boolean"){
