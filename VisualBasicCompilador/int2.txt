@@ -1,5 +1,6 @@
 Sub main()
-	k As String = "Hell"&"Hell"
+	m As String = "Hell"
+	k As Integer = m/m
 	
 	'o As Boolean = k<20
 	

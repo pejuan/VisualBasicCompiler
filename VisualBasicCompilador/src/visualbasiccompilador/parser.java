@@ -2596,10 +2596,10 @@ if(!foundError){
                                                                                         if(auxtype == "none"){
                                                                                             auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                 if(auxtype != "Integer"){
-                                                                                                    System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");
+                                                                                                    System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");
                                                                                                 }
                                                                                         }else{
-                                                                                            System.err.println("Error at *expression1* + *expression2*, not a numeric expression. Is "+auxtype+".");
+                                                                                            System.err.println("Error at *expression1* + *expression2*, first operand is not an Integer. Is "+auxtype+".");
                                                                                         }
                                                                                     }
                                                                                 }
@@ -2613,10 +2613,10 @@ if(!foundError){
                                                                                         if(auxtype2 == "none"){
                                                                                             auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                             if(auxtype2 != "Integer"){
-                                                                                                System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");
+                                                                                                System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");
                                                                                             }
                                                                                         }else{
-                                                                                           System.err.println("Error at *expression1* + *expression2*, not a numeric expression. Is "+auxtype2+"."); 
+                                                                                           System.err.println("Error at *expression1* + *expression2*, second operand is not an Integer. Is "+auxtype2+"."); 
                                                                                         }
                                                                                     }
                                                                                 }
@@ -2647,10 +2647,10 @@ if(!foundError){
                                                                                         if(auxtype == "none"){
                                                                                             auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                 if(auxtype != "Integer"){
-                                                                                                    System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");
+                                                                                                    System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");
                                                                                                 }
                                                                                         }else{
-                                                                                            System.err.println("Error at *expression1* - *expression2*, not a numeric expression. Is "+auxtype+".");
+                                                                                            System.err.println("Error at *expression1* - *expression2*, first operand is not an Integer. Is "+auxtype+".");
                                                                                         }
                                                                                     }
                                                                                 }
@@ -2664,10 +2664,10 @@ if(!foundError){
                                                                                         if(auxtype2 == "none"){
                                                                                             auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                             if(auxtype2 != "Integer"){
-                                                                                                System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");
+                                                                                                System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");
                                                                                             }
                                                                                         }else{
-                                                                                           System.err.println("Error at *expression1* - *expression2*, not a numeric expression. Is "+auxtype2+"."); 
+                                                                                           System.err.println("Error at *expression1* - *expression2*, second operand is not an Integer. Is "+auxtype2+"."); 
                                                                                         }
                                                                                     }
                                                                                 }
@@ -2697,10 +2697,10 @@ if(!foundError){
                                                                                         if(auxtype == "none"){
                                                                                             auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                 if(auxtype != "Integer"){
-                                                                                                    System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");
+                                                                                                    System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");
                                                                                                 }
                                                                                         }else{
-                                                                                            System.err.println("Error at *expression1* * *expression2*, not a numeric expression. Is "+auxtype+".");
+                                                                                            System.err.println("Error at *expression1* * *expression2*, first operand is not an Integer. Is "+auxtype+".");
                                                                                         }
                                                                                     }
                                                                                 }
@@ -2714,10 +2714,10 @@ if(!foundError){
                                                                                         if(auxtype2 == "none"){
                                                                                             auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                             if(auxtype2 != "Integer"){
-                                                                                                System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");
+                                                                                                System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");
                                                                                             }
                                                                                         }else{
-                                                                                            System.err.println("Error at *expression1* * *expression2*, not a numeric expression. Is "+auxtype2+".");
+                                                                                            System.err.println("Error at *expression1* * *expression2*, second operand is not an Integer. Is "+auxtype2+".");
                                                                                         }
                                                                                     }
                                                                                 }
@@ -2747,10 +2747,10 @@ if(!foundError){
                                                                                         if(auxtype == "none"){
                                                                                             auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                 if(auxtype != "Integer"){
-                                                                                                    System.err.println("Error with variable "+e1.getId()+", not a numeric expression. Is "+auxtype+".");
+                                                                                                    System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");
                                                                                                 }
                                                                                         }else{
-                                                                                            System.err.println("Error at *expression1* / *expression2*, not a numeric expression. Is "+auxtype+".");
+                                                                                            System.err.println("Error at *expression1* / *expression2*, first operand is not an Integer. Is "+auxtype+".");
                                                                                         }
                                                                                     }
                                                                                 }
@@ -2764,10 +2764,10 @@ if(!foundError){
                                                                                         if(auxtype2 == "none"){
                                                                                             auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                             if(auxtype2 != "Integer"){
-                                                                                                System.err.println("Error with variable "+e2.getId()+", not a numeric expression. Is "+auxtype2+".");
+                                                                                                System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");
                                                                                             }
                                                                                         }else{
-                                                                                            System.err.println("Error at *expression1* / *expression2*, not a numeric expression. Is "+auxtype2+".");
+                                                                                            System.err.println("Error at *expression1* / *expression2*, second operand is not an Integer. Is "+auxtype2+".");
                                                                                         }
                                                                                     }
                                                                                 }
