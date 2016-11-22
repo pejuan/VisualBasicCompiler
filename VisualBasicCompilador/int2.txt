@@ -1,13 +1,13 @@
 Sub main()
 	m As String = "Hell"
-	k As Integer = m/m
+	k As Integer = 9
 	
-	'o As Boolean = k<20
+	o As Boolean = True And 10
 	
 	
 	'Cuando se asigna un Id, expression regresa como tipo el tipo none, hay que hacer una busqueda.
 	'Dim Hola As String = "Hell"
-	'Dim ey As Integer = Hola
+	'Dim ey As Integer = Hola 
 	
 	
 End Sub

@@ -2136,7 +2136,7 @@ if(!foundError){
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if(!foundError){RESULT = new BooleanExpression(e1,">",e2,null);
                                                                                             
-                                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                                            
                                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
@@ -2152,9 +2152,9 @@ if(!foundError){
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                            }
                                                                                             
-                                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                                            
+                                                                                            
                                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
@@ -2165,12 +2165,12 @@ if(!foundError){
                                                                                                             if(auxtype2 != "Integer"){
                                                                                                                 System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
                                                                                                             }
+                                                                                                        }else{
+                                                                                                            System.err.println("Error at *expression1* > *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
                                                                                                         }
-                                                                                                    }else{
-                                                                                                        System.err.println("Error at *expression1* > *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
                                                                                                     }
                                                                                                 }
-                                                                                            }                                                                                   
+                                                                                                                                                                               
                                                                                         }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2187,7 +2187,7 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if(!foundError){RESULT = new BooleanExpression(e1,"<",e2,null);
-                                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                                            
                                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
@@ -2203,8 +2203,8 @@ if(!foundError){
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                            }
-                                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                                            
+                                                                                            
                                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
@@ -2215,12 +2215,12 @@ if(!foundError){
                                                                                                             if(auxtype2 != "Integer"){
                                                                                                                 System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
                                                                                                             }
+                                                                                                        }else{
+                                                                                                            System.err.println("Error at *expression1* < *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
                                                                                                         }
-                                                                                                    }else{
-                                                                                                        System.err.println("Error at *expression1* < *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
                                                                                                     }
                                                                                                 }
-                                                                                            }
+                                                                                            
                                                                                         }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2237,7 +2237,7 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if(!foundError){RESULT = new BooleanExpression(e1,">=",e2,null);
-                                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                                            
                                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
@@ -2253,8 +2253,8 @@ if(!foundError){
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                            }
-                                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                                            
+                                                                                            
                                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
@@ -2265,12 +2265,12 @@ if(!foundError){
                                                                                                             if(auxtype2 != "Integer"){
                                                                                                                 System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
                                                                                                             }
+                                                                                                        }else{
+                                                                                                            System.err.println("Error at *expression1* >= *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
                                                                                                         }
-                                                                                                    }else{
-                                                                                                        System.err.println("Error at *expression1* >= *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
                                                                                                     }
                                                                                                 }
-                                                                                            } 
+                                                                                             
                                                                                         }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2287,7 +2287,7 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if(!foundError){RESULT = new BooleanExpression(e1,"<=",e2,null);
-                                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                                            
                                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
@@ -2303,8 +2303,8 @@ if(!foundError){
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                            }
-                                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                                            
+                                                                                            
                                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
@@ -2315,12 +2315,12 @@ if(!foundError){
                                                                                                             if(auxtype2 != "Integer"){
                                                                                                                 System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
                                                                                                             }
+                                                                                                        }else{
+                                                                                                            System.err.println("Error at *expression1* <= *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
                                                                                                         }
-                                                                                                    }else{
-                                                                                                        System.err.println("Error at *expression1* <= *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
                                                                                                     }
                                                                                                 }
-                                                                                            } 
+                                                                                             
                                                                                         }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2337,7 +2337,7 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if(!foundError){RESULT = new BooleanExpression(e1,"=",e2,null);
-                                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                                            
                                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
@@ -2353,8 +2353,8 @@ if(!foundError){
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                            }
-                                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                                            
+                                                                                            
                                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
@@ -2365,12 +2365,12 @@ if(!foundError){
                                                                                                             if(auxtype2 != "Integer"){
                                                                                                                 System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
                                                                                                             }
+                                                                                                        }else{
+                                                                                                           System.err.println("Error at *expression1* = *expression2*, expression2 is not an Integer. Is "+auxtype2+"."); 
                                                                                                         }
-                                                                                                    }else{
-                                                                                                        System.err.println("Error at *expression1* = *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
                                                                                                     }
                                                                                                 }
-                                                                                            }
+                                                                                            
                                                                                         }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2387,7 +2387,7 @@ if(!foundError){
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if(!foundError){RESULT = new BooleanExpression(e1,"<>",e2,null);
-                                                                                            if(!(e1 instanceof LiteralExpression)){
+                                                                                            
                                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                                                 }else{
@@ -2403,8 +2403,8 @@ if(!foundError){
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                            }
-                                                                                            if(!(e2 instanceof LiteralExpression)){
+                                                                                            
+                                                                                            
                                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
                                                                                                     System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
                                                                                                 }else{
@@ -2415,12 +2415,12 @@ if(!foundError){
                                                                                                             if(auxtype2 != "Integer"){
                                                                                                                 System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
                                                                                                             }
+                                                                                                        }else{
+                                                                                                            System.err.println("Error at *expression1* <> *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
                                                                                                         }
-                                                                                                    }else{
-                                                                                                        System.err.println("Error at *expression1* <> *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
                                                                                                     }
                                                                                                 }
-                                                                                            }
+                                                                                            
                                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
