@@ -27,7 +27,7 @@ public class IdTable {
     }
     public boolean searchNode(IdNode nodo){//a esta busqueda habra que incluirle el ambito
         for (IdNode idlist1 : this.idlist) {
-            if (idlist1.getName().equals(nodo.getName()) && idlist1.getAmbito().equals(nodo.getAmbito())) {
+            if (idlist1.getName().equals(nodo.getName()) && nodo.getAmbito().contains(idlist1.getAmbito())) {
                 return true;
             }
         }
