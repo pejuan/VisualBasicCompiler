@@ -1,4 +1,12 @@
+Function funcion1(ByVal a As Integer, ByRef b As Boolean, ByVal c As String) As Boolean
+	If c > 20 Then
+	End If
+End Function
 
+Function funcion2() As Integer
+	Dim c As Boolean = False
+	c = funcion1()
+End Function
 
 Sub main()
 	m As String = "Hell"
@@ -20,8 +28,7 @@ Sub main()
 	Else
 		Dim d As Integer = 0
 	End If
-	
-End Sub
 
-Sub algo() 
+	u As Integer = funcion2()
+	
 End Sub

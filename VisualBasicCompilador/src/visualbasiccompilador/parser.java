@@ -1215,7 +1215,7 @@ if(!foundError){
                                                                                     tipo_sub += listaparameters.get(k).getDataType();
                                                                                 }
                                                                             }
-                                                                            if (!tableIds.addNode(new IdNode(i,tipo_sub+"->void",ambito_actual))){
+                                                                            if (!tableIds.addNode(new IdNode(i,"void",ambito_actual,"void->"+tipo_sub,"Sub"))){
                                                                                 System.err.println("Function or Sub"+i+" has already been defined");
                                                                             }
                                                                             pila_de_bloques.push(bloque);
@@ -1261,7 +1261,7 @@ if(!foundError){
 if(!foundError){
                                                             bloque++;
                                                             ambito_actual += "." + Integer.toString(bloque);
-                                                            if (!tableIds.addNode(new IdNode(i, "void->void", ambito_actual))){
+                                                            if (!tableIds.addNode(new IdNode(i, "void", ambito_actual,"void->void","Sub"))){
                                                                 System.err.println("Function or Sub "+i+" has already been defined");
                                                             }
                                                             pila_de_bloques.push(bloque);
@@ -1354,8 +1354,8 @@ if(!foundError){
                                                                                                                     tipo_funcion += listaparameters.get(k).getDataType();
                                                                                                                 }
                                                                                                             }
-                                                                                                            if(!tableIds.addNode(new IdNode(i, tipo_funcion+"->"+type,ambito_actual))){
-                                                                                                                System.err.println("Function "+i+" already exists "+tipo_funcion+"->"+type);
+                                                                                                            if(!tableIds.addNode(new IdNode(i,type,ambito_actual,type+"->"+tipo_funcion,"Function"))){
+                                                                                                                System.err.println("Function "+i+" already exists "+type+"->"+tipo_funcion);
                                                                                                             }
                                                                                                             pila_de_bloques.push(bloque);
                                                                                                             bloque = 0;
@@ -1406,8 +1406,8 @@ if(!foundError){
 if(!foundError){
                                                                                             bloque++;
                                                                                             ambito_actual += "."+Integer.toString(bloque);
-                                                                                            if(!tableIds.addNode(new IdNode(i, "void->"+type,ambito_actual))){
-                                                                                                System.err.println("Function "+i+" already exists "+"void->"+type);
+                                                                                            if(!tableIds.addNode(new IdNode(i,type,ambito_actual,type+"->void","Function"))){
+                                                                                                System.err.println("Function "+i+" already exists "+type+"->void");
                                                                                             }
                                                                                             pila_de_bloques.push(bloque);
                                                                                             bloque = 0;
@@ -2302,6 +2302,7 @@ if(!foundError){
 		 if(!foundError){RESULT = new VariableDeclarator(id,"=",expr);
                                                                                                                String auxtype1 =tableIds.searchNodeType(id,ambito_actual);
                                                                                                                String auxtype2 = expr.bringType();
+                                                                                                               
                                                                                                                if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),ambito_actual);}
                                                                                                                if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
                                                                                                             }
@@ -3232,7 +3233,34 @@ if(!foundError){
 		int argsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int argsright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Argument args = (Argument)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		if(!foundError){RESULT = new FunctionCall(listaarguments,i); listaarguments = new ArrayList();} 
+		if(!foundError){
+                                                                                RESULT = new FunctionCall(listaarguments,i);
+                                                                                String parameterType = tableIds.searchFunctionType(i);
+                                                                                if(parameterType=="none"){
+                                                                                    System.err.println("Function or Sub "+i+" not found");
+                                                                                }else{
+                                                                                    String[] split1 = parameterType.split("->");
+                                                                                    
+                                                                                    if(split1[1].equals("void") && listaarguments.size() > 0){
+                                                                                        System.err.println("Error with function or sub "+i+". Expects no arguments");
+                                                                                    }else if(!split1.equals("void")){
+                                                                                        String[] split2 = split1[1].split("x");
+                                                                                    
+                                                                                        if(split2.length != listaarguments.size()){
+                                                                                            System.err.println("Error with function or sub "+i+" wrong number of arguments");
+                                                                                        }else{
+                                                                                            for(int k = 0; k < listaarguments.size(); k++){
+                                                                                                if(!tableIds.searchNodeType(listaarguments.get(k).getExpression().getId(),ambito_actual).equals(split2[k]) && listaarguments.get(k).getExpression().getId() != null) {
+                                                                                                    System.err.println("Error with function or sub "+i+" on call. Wrong parameter "+listaarguments.get(k).getExpression().getId()+". Expected: "+tableIds.searchNodeType(listaarguments.get(k).getExpression().getId(),ambito_actual)+" found "+split2[k]);
+                                                                                                }
+                                                                                            } 
+                                                                                        }
+                                                                                    }
+                                                                                    
+                                                                                    
+                                                                                }
+                                                                                listaarguments = new ArrayList();
+                                                                           }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_call",29, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -3244,7 +3272,9 @@ if(!foundError){
 		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		if(!foundError){RESULT = new FunctionCall(null,i);} 
+		if(!foundError){
+                                                                                RESULT = new FunctionCall(null,i);
+                                                                            }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_call",29, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

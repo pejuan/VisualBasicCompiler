@@ -306,7 +306,7 @@ sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!fou
                                                                                     tipo_sub += listaparameters.get(k).getDataType();
                                                                                 }
                                                                             }
-                                                                            if (!tableIds.addNode(new IdNode(i,tipo_sub+"->void",ambito_actual))){
+                                                                            if (!tableIds.addNode(new IdNode(i,"void",ambito_actual,"void->"+tipo_sub,"Sub"))){
                                                                                 System.err.println("Function or Sub"+i+" has already been defined");
                                                                             }
                                                                             pila_de_bloques.push(bloque);
@@ -322,7 +322,7 @@ sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!fou
                     |TK_SUB TK_ID:i TK_PARIN TK_PAROUT {:if(!foundError){
                                                             bloque++;
                                                             ambito_actual += "." + Integer.toString(bloque);
-                                                            if (!tableIds.addNode(new IdNode(i, "void->void", ambito_actual))){
+                                                            if (!tableIds.addNode(new IdNode(i, "void", ambito_actual,"void->void","Sub"))){
                                                                 System.err.println("Function or Sub "+i+" has already been defined");
                                                             }
                                                             pila_de_bloques.push(bloque);
@@ -352,8 +352,8 @@ function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT 
                                                                                                                     tipo_funcion += listaparameters.get(k).getDataType();
                                                                                                                 }
                                                                                                             }
-                                                                                                            if(!tableIds.addNode(new IdNode(i, tipo_funcion+"->"+type,ambito_actual))){
-                                                                                                                System.err.println("Function "+i+" already exists "+tipo_funcion+"->"+type);
+                                                                                                            if(!tableIds.addNode(new IdNode(i,type,ambito_actual,type+"->"+tipo_funcion,"Function"))){
+                                                                                                                System.err.println("Function "+i+" already exists "+type+"->"+tipo_funcion);
                                                                                                             }
                                                                                                             pila_de_bloques.push(bloque);
                                                                                                             bloque = 0;
@@ -369,8 +369,8 @@ function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT 
                         |TK_FUNCTION TK_ID:i TK_PARIN TK_PAROUT TK_AS data_type:type {:if(!foundError){
                                                                                             bloque++;
                                                                                             ambito_actual += "."+Integer.toString(bloque);
-                                                                                            if(!tableIds.addNode(new IdNode(i, "void->"+type,ambito_actual))){
-                                                                                                System.err.println("Function "+i+" already exists "+"void->"+type);
+                                                                                            if(!tableIds.addNode(new IdNode(i,type,ambito_actual,type+"->void","Function"))){
+                                                                                                System.err.println("Function "+i+" already exists "+type+"->void");
                                                                                             }
                                                                                             pila_de_bloques.push(bloque);
                                                                                             bloque = 0;
@@ -594,6 +594,7 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                             |TK_ID:id TK_EQUALS expression:expr                                             {: if(!foundError){RESULT = new VariableDeclarator(id,"=",expr);
                                                                                                                String auxtype1 =tableIds.searchNodeType(id,ambito_actual);
                                                                                                                String auxtype2 = expr.bringType();
+                                                                                                               
                                                                                                                if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),ambito_actual);}
                                                                                                                if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
                                                                                                             }:}
@@ -1131,8 +1132,38 @@ literal_expression ::= 	TK_NUMBER:num                                       {:if
 			|TK_STRINGVAL:strVal                                {:if(!foundError){RESULT = new LiteralExpression(strVal,null,null);} :}
 ;
 
-function_call ::=   TK_ID:i TK_PARIN arguments:args TK_PAROUT             {:if(!foundError){RESULT = new FunctionCall(listaarguments,i); listaarguments = new ArrayList();} :}
-                    |TK_ID:i TK_PARIN TK_PAROUT                           {:if(!foundError){RESULT = new FunctionCall(null,i);} :}
+function_call ::=   TK_ID:i TK_PARIN arguments:args TK_PAROUT             {:if(!foundError){
+                                                                                RESULT = new FunctionCall(listaarguments,i);
+                                                                                String parameterType = tableIds.searchFunctionType(i);
+                                                                                if(parameterType=="none"){
+                                                                                    System.err.println("Function or Sub "+i+" not found");
+                                                                                }else{
+                                                                                    String[] split1 = parameterType.split("->");
+                                                                                    
+                                                                                    if(split1[1].equals("void") && listaarguments.size() > 0){
+                                                                                        System.err.println("Error with function or sub "+i+". Expects no arguments");
+                                                                                    }else if(!split1.equals("void")){
+                                                                                        String[] split2 = split1[1].split("x");
+                                                                                    
+                                                                                        if(split2.length != listaarguments.size()){
+                                                                                            System.err.println("Error with function or sub "+i+" wrong number of arguments");
+                                                                                        }else{
+                                                                                            for(int k = 0; k < listaarguments.size(); k++){
+                                                                                                if(!tableIds.searchNodeType(listaarguments.get(k).getExpression().getId(),ambito_actual).equals(split2[k]) && listaarguments.get(k).getExpression().getId() != null) {
+                                                                                                    System.err.println("Error with function or sub "+i+" on call. Wrong parameter "+listaarguments.get(k).getExpression().getId()+". Expected: "+tableIds.searchNodeType(listaarguments.get(k).getExpression().getId(),ambito_actual)+" found "+split2[k]);
+                                                                                                }
+                                                                                            } 
+                                                                                        }
+                                                                                    }
+                                                                                    
+                                                                                    
+                                                                                }
+                                                                                listaarguments = new ArrayList();
+                                                                           }:}
+
+                    |TK_ID:i TK_PARIN TK_PAROUT                           {:if(!foundError){
+                                                                                RESULT = new FunctionCall(null,i);
+                                                                            }:}
                     |TK_ID TK_PARIN error                                 {:System.err.println("Function call expects ')'");foundError=true;:}
                     |TK_ID:i TK_PARIN arguments:args error                {:System.err.println("Function call expects2 ')'");foundError=true;:}
 ;

@@ -33,10 +33,22 @@ public class IdTable {
         }
         return false;
     }
+    
+    public String searchFunctionType(String id){
+        for(IdNode idlist1:this.idlist){
+            if(idlist1.getName().equals(id) && (idlist1.getProcedureType().equals("Function") || idlist1.getProcedureType().equals("Sub"))){
+                return idlist1.getType2();
+            }
+        }
+        return "none";
+    }
+    
     public String searchNodeType(String id,String ambito){//a esta busqueda habra que incluirle el ambito
         
         for (IdNode idlist1 : this.idlist) {
-            if (idlist1.getName().equals(id) && ambito.contains(idlist1.getAmbito())) {
+            if(idlist1.getName().equals(id) && idlist1.getProcedureType().equals("Function")){
+                return idlist1.getType();
+            }else if(idlist1.getName().equals(id) && ambito.contains(idlist1.getAmbito())){
                 return idlist1.getType();
             }
         }

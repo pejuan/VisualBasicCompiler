@@ -13,6 +13,8 @@ public class IdNode {
     private String name;
     private String type;
     private String ambito;
+    private String type2 = new String(); //Si no los inicializo como new String, me tira un null pointer
+    private String procedureType = new String(); //Si no los inicializo como new String, me tira un null pointer
 
     public IdNode(String name, String type) {
         this.name = name;
@@ -23,6 +25,16 @@ public class IdNode {
         this.name = name;
         this.type = type;
         this.ambito = ambito;
+        this.type2 = "Variable";
+        this.procedureType = "None";
+    }
+    
+    public IdNode(String name, String type, String ambito, String type2, String procedureType){
+        this.name = name;
+        this.type = type;
+        this.ambito = ambito;
+        this.type2 = type2;
+        this.procedureType = procedureType;
     }
  
     
@@ -48,6 +60,22 @@ public class IdNode {
 
     public void setAmbito(String ambito) {
         this.ambito = ambito;
+    }
+    
+    public String getProcedureType(){
+        return this.procedureType;
+    }
+    
+    public void setProcedureType(String procedureType){
+        this.procedureType = procedureType;
+    }
+    
+    public String getType2(){
+        return this.type2;
+    }
+    
+    public void setType2(String type2){
+        this.type2 = type2;
     }
 
     @Override
