@@ -1353,6 +1353,10 @@ if(!foundError){
                                                                                                                 }else{
                                                                                                                     tipo_funcion += listaparameters.get(k).getDataType();
                                                                                                                 }
+                                                                                                                if(!tableIds.addNode(new IdNode(listaparameters.get(k).getId(),listaparameters.get(k).getDataType(),ambito_actual,"Parameter",listaparameters.get(k).getParameterType()))){//revisar si expr tiene el mismo type que id
+                                                                                                                    System.err.println("Parameter id "+i+" already exists.");//No estoy seguro si foundError debe cambiar
+                                                                                                                } 
+                                                                                                                
                                                                                                             }
                                                                                                             if(!tableIds.addNode(new IdNode(i,type,ambito_actual,type+"->"+tipo_funcion,"Function"))){
                                                                                                                 System.err.println("Function "+i+" already exists "+type+"->"+tipo_funcion);
@@ -1510,7 +1514,10 @@ if(!foundError){
 		int typeleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int typeright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String type = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		if(!foundError){RESULT = new Parameter(prmt_type, type,i);} 
+		if(!foundError){RESULT = new Parameter(prmt_type, type,i);
+                                                                                                                                                      
+                                                                      } 
+                                                                      
               CUP$parser$result = parser.getSymbolFactory().newSymbol("parameter",9, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

@@ -351,6 +351,10 @@ function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT 
                                                                                                                 }else{
                                                                                                                     tipo_funcion += listaparameters.get(k).getDataType();
                                                                                                                 }
+                                                                                                                if(!tableIds.addNode(new IdNode(listaparameters.get(k).getId(),listaparameters.get(k).getDataType(),ambito_actual,"Parameter",listaparameters.get(k).getParameterType()))){//revisar si expr tiene el mismo type que id
+                                                                                                                    System.err.println("Parameter id "+i+" already exists.");//No estoy seguro si foundError debe cambiar
+                                                                                                                } 
+                                                                                                                
                                                                                                             }
                                                                                                             if(!tableIds.addNode(new IdNode(i,type,ambito_actual,type+"->"+tipo_funcion,"Function"))){
                                                                                                                 System.err.println("Function "+i+" already exists "+type+"->"+tipo_funcion);
@@ -392,7 +396,10 @@ parameters ::= 	parameter:prmt TK_COMMA parameters:prmts        {: if(!foundErro
 		|parameter:prmt                                 {: if(!foundError){listaparameters.add(prmt);}:}
 ;
 
-parameter ::=	parameter_type:prmt_type TK_ID:i TK_AS data_type:type {:if(!foundError){RESULT = new Parameter(prmt_type, type,i);} :}
+parameter ::=	parameter_type:prmt_type TK_ID:i TK_AS data_type:type {:if(!foundError){RESULT = new Parameter(prmt_type, type,i);
+                                                                                                                                                      
+                                                                      } 
+                                                                      :}
 ;
 
 parameter_type ::=  TK_BYVAL                    {: if(!foundError){RESULT = "ByVal";}:}
