@@ -11,6 +11,7 @@ package AST;
  */
 public class Expression extends Statements{
     private String Id;
+    private String lugar;
 
     public Expression(String Id) {
         this.Id = Id;
@@ -25,6 +26,14 @@ public class Expression extends Statements{
     }
     public String bringType(){
         return "none";
+    }
+
+    public String getLugar() {
+        return lugar;
+    }
+
+    public void setLugar(String lugar) {
+        this.lugar = lugar;
     }
 
     

@@ -9,6 +9,7 @@ import AST.*;
 parser code {:
         public Program FINALOBJECT = new Program();
         public IdTable tableIds = new IdTable();
+        public Cuadruplo cuadruplo = new Cuadruplo();
         public ArrayList<Statements> listastatements = new ArrayList();
         public ArrayList<Argument> listaarguments = new ArrayList();
         public ArrayList<Parameter> listaparameters = new ArrayList();
@@ -16,6 +17,8 @@ parser code {:
         public boolean foundError = false;
         public boolean foundTypeError = false;
         public int bloque = 0;
+        public int contadortemporales = 0;
+        public int contadoretiquetas = 0;
         public Stack pila_de_bloques = new Stack();
         public String ambito_actual = Integer.toString(bloque);
         public String partir_ambito[];
@@ -31,6 +34,11 @@ parser code {:
                 }
             }
             return scope;
+        }
+        public String nuevoTemporal(){
+            String tmp = "t"+contadortemporales;
+            contadortemporales++;
+            return tmp;
         }
 	public void syntax_error(Symbol s){
             if(s.sym==0){
@@ -608,12 +616,12 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
 ;   
 
 
-expression ::=	numeric_expression:num_exp      {: if(!foundError){RESULT = new NumericExpression(((NumericExpression)num_exp).getExpression1(),((NumericExpression)num_exp).getExpression2(),((NumericExpression)num_exp).getOperador(),null);} :}
-		|boolean_expression:bool_exp    {:if(!foundError){RESULT = new BooleanExpression(((BooleanExpression)bool_exp).getExpression1(), ((BooleanExpression)bool_exp).getOperador(), ((BooleanExpression)bool_exp).getExpression2(),null);} :}
-		|logical_expression:logic_exp   {:if(!foundError){RESULT = new LogicalExpression(((LogicalExpression)logic_exp).isValue(),((LogicalExpression)logic_exp).getOperador(),((LogicalExpression)logic_exp).getExpression1(),((LogicalExpression)logic_exp).getExpression2(),null);} :}
-		|literal_expression:lit_exp     {:if(!foundError){RESULT = new LiteralExpression(((LiteralExpression)lit_exp).getStringval(),((LiteralExpression)lit_exp).getNumber(),null);} :}
-		|TK_ID:id                       {:if(!foundError){RESULT = new Expression(id);} :}
-		|function_call:call             {:if(!foundError){RESULT = new FunctionCall(((FunctionCall)call).getArguments(),((FunctionCall)call).getId());} :}
+expression ::=	numeric_expression:num_exp      {: if(!foundError){RESULT = new NumericExpression(((NumericExpression)num_exp).getExpression1(),((NumericExpression)num_exp).getExpression2(),((NumericExpression)num_exp).getOperador(),null); RESULT.setLugar(num_exp.getLugar());} :}
+		|boolean_expression:bool_exp    {:if(!foundError){RESULT = new BooleanExpression(((BooleanExpression)bool_exp).getExpression1(), ((BooleanExpression)bool_exp).getOperador(), ((BooleanExpression)bool_exp).getExpression2(),null); RESULT.setLugar(bool_exp.getLugar());} :}
+		|logical_expression:logic_exp   {:if(!foundError){RESULT = new LogicalExpression(((LogicalExpression)logic_exp).isValue(),((LogicalExpression)logic_exp).getOperador(),((LogicalExpression)logic_exp).getExpression1(),((LogicalExpression)logic_exp).getExpression2(),null); RESULT.setLugar(logic_exp.getLugar());} :}
+		|literal_expression:lit_exp     {:if(!foundError){RESULT = new LiteralExpression(((LiteralExpression)lit_exp).getStringval(),((LiteralExpression)lit_exp).getNumber(),null); RESULT.setLugar(lit_exp.getLugar());} :}
+		|TK_ID:id                       {:if(!foundError){RESULT = new Expression(id); RESULT.setLugar(id);} :}
+		|function_call:call             {:if(!foundError){RESULT = new FunctionCall(((FunctionCall)call).getArguments(),((FunctionCall)call).getId()); RESULT.setLugar(call.getLugar());} :}
 ;
 
 boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2                       {: if(!foundError){RESULT = new BooleanExpression(e1,">",e2,null);
@@ -632,6 +640,9 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }else{
                                                                                                             System.err.println("Error at *expression1* > *expression2*, expression1 is not an Integer. Is "+auxtype+".");
                                                                                                         }
+                                                                                                    }else{
+                                                                                                        
+                                                                                                        
                                                                                                     }
                                                                                                 }
                                                                                             
@@ -652,6 +663,17 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
+                                                                                                RESULT.setLugar(nuevoTemporal());
+                                                                                                int tmpet = contadoretiquetas;
+                                                                                                cuadruplo.addNode("if>",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                contadoretiquetas++;
+                                                                                                cuadruplo.addNode("=","0","",RESULT.getLugar());
+                                                                                                int tmpet2 = contadoretiquetas;
+                                                                                                cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
+                                                                                                contadoretiquetas++;
+                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
+                                                                                                cuadruplo.addNode("=","1","",RESULT.getLugar());
+                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
                                                                                                                                                                                
                                                                                         }:}
 
@@ -689,6 +711,17 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
+                                                                                                RESULT.setLugar(nuevoTemporal());
+                                                                                                int tmpet = contadoretiquetas;
+                                                                                                cuadruplo.addNode("if<",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                contadoretiquetas++;
+                                                                                                cuadruplo.addNode("=","0","",RESULT.getLugar());
+                                                                                                int tmpet2 = contadoretiquetas;
+                                                                                                cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
+                                                                                                contadoretiquetas++;
+                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
+                                                                                                cuadruplo.addNode("=","1","",RESULT.getLugar());
+                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
                                                                                             
                                                                                         }:}
                        |expression:e1 TK_GREATEREQUAL expression:e2                     {: if(!foundError){RESULT = new BooleanExpression(e1,">=",e2,null);
@@ -725,6 +758,17 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
+                                                                                                RESULT.setLugar(nuevoTemporal());
+                                                                                                int tmpet = contadoretiquetas;
+                                                                                                cuadruplo.addNode("if>=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                contadoretiquetas++;
+                                                                                                cuadruplo.addNode("=","0","",RESULT.getLugar());
+                                                                                                int tmpet2 = contadoretiquetas;
+                                                                                                cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
+                                                                                                contadoretiquetas++;
+                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
+                                                                                                cuadruplo.addNode("=","1","",RESULT.getLugar());
+                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
                                                                                              
                                                                                         }:}
                        |expression:e1 TK_LESSEQUAL expression:e2                        {: if(!foundError){RESULT = new BooleanExpression(e1,"<=",e2,null);
@@ -761,6 +805,17 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
+                                                                                                RESULT.setLugar(nuevoTemporal());
+                                                                                                int tmpet = contadoretiquetas;
+                                                                                                cuadruplo.addNode("if<=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                contadoretiquetas++;
+                                                                                                cuadruplo.addNode("=","0","",RESULT.getLugar());
+                                                                                                int tmpet2 = contadoretiquetas;
+                                                                                                cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
+                                                                                                contadoretiquetas++;
+                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
+                                                                                                cuadruplo.addNode("=","1","",RESULT.getLugar());
+                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
                                                                                              
                                                                                         }:}
                        |expression:e1 TK_EQUALS expression:e2                           {: if(!foundError){RESULT = new BooleanExpression(e1,"=",e2,null);
@@ -797,6 +852,17 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
+                                                                                                RESULT.setLugar(nuevoTemporal());
+                                                                                                int tmpet = contadoretiquetas;
+                                                                                                cuadruplo.addNode("if=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                contadoretiquetas++;
+                                                                                                cuadruplo.addNode("=","0","",RESULT.getLugar());
+                                                                                                int tmpet2 = contadoretiquetas;
+                                                                                                cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
+                                                                                                contadoretiquetas++;
+                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
+                                                                                                cuadruplo.addNode("=","1","",RESULT.getLugar());
+                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
                                                                                             
                                                                                         }:}
                        |expression:e1 TK_NOTEQUAL expression:e2                         {: if(!foundError){RESULT = new BooleanExpression(e1,"<>",e2,null);
@@ -833,6 +899,17 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
+                                                                                                RESULT.setLugar(nuevoTemporal());
+                                                                                                int tmpet = contadoretiquetas;
+                                                                                                cuadruplo.addNode("if!=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                contadoretiquetas++;
+                                                                                                cuadruplo.addNode("=","0","",RESULT.getLugar());
+                                                                                                int tmpet2 = contadoretiquetas;
+                                                                                                cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
+                                                                                                contadoretiquetas++;
+                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
+                                                                                                cuadruplo.addNode("=","1","",RESULT.getLugar());
+                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
                                                                                             
                                                                                         } :}
 ;
@@ -851,6 +928,8 @@ logical_expression ::= TK_NOT expression:e1                             {:if(!fo
                                                                                     }
                                                                                 }
                                                                             }
+                                                                            RESULT.setLugar(nuevoTemporal());
+                                                                            cuadruplo.addNode("NOT",e1.getLugar(),"",RESULT.getLugar());
                                                                         }:}
                        |TK_NOT TK_PARIN expression:e1 TK_PAROUT         {:if(!foundError){RESULT = new LogicalExpression("Not",e1,null);
                                                                            if(e1.getId() != null && !tableIds.searchScope(e1.getId(),ambito_actual)){
@@ -866,6 +945,8 @@ logical_expression ::= TK_NOT expression:e1                             {:if(!fo
                                                                                     }
                                                                                 }
                                                                             }
+                                                                            RESULT.setLugar(nuevoTemporal());
+                                                                            cuadruplo.addNode("NOT",e1.getLugar(),"",RESULT.getLugar());
                                                                         }:}
                        |expression:e1 TK_OR expression:e2               {:if(!foundError){RESULT = new LogicalExpression("Or",e1,e2,null);
                                                                             if(e1.getId() != null && !tableIds.searchScope(e1.getId(),ambito_actual)){
@@ -891,7 +972,8 @@ logical_expression ::= TK_NOT expression:e1                             {:if(!fo
                                                                                     }else{System.err.println("Error at *expression* Or *expression*, not a boolean expression. Is "+auxtype2+".");}
                                                                                 }
                                                                             }
-                                                                            
+                                                                            RESULT.setLugar(nuevoTemporal());
+                                                                            cuadruplo.addNode("Or",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
                                                                         }:}
                        |expression:e1 TK_AND expression:e2              {:if(!foundError){RESULT = new LogicalExpression("And",e1,e2,null);
                                                                             if(e1.getId() != null && !tableIds.searchScope(e1.getId(),ambito_actual)){
@@ -917,6 +999,8 @@ logical_expression ::= TK_NOT expression:e1                             {:if(!fo
                                                                                     }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype2+".");}
                                                                                 }
                                                                             }
+                                                                            RESULT.setLugar(nuevoTemporal());
+                                                                            cuadruplo.addNode("And",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
                                                                             
                                                                         } :}
                        |expression:e1 TK_XOR expression:e2              {:if(!foundError){RESULT = new LogicalExpression("Xor",e1,e2,null);
@@ -943,9 +1027,17 @@ logical_expression ::= TK_NOT expression:e1                             {:if(!fo
                                                                                     }else{System.err.println("Error at *expression* Xor *expression*, not a boolean expression. Is "+auxtype2+".");}
                                                                                 }
                                                                             }
+                                                                            RESULT.setLugar(nuevoTemporal());
+                                                                            cuadruplo.addNode("Xor",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
                                                                         } :}
-                       |TK_TRUE                                         {:if(!foundError){RESULT = new LogicalExpression(true,null);} :}
-                       |TK_FALSE                                        {:if(!foundError){RESULT = new LogicalExpression(false,null);} :}
+                       |TK_TRUE                                         {:if(!foundError){RESULT = new LogicalExpression(true,null);} 
+                                                                            RESULT.setLugar(nuevoTemporal());
+                                                                            cuadruplo.addNode("=","1","",RESULT.getLugar());
+                                                                        :}
+                       |TK_FALSE                                        {:if(!foundError){RESULT = new LogicalExpression(false,null);} 
+                                                                            RESULT.setLugar(nuevoTemporal());
+                                                                            cuadruplo.addNode("=","0","",RESULT.getLugar());
+                                                                        :}
 ;
 numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!foundError){RESULT = new NumericExpression(e1,e2,"+",null);
                                                                             

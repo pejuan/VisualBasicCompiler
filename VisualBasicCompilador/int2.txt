@@ -1,34 +1,29 @@
-Function funcion1(ByVal a As Integer, ByRef b As Boolean, ByVal c As String) As Boolean
-	If c > 20 Then
-	End If
-End Function
-
-Function funcion2() As Integer
-	Dim c As Boolean = False
-	c = funcion1()
-End Function
-
 Sub main()
 	m As String = "Hell"
 	k As Integer = 9
+	DIm a As Boolean = True
 	
-	o As Boolean = Not (a Xor b)
+	k>8
 	
+	k<1
+
+	a Or False
+
+
+	k = 8+9*7
 	
 	'Cuando se asigna un Id, expression regresa como tipo el tipo none, hay que hacer una busqueda.
 	'Dim Hola As String = "Hell"
 	'Dim ey As Integer = Hola
 
-	If True Then
-		Dim a As Integer = 0
-	ElseIf True Then
-		Dim b As Integer = 0
-	ElseIf True Then
-		Dim c As Integer = 0
-	Else
-		Dim d As Integer = 0
-	End If
-
-	u As Integer = funcion2()
+	'If True Then
+	'	Dim a As Integer = 0
+	'ElseIf True Then
+	'	Dim b As Integer = 0
+	'ElseIf True Then
+	'	Dim c As Integer = 0
+	'Else
+	'	Dim d As Integer = 0
+	'End If
 	
 End Sub

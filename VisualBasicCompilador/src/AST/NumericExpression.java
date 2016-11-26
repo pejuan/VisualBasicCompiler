@@ -14,7 +14,6 @@ public class NumericExpression extends Expression{
     private Expression expression2;
     private String operador;
 
-
     public NumericExpression(Expression expression1, Expression expression2, String operador, String Id) {
         super(Id);
         this.expression1 = expression1;

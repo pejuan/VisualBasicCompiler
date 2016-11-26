@@ -5,7 +5,7 @@
  */
 package visualbasiccompilador;
 
-import AST.IdNode;
+import AST.*;
 import java.io.FileReader;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -51,9 +51,32 @@ public class VisualBasicCompilador {
                 System.out.format("%20s%20s%20s%20s%20s", nodo.getName(),nodo.getType(),nodo.getAmbito(),nodo.getType2(),nodo.getProcedureType());
             }
             System.out.println("");
+            p.cuadruplo.print();
+            ////////////////////////////////////////////////////////////////////
+            
+            
+//            for (int i = p.FINALOBJECT.getDeclarations().size(); i > 0; i--) {
+//                
+//                FunctionDeclaration fd = p.FINALOBJECT.getDeclarations().get(i-1);
+//                if (fd instanceof SubStatement) {
+//                    SubStatement ss = (SubStatement)fd;
+//                    //System.out.println(((SubStatement)fd).getId());;
+//                    for (int j = ss.getStatements().size(); j > 0; j--) {
+//                        
+//                    }
+//                    
+//                    
+//                }else if(fd instanceof FunctionStatement){
+//                    System.out.println(((FunctionStatement)fd).getId());
+//                }
+//            }
+            ////////////////////////////////////////////////////////////////////
         }catch(Exception e){
             e.printStackTrace();
         }
+        
+        
+        
     }
     
 }
