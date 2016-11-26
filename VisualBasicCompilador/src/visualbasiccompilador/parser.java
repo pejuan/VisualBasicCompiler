@@ -2247,6 +2247,7 @@ if(!foundError){
                                                                                                                     }else   
                                                                                                                         System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
                                                                                                                }
+                                                                                                               cuadruplo.addNode("=",expr.getLugar(),"",id);
                                                                                                             }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable_declarator",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2279,6 +2280,7 @@ if(!foundError){
                                                                                                                     }else   
                                                                                                                         System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
                                                                                                                }
+                                                                                                               cuadruplo.addNode("=",expr.getLugar(),"",id);
                                                                                                             }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable_declarator",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2299,6 +2301,7 @@ if(!foundError){
                                                                                                                String auxtype2 = expr.bringType();
                                                                                                                if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),ambito_actual);}
                                                                                                                if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
+                                                                                                               cuadruplo.addNode("=",expr.getLugar(),"",id);
                                                                                                             } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable_declarator",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2320,6 +2323,7 @@ if(!foundError){
                                                                                                                
                                                                                                                if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),ambito_actual);}
                                                                                                                if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
+                                                                                                               cuadruplo.addNode("=",expr.getLugar(),"",id);
                                                                                                             }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable_declarator",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -3016,7 +3020,8 @@ if(!foundError){
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            
+                                                                                RESULT.setLugar(nuevoTemporal());
+                                                                                cuadruplo.addNode("+",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
                                                                             
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -3067,7 +3072,8 @@ if(!foundError){
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            
+                                                                                RESULT.setLugar(nuevoTemporal());
+                                                                                cuadruplo.addNode("-",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -3117,6 +3123,8 @@ if(!foundError){
                                                                                         }
                                                                                     }
                                                                                 }
+                                                                                RESULT.setLugar(nuevoTemporal());
+                                                                                cuadruplo.addNode("*",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
                                                                             
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -3167,6 +3175,8 @@ if(!foundError){
                                                                                         }
                                                                                     }
                                                                                 }
+                                                                                RESULT.setLugar(nuevoTemporal());
+                                                                                cuadruplo.addNode("/",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
                                                                             
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -3217,6 +3227,8 @@ if(!foundError){
                                                                                         }
                                                                                     }
                                                                                 }
+                                                                                RESULT.setLugar(nuevoTemporal());
+                                                                                cuadruplo.addNode("&",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
                                                                             
                                                                         } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("numeric_expression",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -3306,6 +3318,8 @@ if(!foundError){
 		int numright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Integer num = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new LiteralExpression(null,num,null);} 
+                                                                                RESULT.setLugar(num.toString());
+                                                                            
               CUP$parser$result = parser.getSymbolFactory().newSymbol("literal_expression",27, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -3318,6 +3332,8 @@ if(!foundError){
 		int strValright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String strVal = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new LiteralExpression(strVal,null,null);} 
+                                                                                RESULT.setLugar("\""+strVal+"\"");
+                                                                            
               CUP$parser$result = parser.getSymbolFactory().newSymbol("literal_expression",27, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

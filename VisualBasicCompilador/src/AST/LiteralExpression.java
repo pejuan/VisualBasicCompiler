@@ -44,13 +44,13 @@ public class LiteralExpression extends Expression{
         }
         
     }
-    @Override
-    public String getLugar(){
-        if (number == null) {
-            return stringval;
-        }else{
-            return number.toString();
-        }
- 
-    }
+//    @Override
+//    public String getLugar(){
+//        if (number == null) {
+//            return stringval;
+//        }else{
+//            return number.toString();
+//        }
+// 
+//    }
 }

@@ -5,7 +5,9 @@
  */
 package visualbasiccompilador;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -28,6 +30,22 @@ public class Cuadruplo {
         for (int i = 0; i < comandos.size(); i++) {
             System.out.format("%20s%20s%20s%20s", comandos.get(i),dir1.get(i),dir2.get(i),dir3.get(i));
             System.out.println("");
+        }
+    }
+    public void generateCode(){
+        try{
+            ArrayList<String> logicos = new ArrayList(Arrays.asList("Or","And","Xor"));
+            PrintWriter writer = new PrintWriter("codigoIntermedio.txt","UTF-8");
+        for (int i = 0; i < comandos.size(); i++) {
+            
+            if (logicos.contains(comandos.get(i))) {
+                int aux = logicos.indexOf(comandos.get(i));
+                writer.println(dir3.get(i)+"="+dir1.get(i)+" "+logicos.get(aux).toLowerCase()+" "+dir2.get(i));
+            }
+        }
+        writer.close();
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
     public void addNode(String comando,String dir1, String dir2, String dir3){

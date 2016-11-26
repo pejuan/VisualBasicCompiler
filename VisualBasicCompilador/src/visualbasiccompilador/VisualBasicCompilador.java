@@ -52,25 +52,8 @@ public class VisualBasicCompilador {
             }
             System.out.println("");
             p.cuadruplo.print();
-            ////////////////////////////////////////////////////////////////////
+            p.cuadruplo.generateCode();
             
-            
-//            for (int i = p.FINALOBJECT.getDeclarations().size(); i > 0; i--) {
-//                
-//                FunctionDeclaration fd = p.FINALOBJECT.getDeclarations().get(i-1);
-//                if (fd instanceof SubStatement) {
-//                    SubStatement ss = (SubStatement)fd;
-//                    //System.out.println(((SubStatement)fd).getId());;
-//                    for (int j = ss.getStatements().size(); j > 0; j--) {
-//                        
-//                    }
-//                    
-//                    
-//                }else if(fd instanceof FunctionStatement){
-//                    System.out.println(((FunctionStatement)fd).getId());
-//                }
-//            }
-            ////////////////////////////////////////////////////////////////////
         }catch(Exception e){
             e.printStackTrace();
         }

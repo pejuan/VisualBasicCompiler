@@ -584,6 +584,7 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                                                                                                                     }else   
                                                                                                                         System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
                                                                                                                }
+                                                                                                               cuadruplo.addNode("=",expr.getLugar(),"",id);
                                                                                                             }:}
                             |TK_ID:id TK_AS data_type:type TK_EQUALS expression:expr                        {: if(!foundError){RESULT = new VariableDeclarator(id,"As",type,"=",expr);
                                                                                                                 String auxtype = expr.bringType();
@@ -599,12 +600,14 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                                                                                                                     }else   
                                                                                                                         System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
                                                                                                                }
+                                                                                                               cuadruplo.addNode("=",expr.getLugar(),"",id);
                                                                                                             }:}
                             |TK_DIM TK_ID:id TK_EQUALS expression:expr                                      {: if(!foundError){RESULT = new VariableDeclarator("Dim",id,"=",expr);
                                                                                                                String auxtype1 =tableIds.searchNodeType(id,ambito_actual);
                                                                                                                String auxtype2 = expr.bringType();
                                                                                                                if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),ambito_actual);}
                                                                                                                if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
+                                                                                                               cuadruplo.addNode("=",expr.getLugar(),"",id);
                                                                                                             } :}
                             |TK_ID:id TK_EQUALS expression:expr                                             {: if(!foundError){RESULT = new VariableDeclarator(id,"=",expr);
                                                                                                                String auxtype1 =tableIds.searchNodeType(id,ambito_actual);
@@ -612,6 +615,7 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                                                                                                                
                                                                                                                if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),ambito_actual);}
                                                                                                                if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
+                                                                                                               cuadruplo.addNode("=",expr.getLugar(),"",id);
                                                                                                             }:}
 ;   
 
@@ -1073,7 +1077,8 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            
+                                                                                RESULT.setLugar(nuevoTemporal());
+                                                                                cuadruplo.addNode("+",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
                                                                             
                                                                         } :}
                        |expression:e1 TK_MINUS expression:e2            {:if(!foundError){RESULT = new NumericExpression(e1,e2,"-",null);
@@ -1110,7 +1115,8 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            
+                                                                                RESULT.setLugar(nuevoTemporal());
+                                                                                cuadruplo.addNode("-",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
                                                                         } :}
                        |expression:e1 TK_PRODUCT expression:e2          {:if(!foundError){RESULT = new NumericExpression(e1,e2,"*",null);
                                                                             
@@ -1146,6 +1152,8 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                                                                                         }
                                                                                     }
                                                                                 }
+                                                                                RESULT.setLugar(nuevoTemporal());
+                                                                                cuadruplo.addNode("*",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
                                                                             
                                                                         } :}
                        |expression:e1 TK_DIVISION expression:e2         {:if(!foundError){RESULT = new NumericExpression(e1,e2,"/",null);
@@ -1182,6 +1190,8 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                                                                                         }
                                                                                     }
                                                                                 }
+                                                                                RESULT.setLugar(nuevoTemporal());
+                                                                                cuadruplo.addNode("/",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
                                                                             
                                                                         } :}
                        |expression:e1 TK_AMPERSAND expression:e2        {:if(!foundError){RESULT = new NumericExpression(e1,e2,"&",null);
@@ -1218,6 +1228,8 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                                                                                         }
                                                                                     }
                                                                                 }
+                                                                                RESULT.setLugar(nuevoTemporal());
+                                                                                cuadruplo.addNode("&",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
                                                                             
                                                                         } :}
                        |expression:e1 TK_SUM error expression:e2              {: System.err.println("Error in numeric expression.");foundError=true;:}
@@ -1227,8 +1239,12 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                        |expression:e1 TK_AMPERSAND error expression:e2        {: System.err.println("Error in numeric expression.");foundError=true;:}
 ;   
 
-literal_expression ::= 	TK_NUMBER:num                                       {:if(!foundError){RESULT = new LiteralExpression(null,num,null);} :}
-			|TK_STRINGVAL:strVal                                {:if(!foundError){RESULT = new LiteralExpression(strVal,null,null);} :}
+literal_expression ::= 	TK_NUMBER:num                                       {:if(!foundError){RESULT = new LiteralExpression(null,num,null);} 
+                                                                                RESULT.setLugar(num.toString());
+                                                                            :}
+			|TK_STRINGVAL:strVal                                {:if(!foundError){RESULT = new LiteralExpression(strVal,null,null);} 
+                                                                                RESULT.setLugar("\""+strVal+"\"");
+                                                                            :}
 ;
 
 function_call ::=   TK_ID:i TK_PARIN arguments:args TK_PAROUT             {:if(!foundError){

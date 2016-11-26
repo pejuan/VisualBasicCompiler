@@ -878,7 +878,7 @@ public class VisualBasicLexer extends sym implements java_cup.runtime.Scanner {
             }
           case 78: break;
           case 26: 
-            { stringtmp=yytext();return symbol(sym.TK_STRINGVAL,stringtmp.substring(1,stringtmp.length()-2));
+            { stringtmp=yytext();return symbol(sym.TK_STRINGVAL,stringtmp.substring(1,stringtmp.length()-1));
             }
           case 79: break;
           case 27: 

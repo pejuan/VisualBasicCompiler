@@ -124,7 +124,7 @@ whitespace = {linebreak} | [\s\t\f]
 	{Structure}						{return symbol(sym.TK_STRUCTURE);}
 	{Sum}							{return symbol(sym.TK_SUM);}
         {ampersand}                                             {return symbol(sym.TK_AMPERSAND);}
-	{stringval}						{stringtmp=yytext();return symbol(sym.TK_STRINGVAL,stringtmp.substring(1,stringtmp.length()-2));}
+	{stringval}						{stringtmp=yytext();return symbol(sym.TK_STRINGVAL,stringtmp.substring(1,stringtmp.length()-1));}
 	{Minus}							{return symbol(sym.TK_MINUS);}
 	{Product}						{return symbol(sym.TK_PRODUCT);}
 	{Division}						{return symbol(sym.TK_DIVISION);}

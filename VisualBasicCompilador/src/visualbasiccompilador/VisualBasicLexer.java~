@@ -782,7 +782,7 @@ public class VisualBasicLexer extends sym implements java_cup.runtime.Scanner {
             }
           case 54: break;
           case 2: 
-            { return symbol(sym.TK_ID,new OBJID(yytext()));
+            { return symbol(sym.TK_ID,yytext());
             }
           case 55: break;
           case 3: 
