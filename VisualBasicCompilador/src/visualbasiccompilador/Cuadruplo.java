@@ -45,7 +45,7 @@ public class Cuadruplo {
                 writer.println(dir3.get(i)+"="+dir1.get(i)+" "+logicos.get(aux).toLowerCase()+" "+dir2.get(i));
             }else if(comp.contains(comandos.get(i))){
                 int aux = comp.indexOf(comandos.get(i));
-                writer.println("if "+dir1.get(i)+comp.get(aux)+dir2.get(i)+" GOTO "+dir3.get(aux));
+                writer.println("if "+dir1.get(i)+comp.get(aux)+dir2.get(i)+" GOTO "+dir3.get(i));
             }else if(comandos.get(i).equals("ETIQ")){
                 writer.println(dir3.get(i));
             }else if(comandos.get(i).equals("GOTO")){

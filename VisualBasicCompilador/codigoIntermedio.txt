@@ -4,13 +4,13 @@ k=t0
 t1=1
 a=t1
 R=0
-if k>8 GOTO m
+if k>8 GOTO etiqueta0
 t2=0
 GOTO etiqueta1
 etiqueta0
 t2=1
 etiqueta1
-if k<1 GOTO t0
+if k<1 GOTO etiqueta2
 t3=0
 GOTO etiqueta3
 etiqueta2
