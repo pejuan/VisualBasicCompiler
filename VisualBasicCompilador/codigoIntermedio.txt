@@ -1,1 +1,23 @@
+m="Hell"
+t0=9*7
+k=t0
+t1=1
+a=t1
+R=0
+if k>8 GOTO m
+t2=0
+GOTO etiqueta1
+etiqueta0
+t2=1
+etiqueta1
+if k<1 GOTO t0
+t3=0
+GOTO etiqueta3
+etiqueta2
+t3=1
+etiqueta3
+t4=0
 t5=a or t4
+t6=9*23
+t7=8+t6
+k=t7

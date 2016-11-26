@@ -35,12 +35,26 @@ public class Cuadruplo {
     public void generateCode(){
         try{
             ArrayList<String> logicos = new ArrayList(Arrays.asList("Or","And","Xor"));
+            ArrayList<String> comp = new ArrayList(Arrays.asList(">","<","<=",">=","==","!="));
+            ArrayList<String> operacion = new ArrayList(Arrays.asList("+","-","*","/"));
             PrintWriter writer = new PrintWriter("codigoIntermedio.txt","UTF-8");
         for (int i = 0; i < comandos.size(); i++) {
             
             if (logicos.contains(comandos.get(i))) {
                 int aux = logicos.indexOf(comandos.get(i));
                 writer.println(dir3.get(i)+"="+dir1.get(i)+" "+logicos.get(aux).toLowerCase()+" "+dir2.get(i));
+            }else if(comp.contains(comandos.get(i))){
+                int aux = comp.indexOf(comandos.get(i));
+                writer.println("if "+dir1.get(i)+comp.get(aux)+dir2.get(i)+" GOTO "+dir3.get(aux));
+            }else if(comandos.get(i).equals("ETIQ")){
+                writer.println(dir3.get(i));
+            }else if(comandos.get(i).equals("GOTO")){
+                writer.println("GOTO "+dir3.get(i));
+            }else if(comandos.get(i).equals("=")){
+                writer.println(dir3.get(i)+"="+dir1.get(i));
+            }else if(operacion.contains(comandos.get(i))){
+                int aux = operacion.indexOf(comandos.get(i));
+                writer.println(dir3.get(i)+"="+dir1.get(i)+operacion.get(aux).toLowerCase()+dir2.get(i));
             }
         }
         writer.close();

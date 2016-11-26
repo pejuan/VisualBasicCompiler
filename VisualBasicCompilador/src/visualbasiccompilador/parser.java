@@ -2452,7 +2452,7 @@ if(!foundError){
                                                                                                 }
                                                                                                 RESULT.setLugar(nuevoTemporal());
                                                                                                 int tmpet = contadoretiquetas;
-                                                                                                cuadruplo.addNode("if>",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                cuadruplo.addNode(">",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
                                                                                                 contadoretiquetas++;
                                                                                                 cuadruplo.addNode("=","0","",RESULT.getLugar());
                                                                                                 int tmpet2 = contadoretiquetas;
@@ -2513,7 +2513,7 @@ if(!foundError){
                                                                                                 }
                                                                                                 RESULT.setLugar(nuevoTemporal());
                                                                                                 int tmpet = contadoretiquetas;
-                                                                                                cuadruplo.addNode("if<",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                cuadruplo.addNode("<",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
                                                                                                 contadoretiquetas++;
                                                                                                 cuadruplo.addNode("=","0","",RESULT.getLugar());
                                                                                                 int tmpet2 = contadoretiquetas;
@@ -2574,7 +2574,7 @@ if(!foundError){
                                                                                                 }
                                                                                                 RESULT.setLugar(nuevoTemporal());
                                                                                                 int tmpet = contadoretiquetas;
-                                                                                                cuadruplo.addNode("if>=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                cuadruplo.addNode(">=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
                                                                                                 contadoretiquetas++;
                                                                                                 cuadruplo.addNode("=","0","",RESULT.getLugar());
                                                                                                 int tmpet2 = contadoretiquetas;
@@ -2635,7 +2635,7 @@ if(!foundError){
                                                                                                 }
                                                                                                 RESULT.setLugar(nuevoTemporal());
                                                                                                 int tmpet = contadoretiquetas;
-                                                                                                cuadruplo.addNode("if<=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                cuadruplo.addNode("<=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
                                                                                                 contadoretiquetas++;
                                                                                                 cuadruplo.addNode("=","0","",RESULT.getLugar());
                                                                                                 int tmpet2 = contadoretiquetas;
@@ -2696,7 +2696,7 @@ if(!foundError){
                                                                                                 }
                                                                                                 RESULT.setLugar(nuevoTemporal());
                                                                                                 int tmpet = contadoretiquetas;
-                                                                                                cuadruplo.addNode("if=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                cuadruplo.addNode("==",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
                                                                                                 contadoretiquetas++;
                                                                                                 cuadruplo.addNode("=","0","",RESULT.getLugar());
                                                                                                 int tmpet2 = contadoretiquetas;
@@ -2757,7 +2757,7 @@ if(!foundError){
                                                                                                 }
                                                                                                 RESULT.setLugar(nuevoTemporal());
                                                                                                 int tmpet = contadoretiquetas;
-                                                                                                cuadruplo.addNode("if!=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                cuadruplo.addNode("!=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
                                                                                                 contadoretiquetas++;
                                                                                                 cuadruplo.addNode("=","0","",RESULT.getLugar());
                                                                                                 int tmpet2 = contadoretiquetas;
