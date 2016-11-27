@@ -6,12 +6,11 @@
             <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/parser.cup</file>
             <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/parser.java</file>
             <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/Cuadruplo.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/IdTable.java</file>
+            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/BooleanExpression.java</file>
             <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/LiteralExpression.java</file>
             <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/VisualBasicCompilador.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/IdNode.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/Expression.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/Parameter.java</file>
+            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/FunctionCall.java</file>
+            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/LogicalExpression.java</file>
         </group>
     </open-files>
 </project-private>

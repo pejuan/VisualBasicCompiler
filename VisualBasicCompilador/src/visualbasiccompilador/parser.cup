@@ -479,7 +479,13 @@ begin_if ::= TK_IF expression:expr {:if(!foundError){
                                                 ambito_actual += "."+Integer.toString(bloque);
                                                 pila_de_bloques.push(bloque);
                                                 bloque = 0;
-                                             }:} TK_THEN statements:stmnts
+                                                cuadruplo.addNode("If",expr.getLugar(),"","");
+                                                cuadruplo.addNode("GOTO","");
+                                                cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                contadoretiquetas++;
+                                             }:} TK_THEN statements:stmnts {:cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                             contadoretiquetas++;
+                                                                           :}
 ;
 
 elseif_statements ::=	elseif_statement:elseifStmnt elseif_statements:elseifStmnts                     {:if(!foundError){listaelseifs.add(elseifStmnt);} :}
@@ -574,6 +580,7 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                                                                                                                String auxtype = expr.bringType();
                                                                                                                if(auxtype==type){
                                                                                                                     if(!tableIds.addNode(new IdNode(id,type,ambito_actual))){//revisar si expr tiene el mismo type que id
+                                                                                                                        
                                                                                                                          System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
                                                                                                                     }
                                                                                                                }else{ 

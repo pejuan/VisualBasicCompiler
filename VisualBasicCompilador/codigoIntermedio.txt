@@ -1,23 +1,24 @@
-m="Hell"
-t0=9*7
-k=t0
-t1=1
-a=t1
-R=0
-if k>8 GOTO etiqueta0
-t2=0
+k=13
+if k>11 GOTO etiqueta0
+t0=0
 GOTO etiqueta1
 etiqueta0
-t2=1
+t0=1
 etiqueta1
-if k<1 GOTO etiqueta2
-t3=0
-GOTO etiqueta3
+if t0 GOTO 
+GOTO 
 etiqueta2
-t3=1
+U=0
+if k<20 GOTO etiqueta3
+t1=0
+GOTO etiqueta4
 etiqueta3
-t4=0
-t5=a or t4
-t6=9*23
-t7=8+t6
-k=t7
+t1=1
+etiqueta4
+if t1 GOTO 
+GOTO 
+etiqueta5
+Yey="hola"
+etiqueta6
+yupi="hello"
+etiqueta7

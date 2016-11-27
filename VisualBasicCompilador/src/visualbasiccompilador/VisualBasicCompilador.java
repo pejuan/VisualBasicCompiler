@@ -43,13 +43,14 @@ public class VisualBasicCompilador {
             //System.out.println(p.FINALOBJECT.getDeclarations().size());
             mapper.writeValue(new File("./AST.json"), p.FINALOBJECT);
             file.finish();
-            System.out.format("%20s%20s%20s%20s%20s", "Symbol ID","Data Type","Scope","Type","Procedure Type");
+            
             System.out.println("");
-            for (int i = 0; i < p.tableIds.getIdlist().size()-1; i++) {
-                IdNode nodo = p.tableIds.getIdlist().get(i);
-                System.out.println("");
-                System.out.format("%20s%20s%20s%20s%20s", nodo.getName(),nodo.getType(),nodo.getAmbito(),nodo.getType2(),nodo.getProcedureType());
-            }
+//            for (int i = 0; i < p.tableIds.getIdlist().size()-1; i++) {
+//                IdNode nodo = p.tableIds.getIdlist().get(i);
+//                System.out.println("");
+//                System.out.format("%20s%20s%20s%20s%20s", nodo.getName(),nodo.getType(),nodo.getAmbito(),nodo.getType2(),nodo.getProcedureType());
+//            }
+            p.tableIds.print();
             System.out.println("");
             p.cuadruplo.print();
             p.cuadruplo.generateCode();

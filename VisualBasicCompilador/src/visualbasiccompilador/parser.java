@@ -1858,6 +1858,10 @@ if(!foundError){
                                                 ambito_actual += "."+Integer.toString(bloque);
                                                 pila_de_bloques.push(bloque);
                                                 bloque = 0;
+                                                cuadruplo.addNode("If",expr.getLugar(),"","");
+                                                cuadruplo.addNode("GOTO","");
+                                                cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                contadoretiquetas++;
                                              }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$5",37, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1875,7 +1879,9 @@ if(!foundError){
 		int stmntsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int stmntsright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Statements stmnts = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-
+		cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                             contadoretiquetas++;
+                                                                           
               CUP$parser$result = parser.getSymbolFactory().newSymbol("begin_if",19, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2237,6 +2243,7 @@ if(!foundError){
                                                                                                                String auxtype = expr.bringType();
                                                                                                                if(auxtype==type){
                                                                                                                     if(!tableIds.addNode(new IdNode(id,type,ambito_actual))){//revisar si expr tiene el mismo type que id
+                                                                                                                        
                                                                                                                          System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
                                                                                                                     }
                                                                                                                }else{ 

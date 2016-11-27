@@ -1,16 +1,12 @@
 Sub main()
-	m As String = "Hell"
-	k As Integer = 9*7
-	Dim a As Boolean = True
-	R As Integer = 0
 	
-	k>8
-	
-	k<1
-
-	a Or False
-
-
-	k = 8+9*23
+	Dim k As Integer = 13
+	If k>11 Then
+		Dim U As Integer = 0
 		
+		If k<20 Then
+			Dim Yey As String = "hola"
+		End If
+		Dim yupi As String = "hello"
+	End If
 End Sub

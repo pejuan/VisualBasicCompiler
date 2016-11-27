@@ -55,6 +55,8 @@ public class Cuadruplo {
             }else if(operacion.contains(comandos.get(i))){
                 int aux = operacion.indexOf(comandos.get(i));
                 writer.println(dir3.get(i)+"="+dir1.get(i)+operacion.get(aux).toLowerCase()+dir2.get(i));
+            }else if(comandos.get(i).equals("If")){
+                writer.println("if "+dir1.get(i)+" GOTO "+dir3.get(i));
             }
         }
         writer.close();

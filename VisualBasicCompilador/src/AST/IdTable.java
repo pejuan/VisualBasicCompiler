@@ -73,6 +73,13 @@ public class IdTable {
         }
         
     }
-    
+    public void print(){
+        System.out.format("%20s%20s%20s%20s%20s", "Symbol ID","Data Type","Scope","Type","Procedure Type");
+        for (int i = 0; i < getIdlist().size()-1; i++) {
+            IdNode nodo = getIdlist().get(i);
+            System.out.println("");
+            System.out.format("%20s%20s%20s%20s%20s", nodo.getName(),nodo.getType(),nodo.getAmbito(),nodo.getType2(),nodo.getProcedureType());
+        }
+    }
     
 }
