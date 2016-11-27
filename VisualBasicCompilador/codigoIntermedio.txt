@@ -8,17 +8,20 @@ etiqueta1
 if t0 GOTO 
 GOTO 
 etiqueta2
-U=0
-if k<20 GOTO etiqueta3
-t1=0
-GOTO etiqueta4
+U="dentro del if"
+GOTO 
 etiqueta3
-t1=1
+if k>5 GOTO etiqueta4
+t1=0
+GOTO etiqueta5
 etiqueta4
+t1=1
+etiqueta5
 if t1 GOTO 
 GOTO 
-etiqueta5
-Yey="hola"
 etiqueta6
-yupi="hello"
-etiqueta7
+yupi="dentro del elseif"
+GOTO 
+etiqueta8
+ultimo="dentro del else"
+etiqueta9

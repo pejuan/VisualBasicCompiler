@@ -2,11 +2,12 @@ Sub main()
 	
 	Dim k As Integer = 13
 	If k>11 Then
-		Dim U As Integer = 0
+		Dim U As String = "dentro del if"
 		
-		If k<20 Then
-			Dim Yey As String = "hola"
-		End If
-		Dim yupi As String = "hello"
+		
+	ElseIf k>5 Then
+		Dim yupi As String = "dentro del elseif"
+	Else
+		Dim ultimo As String = "dentro del else"
 	End If
 End Sub

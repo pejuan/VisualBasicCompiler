@@ -1774,6 +1774,8 @@ if(!foundError){
                                                                                                                  partir_ambito = ambito_actual.split("\\.");
                                                                                                                  ambito_actual = remove_scope(partir_ambito);
                                                                                                                  bloque = (int) pila_de_bloques.pop();
+                                                                                                                 cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                                 contadoretiquetas++;
                                                                                                                }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("if_statement",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1795,6 +1797,8 @@ if(!foundError){
                                                                                                                    partir_ambito = ambito_actual.split("\\.");
                                                                                                                    ambito_actual = remove_scope(partir_ambito);
                                                                                                                    bloque = (int) pila_de_bloques.pop();
+                                                                                                                   cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                                   contadoretiquetas++;
                                                                                                                 }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("if_statement",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1815,7 +1819,9 @@ if(!foundError){
                                                                                                                     listastatements = new ArrayList();listaelseifs = new ArrayList();
                                                                                                                     partir_ambito = ambito_actual.split("\\.");
                                                                                                                     ambito_actual = remove_scope(partir_ambito);
-                                                                                                                    bloque = (int) pila_de_bloques.pop();   
+                                                                                                                    bloque = (int) pila_de_bloques.pop();
+                                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                                    contadoretiquetas++;
                                                                                                                 }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("if_statement",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1840,6 +1846,8 @@ if(!foundError){
                                                                                                                     partir_ambito = ambito_actual.split("\\.");
                                                                                                                     ambito_actual = remove_scope(partir_ambito);
                                                                                                                     bloque = (int) pila_de_bloques.pop();
+                                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                                    contadoretiquetas++;
                                                                                                                   } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("if_statement",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1879,8 +1887,8 @@ if(!foundError){
 		int stmntsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int stmntsright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Statements stmnts = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
-                                                                             contadoretiquetas++;
+		cuadruplo.addNode("GOTO","");
+                                                                             //contadoretiquetas++;
                                                                            
               CUP$parser$result = parser.getSymbolFactory().newSymbol("begin_if",19, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1931,10 +1939,13 @@ if(!foundError){
             {
               ElseStatement RESULT =(ElseStatement) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 if(!foundError){
+                                    
                                     bloque++;
                                     ambito_actual += "."+Integer.toString(bloque);
                                     pila_de_bloques.push(bloque);
                                     bloque = 0;
+                                    cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                    contadoretiquetas++;
                                   }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$7",39, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1966,6 +1977,8 @@ if(!foundError){
                             partir_ambito = ambito_actual.split("\\.");
                             ambito_actual = remove_scope(partir_ambito);
                             bloque = (int) pila_de_bloques.pop();
+                            cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                            contadoretiquetas++;
                           }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$8",40, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1983,6 +1996,11 @@ if(!foundError){
                                                         ambito_actual += "."+Integer.toString(bloque);
                                                         pila_de_bloques.push(bloque);
                                                         bloque = 0;
+                                                        cuadruplo.addNode("If",expr.getLugar(),"","");
+                                                        cuadruplo.addNode("GOTO","");
+                                                        cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                        contadoretiquetas++;
+                                                        contadoretiquetas++;
                                                     }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$9",41, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2003,7 +2021,7 @@ if(!foundError){
 		if(!foundError){ 
                                                                                                 RESULT = new ElseIfStatement("ElseIf",expr,"Then",listastatements);
                                                                                                 listastatements = new ArrayList();
-                                                                                               
+                                                                                                cuadruplo.addNode("GOTO","");                                                                                               
                                                                                             } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("elseif_statement",17, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }

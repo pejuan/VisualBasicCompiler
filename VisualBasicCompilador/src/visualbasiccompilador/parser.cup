@@ -449,6 +449,8 @@ if_statement ::=    begin_if:beg TK_END TK_IF                                   
                                                                                                                  partir_ambito = ambito_actual.split("\\.");
                                                                                                                  ambito_actual = remove_scope(partir_ambito);
                                                                                                                  bloque = (int) pila_de_bloques.pop();
+                                                                                                                 cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                                 contadoretiquetas++;
                                                                                                                }:}
                     |begin_if:beg else_statement:elseStmnt TK_END TK_IF                                          {:if(!foundError){
                                                                                                                     RESULT = new IfStatement("If",beg.getExpression(),"Then","Else",listastatements,null,elseStmnt,"End IF");
@@ -456,13 +458,17 @@ if_statement ::=    begin_if:beg TK_END TK_IF                                   
                                                                                                                    partir_ambito = ambito_actual.split("\\.");
                                                                                                                    ambito_actual = remove_scope(partir_ambito);
                                                                                                                    bloque = (int) pila_de_bloques.pop();
+                                                                                                                   cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                                   contadoretiquetas++;
                                                                                                                 }:}
                     |begin_if:beg elseif_statements:elseifStmnts TK_END TK_IF                                    {:if(!foundError){
                                                                                                                      RESULT = new IfStatement("If",beg.getExpression(),"Then",null,listastatements,listaelseifs,null,"End IF");
                                                                                                                     listastatements = new ArrayList();listaelseifs = new ArrayList();
                                                                                                                     partir_ambito = ambito_actual.split("\\.");
                                                                                                                     ambito_actual = remove_scope(partir_ambito);
-                                                                                                                    bloque = (int) pila_de_bloques.pop();   
+                                                                                                                    bloque = (int) pila_de_bloques.pop();
+                                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                                    contadoretiquetas++;
                                                                                                                 }:}
                     |begin_if:beg elseif_statements:elseifStmnts else_statement:elseStmnt TK_END TK_IF           {:if(!foundError){
                                                                                                                     RESULT = new IfStatement("If",beg.getExpression(),"Then","Else",listastatements,listaelseifs,elseStmnt,"End IF");
@@ -470,6 +476,8 @@ if_statement ::=    begin_if:beg TK_END TK_IF                                   
                                                                                                                     partir_ambito = ambito_actual.split("\\.");
                                                                                                                     ambito_actual = remove_scope(partir_ambito);
                                                                                                                     bloque = (int) pila_de_bloques.pop();
+                                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                                    contadoretiquetas++;
                                                                                                                   } :}
 ;
 
@@ -483,8 +491,8 @@ begin_if ::= TK_IF expression:expr {:if(!foundError){
                                                 cuadruplo.addNode("GOTO","");
                                                 cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                 contadoretiquetas++;
-                                             }:} TK_THEN statements:stmnts {:cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
-                                                                             contadoretiquetas++;
+                                             }:} TK_THEN statements:stmnts {:cuadruplo.addNode("GOTO","");
+                                                                             //contadoretiquetas++;
                                                                            :}
 ;
 
@@ -497,10 +505,13 @@ else_statement   ::=    {:if(!foundError){
                             ambito_actual = remove_scope(partir_ambito);
                             bloque = (int) pila_de_bloques.pop();
                           }:} TK_ELSE {:if(!foundError){
+                                    
                                     bloque++;
                                     ambito_actual += "."+Integer.toString(bloque);
                                     pila_de_bloques.push(bloque);
                                     bloque = 0;
+                                    cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                    contadoretiquetas++;
                                   }:} statements:stmnts                   {:if(!foundError){
                                                                                 RESULT = new ElseStatement("Else",listastatements);
                                                                                 listastatements = new ArrayList();
@@ -511,15 +522,22 @@ elseif_statement ::=	{:if(!foundError){
                             partir_ambito = ambito_actual.split("\\.");
                             ambito_actual = remove_scope(partir_ambito);
                             bloque = (int) pila_de_bloques.pop();
+                            cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                            contadoretiquetas++;
                           }:} TK_ELSEIF expression:expr {:if(!foundError){
                                                         bloque++;
                                                         ambito_actual += "."+Integer.toString(bloque);
                                                         pila_de_bloques.push(bloque);
                                                         bloque = 0;
+                                                        cuadruplo.addNode("If",expr.getLugar(),"","");
+                                                        cuadruplo.addNode("GOTO","");
+                                                        cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                        contadoretiquetas++;
+                                                        contadoretiquetas++;
                                                     }:} TK_THEN statements:stmnts           {:if(!foundError){ 
                                                                                                 RESULT = new ElseIfStatement("ElseIf",expr,"Then",listastatements);
                                                                                                 listastatements = new ArrayList();
-                                                                                               
+                                                                                                cuadruplo.addNode("GOTO","");                                                                                               
                                                                                             } :}
 ;
  
