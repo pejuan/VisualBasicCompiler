@@ -12,7 +12,7 @@ package AST;
 public class VariableDeclaration extends Statements{
     private VariableDeclarator variableDeclarator;
     private VariableDeclaration variableDeclaration;
-
+    private String lugar;
     public VariableDeclaration(VariableDeclarator variableDeclarator, VariableDeclaration variableDeclaration) {
         this.variableDeclarator = variableDeclarator;
         this.variableDeclaration = variableDeclaration;
@@ -34,5 +34,13 @@ public class VariableDeclaration extends Statements{
 
     public void setVariableDeclaration(VariableDeclaration variableDeclaration) {
         this.variableDeclaration = variableDeclaration;
+    }
+
+    public String getLugar() {
+        return lugar;
+    }
+
+    public void setLugar(String lugar) {
+        this.lugar = lugar;
     }
 }

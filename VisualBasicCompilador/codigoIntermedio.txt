@@ -1,27 +1,17 @@
-k=13
-if k>11 GOTO etiqueta0
-t0=0
-GOTO etiqueta1
+i=0
 etiqueta0
-t0=1
+if i<10 GOTO etiqueta1
+t0=0
+GOTO etiqueta2
 etiqueta1
+t0=1
+etiqueta2
 if t0 GOTO 
 GOTO 
-etiqueta2
-U="dentro del if"
-GOTO 
-etiqueta3
-if k>5 GOTO etiqueta4
-t1=0
-GOTO etiqueta5
 etiqueta4
-t1=1
-etiqueta5
-if t1 GOTO 
+y="Dentro del for"
+t1=i+1
+i=t1
 GOTO 
-etiqueta6
-yupi="dentro del elseif"
-GOTO 
-etiqueta8
-ultimo="dentro del else"
-etiqueta9
+etiqueta4
+hello=0

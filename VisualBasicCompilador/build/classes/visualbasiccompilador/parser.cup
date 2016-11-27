@@ -533,7 +533,6 @@ elseif_statement ::=	{:if(!foundError){
                                                         cuadruplo.addNode("GOTO","");
                                                         cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                         contadoretiquetas++;
-                                                        contadoretiquetas++;
                                                     }:} TK_THEN statements:stmnts           {:if(!foundError){ 
                                                                                                 RESULT = new ElseIfStatement("ElseIf",expr,"Then",listastatements);
                                                                                                 listastatements = new ArrayList();
@@ -542,21 +541,32 @@ elseif_statement ::=	{:if(!foundError){
 ;
  
 
-for_statement ::=	TK_FOR variable_declaration:var_declare TK_TO expression:expr {:if(!foundError){
-                                                                                            bloque++;
-                                                                                            ambito_actual += "."+Integer.toString(bloque);
-                                                                                            pila_de_bloques.push(bloque);
-                                                                                            bloque = 0;
-                                                                                        }:} statements:stmnts TK_NEXT                         {:if(!foundError){
+for_statement ::=	TK_FOR {:if(!foundError){
+                                    bloque++;
+                                    ambito_actual += "."+Integer.toString(bloque);
+                                    pila_de_bloques.push(bloque);
+                                    bloque = 0;
+                                }:} variable_declaration:var_declare {:cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                       contadoretiquetas++;
+                                                                       /////////////cuadruplo.addNode("GOTO","");
+                                                                     :} TK_TO expression:expr {:contadoretiquetas++;
+                                                                                                cuadruplo.addNode("If",expr.getLugar(),"","");
+                                                                                                cuadruplo.addNode("GOTO","");
+                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);                                                                                              
+                                                                                         :} statements:stmnts {:String auxtmp = nuevoTemporal();
+                                                                                                                cuadruplo.addNode("+",var_declare.getLugar(),"1",auxtmp);
+                                                                                                                cuadruplo.addNode("=",auxtmp,"",var_declare.getLugar());
+                                                                                                                cuadruplo.addNode("GOTO","");
+                                                                                                              :}TK_NEXT                         {:if(!foundError){
                                                                                                                                                     RESULT = new ForStatement("For",var_declare,"To",expr,listastatements,"Next"); 
                                                                                                                                                     listastatements = new ArrayList();
                                                                                                                                                     partir_ambito = ambito_actual.split("\\.");
                                                                                                                                                     ambito_actual = remove_scope(partir_ambito);
                                                                                                                                                     bloque = (int) pila_de_bloques.pop();
+                                                                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                                                                    contadoretiquetas++;
                                                                                                                                                     
                                                                                                                                                }:}
-                        |TK_FOR error TK_TO expression:expr statements:stmnts TK_NEXT                                                   {:System.err.println("Error in variable declaration by For.");foundError=true; :}
-                        |TK_FOR variable_declaration:var_declare TK_TO expression:expr error statements:stmnts TK_NEXT                  {:System.err.println("Check syntax inside For.");foundError=true;:}
 ; 
 
 
@@ -590,7 +600,9 @@ do_statement ::=    TK_DO TK_WHILE expression:expr {:if(!foundError){
 ;
 
 variable_declaration ::=    variable_declarator:var TK_COMMA variable_declaration:var_declare   {: if(!foundError){RESULT = new VariableDeclaration(var,var_declare);}:}
-                            |variable_declarator:var                                            {: if(!foundError){RESULT = new VariableDeclaration(var,null);}:}
+                            |variable_declarator:var                                            {: if(!foundError){RESULT = new VariableDeclaration(var,null);
+                                                                                                    RESULT.setLugar(var.getLugar());
+                                                                                                }:}
 ;
 
 
@@ -610,6 +622,7 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                                                                                                                         System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
                                                                                                                }
                                                                                                                cuadruplo.addNode("=",expr.getLugar(),"",id);
+                                                                                                               RESULT.setLugar(id);
                                                                                                             }:}
                             |TK_ID:id TK_AS data_type:type TK_EQUALS expression:expr                        {: if(!foundError){RESULT = new VariableDeclarator(id,"As",type,"=",expr);
                                                                                                                 String auxtype = expr.bringType();

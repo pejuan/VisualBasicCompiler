@@ -16,7 +16,7 @@ public class VariableDeclarator {
     private String Equals;
     private Expression expression;
     private String dataType;
-    
+    private String lugar;
     public VariableDeclarator(String Dim, String Id, String As, String dataType, String Equals, Expression expression){
         this.Dim = Dim;
         this.Id = Id;
@@ -102,6 +102,14 @@ public class VariableDeclarator {
 
     public void setDataType(String dataType) {
         this.dataType = dataType;
+    }
+
+    public String getLugar() {
+        return lugar;
+    }
+
+    public void setLugar(String lugar) {
+        this.lugar = lugar;
     }
     
 }
