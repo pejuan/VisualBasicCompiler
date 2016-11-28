@@ -1,11 +1,4 @@
-i=0
+i=9
 etiqueta0
-if i>10 GOTO 
-GOTO 
-etiqueta2
-y="Dentro del for"
-t0=i+1
-i=t0
-GOTO 
-etiqueta2
-hello=0
+yey="holaaa"
+if i>1 GOTO 

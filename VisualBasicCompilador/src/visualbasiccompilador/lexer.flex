@@ -1,7 +1,7 @@
 package visualbasiccompilador;
 
 import java_cup.runtime.*;
-
+import AST.*;
 %%
 %class VisualBasicLexer
 %unicode
@@ -105,16 +105,16 @@ whitespace = {linebreak} | [\s\t\f]
 	{As}							{return symbol(sym.TK_AS);}
 	{True}							{return symbol(sym.TK_TRUE);}
 	{False}							{return symbol(sym.TK_FALSE);}
-	{For}							{return symbol(sym.TK_FOR);}
-	{To}							{return symbol(sym.TK_TO);}
+	{For}							{return symbol(sym.TK_FOR,new TokenEtiqueta());}
+	{To}							{return symbol(sym.TK_TO, new TokenEtiqueta());}
 	{Next}							{return symbol(sym.TK_NEXT);}
-	{If}							{return symbol(sym.TK_IF);}
-	{Then}							{return symbol(sym.TK_THEN);}
-	{ElseIf}						{return symbol(sym.TK_ELSEIF);}
-	{Else}							{return symbol(sym.TK_ELSE);}
-	{Loop}							{return symbol(sym.TK_LOOP);}
+	{If}							{return symbol(sym.TK_IF,new TokenEtiqueta());}
+	{Then}							{return symbol(sym.TK_THEN, new TokenEtiqueta());}
+	{ElseIf}						{return symbol(sym.TK_ELSEIF,new TokenEtiqueta());}
+	{Else}							{return symbol(sym.TK_ELSE, new TokenEtiqueta());}
+	{Loop}							{return symbol(sym.TK_LOOP, new TokenEtiqueta());}
 	{Do}							{return symbol(sym.TK_DO);}
-	{While}							{return symbol(sym.TK_WHILE);}
+	{While}							{return symbol(sym.TK_WHILE,new TokenEtiqueta());}
 	{End}							{return symbol(sym.TK_END);}
 	{Until}							{return symbol(sym.TK_UNTIL);}
 	{Function}						{return symbol(sym.TK_FUNCTION);}

@@ -574,33 +574,25 @@ for_statement ::=	TK_FOR {:if(!foundError){
 ; 
 
 
-do_statement ::=    TK_DO TK_WHILE expression:expr {:if(!foundError){
+do_statement ::=    TK_DO TK_WHILE{:cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                    contadoretiquetas++;
+                                    hayUnIf = true;
+                                  :} expression:expr {:if(!foundError){
                                                         bloque++;
                                                         ambito_actual += "."+Integer.toString(bloque);
                                                         pila_de_bloques.push(bloque);
                                                         bloque = 0;
-                                                    }:} statements:stmnts TK_LOOP                    {:if(!foundError){ 
-                                                                                                            RESULT = new DoStatement("Do","While",listastatements,"Loop",null,expr);
-                                                                                                            listastatements = new ArrayList();
-                                                                                                            partir_ambito = ambito_actual.split("\\.");
-                                                                                                            ambito_actual = remove_scope(partir_ambito);
-                                                                                                            bloque = (int) pila_de_bloques.pop();
-                                                                                                      }:}
-                    |TK_DO {:if(!foundError){
-                                bloque++;
-                                ambito_actual += "."+Integer.toString(bloque);
-                                pila_de_bloques.push(bloque);
-                                bloque = 0;
-                            }:} statements:stmnts TK_LOOP TK_UNTIL expression:expr                   {:if(!foundError){
-                                                                                                           RESULT = new DoStatement("Do",null,listastatements,"Loop","Until",expr);
-                                                                                                           listastatements = new ArrayList();
-                                                                                                           partir_ambito = ambito_actual.split("\\.");
-                                                                                                           ambito_actual = remove_scope(partir_ambito);
-                                                                                                           bloque = (int) pila_de_bloques.pop();
-                                                                                                      }:}
-                    |TK_DO error TK_LOOP TK_UNTIL expression:expr                               {:System.err.println("Error inside Do Loop");foundError=true;:} 
+                                                        hayUnIf=false;
+                                                    }:} statements:stmnts {:cuadruplo.addNode("If",expr.getLugar(),"","");
+                                                                            
+                                                                           :}TK_LOOP {:if(!foundError){ 
+                                                                                        RESULT = new DoStatement("Do","While",listastatements,"Loop",null,expr);
+                                                                                        listastatements = new ArrayList();
+                                                                                        partir_ambito = ambito_actual.split("\\.");
+                                                                                        ambito_actual = remove_scope(partir_ambito);
+                                                                                        bloque = (int) pila_de_bloques.pop();
+                                                                                   }:}
                     |TK_DO TK_WHILE error TK_LOOP                                               {:System.err.println("Error in Do While");foundError=true;:}
-                    |TK_DO TK_WHILE expression:expr error                                       {:System.err.println("Error after Do While statement ");foundError=true;:}
 ;
 
 variable_declaration ::=    variable_declarator:var TK_COMMA variable_declaration:var_declare   {: if(!foundError){RESULT = new VariableDeclaration(var,var_declare);}:}

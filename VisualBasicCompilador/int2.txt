@@ -1,7 +1,6 @@
 Sub main()
-	
-	For i As Integer = 0 To i>10
-		Dim y As String = "Dentro del for"
-	Next
-	Dim hello As Integer = 0	
+	Dim i As Integer = 9
+	Do While i>1
+		Dim yey As String = "holaaa"
+	Loop
 End Sub
