@@ -17,6 +17,7 @@ parser code {:
         public boolean foundError = false;
         public boolean foundTypeError = false;
         public int bloque = 0;
+        public boolean hayUnIf = false;
         public int contadortemporales = 0;
         public int contadoretiquetas = 0;
         public Stack pila_de_bloques = new Stack();
@@ -481,7 +482,7 @@ if_statement ::=    begin_if:beg TK_END TK_IF                                   
                                                                                                                   } :}
 ;
 
-begin_if ::= TK_IF expression:expr {:if(!foundError){
+begin_if ::= TK_IF {:hayUnIf = true;:} expression:expr {:if(!foundError){
                                                 RESULT = new IfStatement("Begin If",expr,"","",null,null,null,"");
                                                 bloque++;
                                                 ambito_actual += "."+Integer.toString(bloque);
@@ -491,6 +492,7 @@ begin_if ::= TK_IF expression:expr {:if(!foundError){
                                                 cuadruplo.addNode("GOTO","");
                                                 cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                 contadoretiquetas++;
+                                                hayUnIf = false;
                                              }:} TK_THEN statements:stmnts {:cuadruplo.addNode("GOTO","");
                                                                              //contadoretiquetas++;
                                                                            :}
@@ -524,7 +526,7 @@ elseif_statement ::=	{:if(!foundError){
                             bloque = (int) pila_de_bloques.pop();
                             cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                             contadoretiquetas++;
-                          }:} TK_ELSEIF expression:expr {:if(!foundError){
+                          }:} TK_ELSEIF {:hayUnIf = true;:} expression:expr {:if(!foundError){
                                                         bloque++;
                                                         ambito_actual += "."+Integer.toString(bloque);
                                                         pila_de_bloques.push(bloque);
@@ -533,6 +535,7 @@ elseif_statement ::=	{:if(!foundError){
                                                         cuadruplo.addNode("GOTO","");
                                                         cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                         contadoretiquetas++;
+                                                        hayUnIf = false;
                                                     }:} TK_THEN statements:stmnts           {:if(!foundError){ 
                                                                                                 RESULT = new ElseIfStatement("ElseIf",expr,"Then",listastatements);
                                                                                                 listastatements = new ArrayList();
@@ -549,10 +552,11 @@ for_statement ::=	TK_FOR {:if(!foundError){
                                 }:} variable_declaration:var_declare {:cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                                        contadoretiquetas++;
                                                                        /////////////cuadruplo.addNode("GOTO","");
-                                                                     :} TK_TO expression:expr {:contadoretiquetas++;
+                                                                     :} TK_TO {:hayUnIf = true;:} expression:expr {:contadoretiquetas++;
                                                                                                 cuadruplo.addNode("If",expr.getLugar(),"","");
                                                                                                 cuadruplo.addNode("GOTO","");
-                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);                                                                                              
+                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas); 
+                                                                                                hayUnIf = false;
                                                                                          :} statements:stmnts {:String auxtmp = nuevoTemporal();
                                                                                                                 cuadruplo.addNode("+",var_declare.getLugar(),"1",auxtmp);
                                                                                                                 cuadruplo.addNode("=",auxtmp,"",var_declare.getLugar());
@@ -639,6 +643,7 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                                                                                                                         System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
                                                                                                                }
                                                                                                                cuadruplo.addNode("=",expr.getLugar(),"",id);
+                                                                                                               RESULT.setLugar(id);
                                                                                                             }:}
                             |TK_DIM TK_ID:id TK_EQUALS expression:expr                                      {: if(!foundError){RESULT = new VariableDeclarator("Dim",id,"=",expr);
                                                                                                                String auxtype1 =tableIds.searchNodeType(id,ambito_actual);
@@ -646,6 +651,7 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                                                                                                                if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),ambito_actual);}
                                                                                                                if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
                                                                                                                cuadruplo.addNode("=",expr.getLugar(),"",id);
+                                                                                                               RESULT.setLugar(id);
                                                                                                             } :}
                             |TK_ID:id TK_EQUALS expression:expr                                             {: if(!foundError){RESULT = new VariableDeclarator(id,"=",expr);
                                                                                                                String auxtype1 =tableIds.searchNodeType(id,ambito_actual);
@@ -654,6 +660,7 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                                                                                                                if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),ambito_actual);}
                                                                                                                if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
                                                                                                                cuadruplo.addNode("=",expr.getLugar(),"",id);
+                                                                                                               RESULT.setLugar(id);
                                                                                                             }:}
 ;   
 
@@ -705,17 +712,19 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                RESULT.setLugar(nuevoTemporal());
-                                                                                                int tmpet = contadoretiquetas;
-                                                                                                cuadruplo.addNode(">",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
-                                                                                                contadoretiquetas++;
-                                                                                                cuadruplo.addNode("=","0","",RESULT.getLugar());
-                                                                                                int tmpet2 = contadoretiquetas;
-                                                                                                cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
-                                                                                                contadoretiquetas++;
-                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
-                                                                                                cuadruplo.addNode("=","1","",RESULT.getLugar());
-                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
+                                                                                                if(!hayUnIf){
+                                                                                                    RESULT.setLugar(nuevoTemporal());
+                                                                                                    int tmpet = contadoretiquetas;
+                                                                                                    cuadruplo.addNode(">",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                    contadoretiquetas++;
+                                                                                                    cuadruplo.addNode("=","0","",RESULT.getLugar());
+                                                                                                    int tmpet2 = contadoretiquetas;
+                                                                                                    cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
+                                                                                                    contadoretiquetas++;
+                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
+                                                                                                    cuadruplo.addNode("=","1","",RESULT.getLugar());
+                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
+                                                                                                }else{RESULT.setLugar(e1.getLugar()+">"+e2.getLugar());}
                                                                                                                                                                                
                                                                                         }:}
 
@@ -753,17 +762,19 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                RESULT.setLugar(nuevoTemporal());
-                                                                                                int tmpet = contadoretiquetas;
-                                                                                                cuadruplo.addNode("<",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
-                                                                                                contadoretiquetas++;
-                                                                                                cuadruplo.addNode("=","0","",RESULT.getLugar());
-                                                                                                int tmpet2 = contadoretiquetas;
-                                                                                                cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
-                                                                                                contadoretiquetas++;
-                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
-                                                                                                cuadruplo.addNode("=","1","",RESULT.getLugar());
-                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
+                                                                                                if(!hayUnIf){
+                                                                                                    RESULT.setLugar(nuevoTemporal());
+                                                                                                    int tmpet = contadoretiquetas;
+                                                                                                    cuadruplo.addNode("<",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                    contadoretiquetas++;
+                                                                                                    cuadruplo.addNode("=","0","",RESULT.getLugar());
+                                                                                                    int tmpet2 = contadoretiquetas;
+                                                                                                    cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
+                                                                                                    contadoretiquetas++;
+                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
+                                                                                                    cuadruplo.addNode("=","1","",RESULT.getLugar());
+                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
+                                                                                                }else{RESULT.setLugar(e1.getLugar()+"<"+e2.getLugar());}
                                                                                             
                                                                                         }:}
                        |expression:e1 TK_GREATEREQUAL expression:e2                     {: if(!foundError){RESULT = new BooleanExpression(e1,">=",e2,null);
@@ -800,17 +811,19 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                RESULT.setLugar(nuevoTemporal());
-                                                                                                int tmpet = contadoretiquetas;
-                                                                                                cuadruplo.addNode(">=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
-                                                                                                contadoretiquetas++;
-                                                                                                cuadruplo.addNode("=","0","",RESULT.getLugar());
-                                                                                                int tmpet2 = contadoretiquetas;
-                                                                                                cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
-                                                                                                contadoretiquetas++;
-                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
-                                                                                                cuadruplo.addNode("=","1","",RESULT.getLugar());
-                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
+                                                                                                if(!hayUnIf){
+                                                                                                    RESULT.setLugar(nuevoTemporal());
+                                                                                                    int tmpet = contadoretiquetas;
+                                                                                                    cuadruplo.addNode(">=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                    contadoretiquetas++;
+                                                                                                    cuadruplo.addNode("=","0","",RESULT.getLugar());
+                                                                                                    int tmpet2 = contadoretiquetas;
+                                                                                                    cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
+                                                                                                    contadoretiquetas++;
+                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
+                                                                                                    cuadruplo.addNode("=","1","",RESULT.getLugar());
+                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
+                                                                                                }else{RESULT.setLugar(e1.getLugar()+">="+e2.getLugar());}
                                                                                              
                                                                                         }:}
                        |expression:e1 TK_LESSEQUAL expression:e2                        {: if(!foundError){RESULT = new BooleanExpression(e1,"<=",e2,null);
@@ -847,17 +860,19 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                RESULT.setLugar(nuevoTemporal());
-                                                                                                int tmpet = contadoretiquetas;
-                                                                                                cuadruplo.addNode("<=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
-                                                                                                contadoretiquetas++;
-                                                                                                cuadruplo.addNode("=","0","",RESULT.getLugar());
-                                                                                                int tmpet2 = contadoretiquetas;
-                                                                                                cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
-                                                                                                contadoretiquetas++;
-                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
-                                                                                                cuadruplo.addNode("=","1","",RESULT.getLugar());
-                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
+                                                                                                if(!hayUnIf){
+                                                                                                    RESULT.setLugar(nuevoTemporal());
+                                                                                                    int tmpet = contadoretiquetas;
+                                                                                                    cuadruplo.addNode("<=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                    contadoretiquetas++;
+                                                                                                    cuadruplo.addNode("=","0","",RESULT.getLugar());
+                                                                                                    int tmpet2 = contadoretiquetas;
+                                                                                                    cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
+                                                                                                    contadoretiquetas++;
+                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
+                                                                                                    cuadruplo.addNode("=","1","",RESULT.getLugar());
+                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
+                                                                                                }else{RESULT.setLugar(e1.getLugar()+"<="+e2.getLugar());}
                                                                                              
                                                                                         }:}
                        |expression:e1 TK_EQUALS expression:e2                           {: if(!foundError){RESULT = new BooleanExpression(e1,"=",e2,null);
@@ -894,17 +909,19 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                RESULT.setLugar(nuevoTemporal());
-                                                                                                int tmpet = contadoretiquetas;
-                                                                                                cuadruplo.addNode("==",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
-                                                                                                contadoretiquetas++;
-                                                                                                cuadruplo.addNode("=","0","",RESULT.getLugar());
-                                                                                                int tmpet2 = contadoretiquetas;
-                                                                                                cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
-                                                                                                contadoretiquetas++;
-                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
-                                                                                                cuadruplo.addNode("=","1","",RESULT.getLugar());
-                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
+                                                                                                if(!hayUnIf){
+                                                                                                    RESULT.setLugar(nuevoTemporal());
+                                                                                                    int tmpet = contadoretiquetas;
+                                                                                                    cuadruplo.addNode("==",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                    contadoretiquetas++;
+                                                                                                    cuadruplo.addNode("=","0","",RESULT.getLugar());
+                                                                                                    int tmpet2 = contadoretiquetas;
+                                                                                                    cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
+                                                                                                    contadoretiquetas++;
+                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
+                                                                                                    cuadruplo.addNode("=","1","",RESULT.getLugar());
+                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
+                                                                                                }else{RESULT.setLugar(e1.getLugar()+"="+e2.getLugar());}
                                                                                             
                                                                                         }:}
                        |expression:e1 TK_NOTEQUAL expression:e2                         {: if(!foundError){RESULT = new BooleanExpression(e1,"<>",e2,null);
@@ -941,17 +958,19 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                RESULT.setLugar(nuevoTemporal());
-                                                                                                int tmpet = contadoretiquetas;
-                                                                                                cuadruplo.addNode("!=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
-                                                                                                contadoretiquetas++;
-                                                                                                cuadruplo.addNode("=","0","",RESULT.getLugar());
-                                                                                                int tmpet2 = contadoretiquetas;
-                                                                                                cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
-                                                                                                contadoretiquetas++;
-                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
-                                                                                                cuadruplo.addNode("=","1","",RESULT.getLugar());
-                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
+                                                                                                if(!hayUnIf){
+                                                                                                    RESULT.setLugar(nuevoTemporal());
+                                                                                                    int tmpet = contadoretiquetas;
+                                                                                                    cuadruplo.addNode("!=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
+                                                                                                    contadoretiquetas++;
+                                                                                                    cuadruplo.addNode("=","0","",RESULT.getLugar());
+                                                                                                    int tmpet2 = contadoretiquetas;
+                                                                                                    cuadruplo.addNode("GOTO","etiqueta"+tmpet2);
+                                                                                                    contadoretiquetas++;
+                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
+                                                                                                    cuadruplo.addNode("=","1","",RESULT.getLugar());
+                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
+                                                                                                }else{RESULT.setLugar(e1.getLugar()+"!="+e2.getLugar());}
                                                                                             
                                                                                         } :}
 ;

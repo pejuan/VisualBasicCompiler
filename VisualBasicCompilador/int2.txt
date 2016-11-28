@@ -1,7 +1,6 @@
 Sub main()
 	
-	
-	For Dim i As Integer = 0 To i<10
+	For i As Integer = 0 To i>10
 		Dim y As String = "Dentro del for"
 	Next
 	Dim hello As Integer = 0	

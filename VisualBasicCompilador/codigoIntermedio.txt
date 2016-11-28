@@ -1,17 +1,11 @@
 i=0
 etiqueta0
-if i<10 GOTO etiqueta1
-t0=0
-GOTO etiqueta2
-etiqueta1
-t0=1
+if i>10 GOTO 
+GOTO 
 etiqueta2
-if t0 GOTO 
-GOTO 
-etiqueta4
 y="Dentro del for"
-t1=i+1
-i=t1
+t0=i+1
+i=t0
 GOTO 
-etiqueta4
+etiqueta2
 hello=0
