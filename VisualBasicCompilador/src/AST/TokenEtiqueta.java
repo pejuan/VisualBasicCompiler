@@ -12,6 +12,7 @@ package AST;
 public class TokenEtiqueta {
     private int arraynumber;
     private String etiqueta;
+    
 
     public TokenEtiqueta() {
     }

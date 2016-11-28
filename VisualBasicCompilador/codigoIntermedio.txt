@@ -1,7 +1,10 @@
 i=9
+o=9
 etiqueta0
-yey="holaaa"
-etiqueta1
-yey2="Dentro del segundo"
-if i<10 GOTO etiqueta1
-if i>1 GOTO etiqueta0
+if o<9 GOTO 
+GOTO 
+etiqueta2
+t0=o+1
+o=t0
+GOTO etiqueta0
+etiqueta2

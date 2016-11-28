@@ -2005,6 +2005,9 @@ if(!foundError){
           case 64: // NT$12 ::= 
             {
               Statements RESULT =null;
+		int frleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int frright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		TokenEtiqueta fr = (TokenEtiqueta)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 if(!foundError){
                                     bloque++;
                                     ambito_actual += "."+Integer.toString(bloque);
@@ -2019,10 +2022,14 @@ if(!foundError){
           case 65: // NT$13 ::= 
             {
               Statements RESULT =(Statements) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int frleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int frright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		TokenEtiqueta fr = (TokenEtiqueta)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		int var_declareleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int var_declareright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		VariableDeclaration var_declare = (VariableDeclaration)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                        fr.setEtiqueta("etiqueta"+contadoretiquetas);
                                                                        contadoretiquetas++;
                                                                        /////////////cuadruplo.addNode("GOTO","");
                                                                      
@@ -2034,6 +2041,9 @@ cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
           case 66: // NT$14 ::= 
             {
               Statements RESULT =(Statements) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int frleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
+		int frright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
+		TokenEtiqueta fr = (TokenEtiqueta)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
 		int var_declareleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int var_declareright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		VariableDeclaration var_declare = (VariableDeclaration)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
@@ -2046,6 +2056,9 @@ hayUnIf = true;
           case 67: // NT$15 ::= 
             {
               Statements RESULT =(Statements) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int frleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).left;
+		int frright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).right;
+		TokenEtiqueta fr = (TokenEtiqueta)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-6)).value;
 		int var_declareleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
 		int var_declareright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
 		VariableDeclaration var_declare = (VariableDeclaration)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
@@ -2066,6 +2079,9 @@ contadoretiquetas++;
           case 68: // NT$16 ::= 
             {
               Statements RESULT =(Statements) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int frleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).left;
+		int frright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).right;
+		TokenEtiqueta fr = (TokenEtiqueta)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-8)).value;
 		int var_declareleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).left;
 		int var_declareright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).right;
 		VariableDeclaration var_declare = (VariableDeclaration)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-6)).value;
@@ -2078,7 +2094,7 @@ contadoretiquetas++;
 String auxtmp = nuevoTemporal();
                                                                                                                 cuadruplo.addNode("+",var_declare.getLugar(),"1",auxtmp);
                                                                                                                 cuadruplo.addNode("=",auxtmp,"",var_declare.getLugar());
-                                                                                                                cuadruplo.addNode("GOTO","");
+                                                                                                                cuadruplo.addNode("GOTO",fr.getEtiqueta());
                                                                                                               
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$16",48, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2090,6 +2106,9 @@ String auxtmp = nuevoTemporal();
               Statements RESULT =null;
               // propagate RESULT from NT$16
                 RESULT = (Statements) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int frleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-10)).left;
+		int frright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-10)).right;
+		TokenEtiqueta fr = (TokenEtiqueta)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-10)).value;
 		int var_declareleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).left;
 		int var_declareright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).right;
 		VariableDeclaration var_declare = (VariableDeclaration)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-8)).value;

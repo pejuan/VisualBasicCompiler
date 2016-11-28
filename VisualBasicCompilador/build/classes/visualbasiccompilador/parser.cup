@@ -544,12 +544,13 @@ elseif_statement ::=	{:if(!foundError){
 ;
  
 
-for_statement ::=	TK_FOR {:if(!foundError){
+for_statement ::=	TK_FOR:fr {:if(!foundError){
                                     bloque++;
                                     ambito_actual += "."+Integer.toString(bloque);
                                     pila_de_bloques.push(bloque);
                                     bloque = 0;
                                 }:} variable_declaration:var_declare {:cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                        fr.setEtiqueta("etiqueta"+contadoretiquetas);
                                                                        contadoretiquetas++;
                                                                        /////////////cuadruplo.addNode("GOTO","");
                                                                      :} TK_TO {:hayUnIf = true;:} expression:expr {:contadoretiquetas++;
@@ -560,7 +561,7 @@ for_statement ::=	TK_FOR {:if(!foundError){
                                                                                          :} statements:stmnts {:String auxtmp = nuevoTemporal();
                                                                                                                 cuadruplo.addNode("+",var_declare.getLugar(),"1",auxtmp);
                                                                                                                 cuadruplo.addNode("=",auxtmp,"",var_declare.getLugar());
-                                                                                                                cuadruplo.addNode("GOTO","");
+                                                                                                                cuadruplo.addNode("GOTO",fr.getEtiqueta());
                                                                                                               :}TK_NEXT                         {:if(!foundError){
                                                                                                                                                     RESULT = new ForStatement("For",var_declare,"To",expr,listastatements,"Next"); 
                                                                                                                                                     listastatements = new ArrayList();
