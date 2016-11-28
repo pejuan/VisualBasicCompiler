@@ -203,8 +203,8 @@ terminal TK_INTEGER, TK_BOOLEAN, TK_STRING;
 terminal TK_BYVAL, TK_BYREF;
 
 /* Estructuras de Control */
-terminal TK_IF, TK_THEN, TK_ELSEIF, TK_ELSE, TK_FOR, TK_TO, TK_LOOP, TK_DO, TK_WHILE, TK_UNTIL, TK_NEXT;
-
+terminal TokenEtiqueta TK_IF, TK_THEN, TK_ELSEIF, TK_ELSE, TK_FOR, TK_TO, TK_LOOP, TK_WHILE;
+terminal TK_UNTIL, TK_NEXT, TK_DO;
 /* Expresiones Booleanas */
 terminal TK_TRUE, TK_FALSE;
 
@@ -574,18 +574,18 @@ for_statement ::=	TK_FOR {:if(!foundError){
 ; 
 
 
-do_statement ::=    TK_DO TK_WHILE{:cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
-                                    contadoretiquetas++;
-                                    hayUnIf = true;
-                                  :} expression:expr {:if(!foundError){
-                                                        bloque++;
-                                                        ambito_actual += "."+Integer.toString(bloque);
-                                                        pila_de_bloques.push(bloque);
-                                                        bloque = 0;
-                                                        hayUnIf=false;
-                                                    }:} statements:stmnts {:cuadruplo.addNode("If",expr.getLugar(),"","");
-                                                                            
-                                                                           :}TK_LOOP {:if(!foundError){ 
+do_statement ::=    TK_DO TK_WHILE:whil{:cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                        whil.setEtiqueta("etiqueta"+contadoretiquetas);
+                                        contadoretiquetas++;
+                                        hayUnIf = true;
+                                      :} expression:expr {:if(!foundError){
+                                                            bloque++;
+                                                            ambito_actual += "."+Integer.toString(bloque);
+                                                            pila_de_bloques.push(bloque);
+                                                            bloque = 0;
+                                                            hayUnIf=false;
+                                                        }:} statements:stmnts {:cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());:}
+                                                                                   TK_LOOP {:if(!foundError){ 
                                                                                         RESULT = new DoStatement("Do","While",listastatements,"Loop",null,expr);
                                                                                         listastatements = new ArrayList();
                                                                                         partir_ambito = ambito_actual.split("\\.");

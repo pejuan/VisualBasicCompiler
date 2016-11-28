@@ -2,5 +2,8 @@ Sub main()
 	Dim i As Integer = 9
 	Do While i>1
 		Dim yey As String = "holaaa"
+		Do While i<10
+			Dim yey2 As String = "Dentro del segundo"
+		Loop
 	Loop
 End Sub

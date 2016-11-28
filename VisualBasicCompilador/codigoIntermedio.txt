@@ -1,4 +1,7 @@
 i=9
 etiqueta0
 yey="holaaa"
-if i>1 GOTO 
+etiqueta1
+yey2="Dentro del segundo"
+if i<10 GOTO etiqueta1
+if i>1 GOTO etiqueta0
