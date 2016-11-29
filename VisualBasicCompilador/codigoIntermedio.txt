@@ -1,9 +1,11 @@
 i=9
+read perrito1
 o=9
 etiqueta0
 if o<9 GOTO 
 GOTO 
-etiqueta2
+etiqueta1
+print "hola perrooosss"
 t0=o+1
 o=t0
 GOTO etiqueta0

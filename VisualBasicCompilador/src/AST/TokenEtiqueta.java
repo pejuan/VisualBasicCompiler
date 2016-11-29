@@ -5,6 +5,8 @@
  */
 package AST;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Jose Alberto Pejuan
@@ -12,9 +14,10 @@ package AST;
 public class TokenEtiqueta {
     private int arraynumber;
     private String etiqueta;
-    
+    private ArrayList<Integer> listanumbers;
 
     public TokenEtiqueta() {
+        listanumbers = new ArrayList();
     }
 
     public TokenEtiqueta(int arraynumber, String etiqueta) {
@@ -37,6 +40,14 @@ public class TokenEtiqueta {
 
     public void setEtiqueta(String etiqueta) {
         this.etiqueta = etiqueta;
+    }
+
+    public ArrayList<Integer> getListanumbers() {
+        return listanumbers;
+    }
+
+    public void setListanumbers(ArrayList<Integer> listanumbers) {
+        this.listanumbers = listanumbers;
     }
     
 }

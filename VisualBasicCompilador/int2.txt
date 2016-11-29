@@ -9,8 +9,9 @@ End Structure
 Sub main()
 	Dim i As Integer = 9
 	Dim perrito1 As Perro
+	Read(perrito1)
 	Dim gato1 As Gato
 	For o As Integer = 9 To o<9
-
+		Write("hola perrooosss")
 	Next
 End Sub

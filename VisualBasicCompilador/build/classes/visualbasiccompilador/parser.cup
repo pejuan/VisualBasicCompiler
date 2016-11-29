@@ -461,11 +461,16 @@ statement ::=	if_statement:ifStatement                {:if(!foundError){
 		|TK_RETURN expression:exp               {:if(!foundError){RESULT = new ReturnExpression("Return",exp);}:}
 		|TK_EXIT                                {:if(!foundError){RESULT = new ExitStatement("Exit");} :}
 ;
-write_statement ::= TK_WRITE TK_PARIN literal_expression:le TK_PAROUT           {:if(!foundError){RESULT = new WriteStatement("Write",le,null);} :}
+write_statement ::= TK_WRITE TK_PARIN literal_expression:le TK_PAROUT           {:if(!foundError){RESULT = new WriteStatement("Write",le,null);
+                                                                                    cuadruplo.addNode("print",le.getLugar());
+                                                                                } :}
                     |TK_WRITE TK_PARIN TK_ID:i TK_PAROUT                        {:if(!foundError){RESULT = new WriteStatement("Write",null,i);}  :}
                     |TK_WRITE TK_PARIN error TK_PAROUT                          {:System.err.println("\t\t\t\t\t  Problem near Console.Write()"); foundError=true;:}
 ;
-read_statement  ::= TK_READ TK_PARIN TK_ID:i TK_PAROUT               {:if(!foundError){RESULT = new ReadStatement("Read",i);} :}
+read_statement  ::= TK_READ TK_PARIN TK_ID:i TK_PAROUT               {:if(!foundError){RESULT = new ReadStatement("Read",i);
+                                                                         //hay que buscar que este declarada i
+                                                                         cuadruplo.addNode("read",i);
+                                                                     } :}
                     |TK_READ TK_PARIN error TK_PAROUT              {:System.err.println("\t\t\t\t\t  Problem near Console.Read().");foundError=true; :}
 ;
 if_statement ::=    begin_if:beg TK_END TK_IF                                                                {:if(!foundError){
@@ -577,10 +582,11 @@ for_statement ::=	TK_FOR:fr {:if(!foundError){
                                                                         fr.setEtiqueta("etiqueta"+contadoretiquetas);
                                                                        contadoretiquetas++;
                                                                        /////////////cuadruplo.addNode("GOTO","");
-                                                                     :} TK_TO {:hayUnIf = true;:} expression:expr {:contadoretiquetas++;
+                                                                     :} TK_TO {:hayUnIf = true;:} expression:expr {:
                                                                                                 cuadruplo.addNode("If",expr.getLugar(),"","");
                                                                                                 cuadruplo.addNode("GOTO","");
-                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas); 
+                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                contadoretiquetas++;
                                                                                                 hayUnIf = false;
                                                                                          :} statements:stmnts {:String auxtmp = nuevoTemporal();
                                                                                                                 cuadruplo.addNode("+",var_declare.getLugar(),"1",auxtmp);

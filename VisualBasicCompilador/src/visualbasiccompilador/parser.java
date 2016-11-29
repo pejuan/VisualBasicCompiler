@@ -1698,7 +1698,9 @@ if(!foundError){
 		int leleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int leright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		LiteralExpression le = (LiteralExpression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		if(!foundError){RESULT = new WriteStatement("Write",le,null);} 
+		if(!foundError){RESULT = new WriteStatement("Write",le,null);
+                                                                                    cuadruplo.addNode("print",le.getLugar());
+                                                                                } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("write_statement",13, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1731,7 +1733,10 @@ if(!foundError){
 		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		if(!foundError){RESULT = new ReadStatement("Read",i);} 
+		if(!foundError){RESULT = new ReadStatement("Read",i);
+                                                                         //hay que buscar que este declarada i
+                                                                         cuadruplo.addNode("read",i);
+                                                                     } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("read_statement",14, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2094,10 +2099,11 @@ hayUnIf = true;
 		int exprleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int exprright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression expr = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-contadoretiquetas++;
+
                                                                                                 cuadruplo.addNode("If",expr.getLugar(),"","");
                                                                                                 cuadruplo.addNode("GOTO","");
-                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas); 
+                                                                                                cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                contadoretiquetas++;
                                                                                                 hayUnIf = false;
                                                                                          
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$15",47, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
