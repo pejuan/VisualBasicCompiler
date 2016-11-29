@@ -64,6 +64,15 @@ public class IdTable {
         return false;
     }
     
+    public boolean searchRecord(String id){
+        for(IdNode idlist1:this.idlist){
+            if(idlist1.getName().equals(id) && idlist1.getType().equals("Record")){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public boolean addNode(IdNode nodo){
         if (!searchNode(nodo)) {
             this.idlist.add(nodo);

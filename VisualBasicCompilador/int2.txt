@@ -1,5 +1,15 @@
+Structure Perro
+	Dim t As Integer
+End Structure
+
+Structure Gato
+	Dim t As Integer
+End Structure
+
 Sub main()
 	Dim i As Integer = 9
+	Dim perrito1 As Perro
+	Dim gato1 As Gato
 	For o As Integer = 9 To o<9
 
 	Next

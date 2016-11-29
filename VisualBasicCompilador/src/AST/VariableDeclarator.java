@@ -56,6 +56,26 @@ public class VariableDeclarator {
         this.dataType = null;
     }
     
+    public VariableDeclarator(String Id, String As, String dataType){
+        this.Id = Id;
+        this.As = As;
+        this.dataType = dataType;
+        
+        this.Dim = null;
+        this.Equals = null;
+        this.expression = null;
+    }
+    
+    public VariableDeclarator(String Dim, String Id, String As, String dataType){
+        this.Dim = Dim;
+        this.Id = Id;
+        this.As = As;
+        this.dataType = dataType;
+        
+        this.Equals = null;
+        this.expression = null;
+    }
+    
     public String getDim() {
         return Dim;
     }
