@@ -15,9 +15,11 @@ public class TokenEtiqueta {
     private int arraynumber;
     private String etiqueta;
     private ArrayList<Integer> listanumbers;
+    private ArrayList<Integer> listanumbersFalse;
 
     public TokenEtiqueta() {
         listanumbers = new ArrayList();
+        listanumbersFalse = new ArrayList();
     }
 
     public TokenEtiqueta(int arraynumber, String etiqueta) {
@@ -48,6 +50,14 @@ public class TokenEtiqueta {
 
     public void setListanumbers(ArrayList<Integer> listanumbers) {
         this.listanumbers = listanumbers;
+    }
+
+    public ArrayList<Integer> getListanumbersFalse() {
+        return listanumbersFalse;
+    }
+
+    public void setListanumbersFalse(ArrayList<Integer> listanumbersFalse) {
+        this.listanumbersFalse = listanumbersFalse;
     }
     
 }

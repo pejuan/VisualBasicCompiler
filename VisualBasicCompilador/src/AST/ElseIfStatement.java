@@ -16,11 +16,17 @@ public class ElseIfStatement {
     private Expression expression;
     private String Then;
     private ArrayList<Statements> listastatements;
+    private ArrayList<Integer> listanumbers;
+    private ArrayList<Integer> listanumbersFalse;
+    private ArrayList<Integer> listasig;
     public ElseIfStatement(String ElseIf, Expression expression, String Then, ArrayList<Statements> listastatements) {
         this.ElseIf = ElseIf;
         this.expression = expression;
         this.Then = Then;
         this.listastatements = listastatements;
+        listanumbers = new ArrayList();
+        listanumbersFalse = new ArrayList();
+        listasig = new ArrayList();
     }
     
     
@@ -54,5 +60,29 @@ public class ElseIfStatement {
 
     public void setListastatements(ArrayList<Statements> listastatements) {
         this.listastatements = listastatements;
+    }
+
+    public ArrayList<Integer> getListanumbers() {
+        return listanumbers;
+    }
+
+    public void setListanumbers(ArrayList<Integer> listanumbers) {
+        this.listanumbers = listanumbers;
+    }
+
+    public ArrayList<Integer> getListanumbersFalse() {
+        return listanumbersFalse;
+    }
+
+    public void setListanumbersFalse(ArrayList<Integer> listanumbersFalse) {
+        this.listanumbersFalse = listanumbersFalse;
+    }
+
+    public ArrayList<Integer> getListasig() {
+        return listasig;
+    }
+
+    public void setListasig(ArrayList<Integer> listasig) {
+        this.listasig = listasig;
     }
 }

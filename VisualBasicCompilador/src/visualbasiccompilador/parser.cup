@@ -480,6 +480,8 @@ if_statement ::=    begin_if:beg TK_END TK_IF                                   
                                                                                                                  ambito_actual = remove_scope(partir_ambito);
                                                                                                                  bloque = (int) pila_de_bloques.pop();
                                                                                                                  cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                                 cuadruplo.complete(beg.getListasig(),"etiqueta"+contadoretiquetas);
+                                                                                                                 cuadruplo.complete(beg.getListanumbersFalse(),"etiqueta"+contadoretiquetas);
                                                                                                                  contadoretiquetas++;
                                                                                                                }:}
                     |begin_if:beg else_statement:elseStmnt TK_END TK_IF                                          {:if(!foundError){
@@ -488,7 +490,10 @@ if_statement ::=    begin_if:beg TK_END TK_IF                                   
                                                                                                                    partir_ambito = ambito_actual.split("\\.");
                                                                                                                    ambito_actual = remove_scope(partir_ambito);
                                                                                                                    bloque = (int) pila_de_bloques.pop();
+                                                                                                                   
                                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                                   cuadruplo.complete(beg.getListasig(),"etiqueta"+contadoretiquetas);
+                                                                                                                   cuadruplo.complete(beg.getListanumbersFalse(),elseStmnt.getEtiqueteinicio());
                                                                                                                    contadoretiquetas++;
                                                                                                                 }:}
                     |begin_if:beg elseif_statements:elseifStmnts TK_END TK_IF                                    {:if(!foundError){
@@ -517,12 +522,15 @@ begin_if ::= TK_IF {:hayUnIf = true;:} expression:expr {:if(!foundError){
                                                 ambito_actual += "."+Integer.toString(bloque);
                                                 pila_de_bloques.push(bloque);
                                                 bloque = 0;
-                                                cuadruplo.addNode("If",expr.getLugar(),"","");
+                                                cuadruplo.addNode("If",expr.getLugar(),"","etiqueta"+contadoretiquetas);
+                                                //RESULT.getListanumbers(cuadruplo.getSize()-1);
                                                 cuadruplo.addNode("GOTO","");
+                                                RESULT.getListanumbersFalse().add(cuadruplo.getSize()-1);
                                                 cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                 contadoretiquetas++;
                                                 hayUnIf = false;
                                              }:} TK_THEN statements:stmnts {:cuadruplo.addNode("GOTO","");
+                                                                             RESULT.getListasig().add(cuadruplo.getSize()-1);
                                                                              //contadoretiquetas++;
                                                                            :}
 ;
@@ -535,16 +543,18 @@ else_statement   ::=    {:if(!foundError){
                             partir_ambito = ambito_actual.split("\\.");
                             ambito_actual = remove_scope(partir_ambito);
                             bloque = (int) pila_de_bloques.pop();
-                          }:} TK_ELSE {:if(!foundError){
+                          }:} TK_ELSE:els {:if(!foundError){
                                     
                                     bloque++;
                                     ambito_actual += "."+Integer.toString(bloque);
                                     pila_de_bloques.push(bloque);
                                     bloque = 0;
                                     cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                    els.setEtiqueta("etiqueta"+contadoretiquetas);
                                     contadoretiquetas++;
                                   }:} statements:stmnts                   {:if(!foundError){
                                                                                 RESULT = new ElseStatement("Else",listastatements);
+                                                                                RESULT.setEtiqueteinicio(els.getEtiqueta());
                                                                                 listastatements = new ArrayList();
                                                                                 
                                                                           }:}
@@ -555,20 +565,23 @@ elseif_statement ::=	{:if(!foundError){
                             bloque = (int) pila_de_bloques.pop();
                             cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                             contadoretiquetas++;
-                          }:} TK_ELSEIF {:hayUnIf = true;:} expression:expr {:if(!foundError){
+                          }:} TK_ELSEIF:elsif {:hayUnIf = true;:} expression:expr {:if(!foundError){
                                                         bloque++;
                                                         ambito_actual += "."+Integer.toString(bloque);
                                                         pila_de_bloques.push(bloque);
                                                         bloque = 0;
-                                                        cuadruplo.addNode("If",expr.getLugar(),"","");
+                                                        cuadruplo.addNode("If",expr.getLugar(),"","etiqueta"+contadoretiquetas);
                                                         cuadruplo.addNode("GOTO","");
+                                                        elsif.getListanumbersFalse().add(cuadruplo.getSize()-1);
                                                         cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                         contadoretiquetas++;
                                                         hayUnIf = false;
                                                     }:} TK_THEN statements:stmnts           {:if(!foundError){ 
                                                                                                 RESULT = new ElseIfStatement("ElseIf",expr,"Then",listastatements);
                                                                                                 listastatements = new ArrayList();
-                                                                                                cuadruplo.addNode("GOTO","");                                                                                               
+                                                                                                RESULT.setListanumbersFalse(elsif.getListanumbersFalse());
+                                                                                                cuadruplo.addNode("GOTO","");     
+                                                                                                RESULT.getListasig().add(cuadruplo.getSize()-1);
                                                                                             } :}
 ;
  
@@ -582,9 +595,11 @@ for_statement ::=	TK_FOR:fr {:if(!foundError){
                                                                         fr.setEtiqueta("etiqueta"+contadoretiquetas);
                                                                        contadoretiquetas++;
                                                                        /////////////cuadruplo.addNode("GOTO","");
-                                                                     :} TK_TO {:hayUnIf = true;:} expression:expr {:
-                                                                                                cuadruplo.addNode("If",expr.getLugar(),"","");
+                                                                     :} TK_TO:tkto {:hayUnIf = true;:} expression:expr {:
+                                                                                                cuadruplo.addNode("If",expr.getLugar(),"","etiqueta"+contadoretiquetas);
+                                                                                                tkto.getListanumbers().add(cuadruplo.getSize()-1);
                                                                                                 cuadruplo.addNode("GOTO","");
+                                                                                                tkto.getListanumbersFalse().add(cuadruplo.getSize()-1);
                                                                                                 cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                                                                 contadoretiquetas++;
                                                                                                 hayUnIf = false;
@@ -599,6 +614,7 @@ for_statement ::=	TK_FOR:fr {:if(!foundError){
                                                                                                                                                     ambito_actual = remove_scope(partir_ambito);
                                                                                                                                                     bloque = (int) pila_de_bloques.pop();
                                                                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                                                                    cuadruplo.complete(tkto.getListanumbersFalse(),"etiqueta"+contadoretiquetas);
                                                                                                                                                     contadoretiquetas++;
                                                                                                                                                     
                                                                                                                                                }:}

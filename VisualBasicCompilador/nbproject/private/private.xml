@@ -7,11 +7,11 @@
             <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/parser.java</file>
             <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/Cuadruplo.java</file>
             <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/IdTable.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/VariableDeclaration.java</file>
             <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/VisualBasicCompilador.java</file>
             <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/IdNode.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/VariableDeclarator.java</file>
             <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/lexer.flex</file>
+            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/TokenEtiqueta.java</file>
+            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/VisualBasicLexer.java</file>
         </group>
     </open-files>
 </project-private>

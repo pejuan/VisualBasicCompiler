@@ -1,12 +1,10 @@
-i=9
-read perrito1
-o=9
+o=8
+if o=7 GOTO etiqueta0
+GOTO etiqueta1
 etiqueta0
-if o<9 GOTO 
-GOTO 
+print "Dentro del If"
+GOTO etiqueta2
 etiqueta1
-print "hola perrooosss"
-t0=o+1
-o=t0
-GOTO etiqueta0
+print "Dentro del Else"
 etiqueta2
+print "Fuera del If"

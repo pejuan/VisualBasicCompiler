@@ -5,6 +5,8 @@
  */
 package AST;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Jose Alberto Pejuan
@@ -12,7 +14,8 @@ package AST;
 public class Expression extends Statements{
     private String Id;
     private String lugar;
-
+    private ArrayList<Integer> listaverdaderas = new ArrayList();
+    private ArrayList<Integer> listafalsas = new ArrayList();
     public Expression(String Id) {
         this.Id = Id;
     }
@@ -34,6 +37,22 @@ public class Expression extends Statements{
 
     public void setLugar(String lugar) {
         this.lugar = lugar;
+    }
+
+    public ArrayList<Integer> getListaverdaderas() {
+        return listaverdaderas;
+    }
+
+    public void setListaverdaderas(ArrayList<Integer> listaverdaderas) {
+        this.listaverdaderas = listaverdaderas;
+    }
+
+    public ArrayList<Integer> getListafalsas() {
+        return listafalsas;
+    }
+
+    public void setListafalsas(ArrayList<Integer> listafalsas) {
+        this.listafalsas = listafalsas;
     }
 
     

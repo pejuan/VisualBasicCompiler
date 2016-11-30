@@ -89,7 +89,9 @@ public class Cuadruplo {
     public void setComandos(ArrayList<String> comandos) {
         this.comandos = comandos;
     }
-
+    public int getSize(){
+        return comandos.size();
+    }
     public ArrayList<String> getDir1() {
         return dir1;
     }
@@ -112,6 +114,12 @@ public class Cuadruplo {
 
     public void setDir3(ArrayList<String> dir3) {
         this.dir3 = dir3;
+    }
+    
+    public void complete(ArrayList<Integer> lista, String etiqueta){
+        for (int i = 0; i < lista.size(); i++) {
+            dir3.set(lista.get(i), etiqueta);
+        }
     }
     
     

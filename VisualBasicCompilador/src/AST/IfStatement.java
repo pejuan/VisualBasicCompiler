@@ -20,6 +20,9 @@ public class IfStatement extends Statements{
     private ArrayList<ElseIfStatement> elseIfStatements;
     private ElseStatement elseStatements;   
     private String endIf;
+    private ArrayList<Integer> listanumbers;
+    private ArrayList<Integer> listanumbersFalse;
+    private ArrayList<Integer> listasig;
 
     public IfStatement(String IF, Expression expression, String Then, String Else, ArrayList<Statements> statements, ArrayList<ElseIfStatement> elseIfStatements, ElseStatement elseStatements, String endIf) {
         this.IF = IF;
@@ -30,6 +33,9 @@ public class IfStatement extends Statements{
         this.elseIfStatements = elseIfStatements;
         this.elseStatements = elseStatements;
         this.endIf = endIf;
+        listanumbers = new ArrayList();
+        listanumbersFalse = new ArrayList();
+        listasig = new ArrayList();
     }
 
     
@@ -97,5 +103,29 @@ public class IfStatement extends Statements{
 
     public void setElseStatements(ElseStatement elseStatements) {
         this.elseStatements = elseStatements;
+    }
+
+    public ArrayList<Integer> getListanumbers() {
+        return listanumbers;
+    }
+
+    public void setListanumbers(ArrayList<Integer> listanumbers) {
+        this.listanumbers = listanumbers;
+    }
+
+    public ArrayList<Integer> getListanumbersFalse() {
+        return listanumbersFalse;
+    }
+
+    public void setListanumbersFalse(ArrayList<Integer> listanumbersFalse) {
+        this.listanumbersFalse = listanumbersFalse;
+    }
+
+    public ArrayList<Integer> getListasig() {
+        return listasig;
+    }
+
+    public void setListasig(ArrayList<Integer> listasig) {
+        this.listasig = listasig;
     }
 }

@@ -1,17 +1,13 @@
-Structure Perro
-	Dim t As Integer
-End Structure
-
-Structure Gato
-	Dim t As Integer
-End Structure
-
 Sub main()
-	Dim i As Integer = 9
-	Dim perrito1 As Perro
-	Read(perrito1)
-	Dim gato1 As Gato
-	For o As Integer = 9 To o<9
-		Write("hola perrooosss")
-	Next
+	Dim o As Integer = 8
+	If o=7 Then
+		Write("Dentro del If")
+	ElseIf o<9 Then
+		Write("Dentro del ElseIf")
+	Else
+		Write("Dentro del Else")
+	End If	
+	Write("Fuera del If")
+
+
 End Sub
