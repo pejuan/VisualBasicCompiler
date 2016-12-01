@@ -1,10 +1,24 @@
+a=0
+t0=1
+b=t0
+c="Dentro del If"
+a=0
+t1=1
+b=t1
+c="Dentro del If"
 o=8
 if o=7 GOTO etiqueta0
-GOTO etiqueta1
+GOTO 
 etiqueta0
 print "Dentro del If"
-GOTO etiqueta2
+GOTO 
 etiqueta1
-print "Dentro del Else"
+if o<9 GOTO etiqueta2
+GOTO 
 etiqueta2
+print "Dentro del ElseIf"
+GOTO 
+etiqueta3
+print "Dentro del Else"
+etiqueta4
 print "Fuera del If"

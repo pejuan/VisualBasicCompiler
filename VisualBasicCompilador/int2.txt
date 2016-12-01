@@ -1,4 +1,19 @@
+Structure Dog
+	Dim a As Integer = 0
+	Dim b As Boolean = True
+	Dim c As String = "Dentro del If"
+End Structure
+
+Structure Gato
+	Dim dog As Dog
+	Dim a As Integer = 0
+	Dim b As Boolean = True
+	Dim c As String = "Dentro del If"
+End Structure
+
 Sub main()
+
+	Dim perro As Dog
 	Dim o As Integer = 8
 	If o=7 Then
 		Write("Dentro del If")

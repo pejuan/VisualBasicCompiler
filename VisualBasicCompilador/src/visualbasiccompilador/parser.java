@@ -828,6 +828,8 @@ public class parser extends java_cup.runtime.lr_parser {
         public boolean hayUnIf = false;
         public int contadortemporales = 0;
         public int contadoretiquetas = 0;
+        public int size = 0;
+        public int offset = 0;
         public Stack pila_de_bloques = new Stack();
         public String ambito_actual = Integer.toString(bloque);
         public String partir_ambito[];
@@ -1150,18 +1152,22 @@ if(!foundError){
 		Statements stmnts = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		if(!foundError){RESULT = new StructureStatement("Structure",i,"End Structure",listastatements);listastatements = new ArrayList();
                                                                                                     String tipo_record = "";
+                                                                                                    int recordSize = 0;
                                                                                                     for(int k = 0; k < variables.size(); k++){
+                                                                                                        recordSize += tableIds.getNodeSize(variables.get(k).getId(),ambito_actual);
                                                                                                         if(k != variables.size()-1){
                                                                                                             tipo_record += variables.get(k).getDataType() + "x";
                                                                                                         }else{
                                                                                                             tipo_record += variables.get(k).getDataType();
                                                                                                         }
                                                                                                     }
-                                                                                                    tableIds.addNode(new IdNode(i,"Record",ambito_actual,"record("+tipo_record+")","Structure"));
+                                                                                                    offset += recordSize;
+                                                                                                    tableIds.addNode(new IdNode(i,"Record",ambito_actual,"record("+tipo_record+")","Structure",recordSize,offset));
                                                                                                     partir_ambito = ambito_actual.split("\\.");
                                                                                                     ambito_actual = remove_scope(partir_ambito);
                                                                                                     bloque = (int) pila_de_bloques.pop();
                                                                                                     variables = new ArrayList();
+                                                                                                    recordSize = 0;
                                                                                                 }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("structure_statement",5, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1326,7 +1332,7 @@ if(!foundError){
                                                                                                                 }else{
                                                                                                                     tipo_funcion += listaparameters.get(k).getDataType();
                                                                                                                 }
-                                                                                                                if(!tableIds.addNode(new IdNode(listaparameters.get(k).getId(),listaparameters.get(k).getDataType(),ambito_actual,"Parameter",listaparameters.get(k).getParameterType()))){//revisar si expr tiene el mismo type que id
+                                                                                                                if(!tableIds.addNode(new IdNode(listaparameters.get(k).getId(),listaparameters.get(k).getDataType(),ambito_actual,"Parameter",listaparameters.get(k).getParameterType(),size,offset))){//revisar si expr tiene el mismo type que id
                                                                                                                     System.err.println("Parameter id "+i+" already exists.");//No estoy seguro si foundError debe cambiar
                                                                                                                 } 
                                                                                                                 
@@ -1517,7 +1523,7 @@ if(!foundError){
           case 28: // data_type ::= TK_INTEGER 
             {
               String RESULT =null;
-		 if(!foundError){RESULT = "Integer";} 
+		 if(!foundError){RESULT = "Integer";size=4;offset += 4;} 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("data_type",11, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1526,7 +1532,7 @@ if(!foundError){
           case 29: // data_type ::= TK_BOOLEAN 
             {
               String RESULT =null;
-		 if(!foundError){RESULT = "Boolean";} 
+		 if(!foundError){RESULT = "Boolean";size=1;offset += 1;} 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("data_type",11, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1535,7 +1541,7 @@ if(!foundError){
           case 30: // data_type ::= TK_STRING 
             {
               String RESULT =null;
-		 if(!foundError){RESULT = "String";} 
+		 if(!foundError){RESULT = "String";size=50;offset += 50;} 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("data_type",11, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1552,6 +1558,8 @@ if(!foundError){
                                                 System.err.println("Error with variable declaration. Data Type: "+i+" cannot be found");
                                             }else{
                                                 RESULT = i;
+                                                size = tableIds.getRecordSize(i);
+                                                offset += tableIds.getRecordSize(i);
                                             }
                                         }
                                     
@@ -2347,7 +2355,7 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
 		 if(!foundError){RESULT = new VariableDeclarator("Dim",id,"As",type,"=",expr);
                                                                                                                String auxtype = expr.bringType();
                                                                                                                if(auxtype==type){
-                                                                                                                    if(!tableIds.addNode(new IdNode(id,type,ambito_actual))){//revisar si expr tiene el mismo type que id
+                                                                                                                    if(!tableIds.addNode(new IdNode(id,type,ambito_actual,size,offset))){//revisar si expr tiene el mismo type que id
                                                                                                                         
                                                                                                                          System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
                                                                                                                     }
@@ -2382,7 +2390,7 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
 		 if(!foundError){RESULT = new VariableDeclarator(id,"As",type,"=",expr);
                                                                                                                 String auxtype = expr.bringType();
                                                                                                                if(auxtype==type){
-                                                                                                                    if(!tableIds.addNode(new IdNode(id,type,ambito_actual))){//revisar si expr tiene el mismo type que id
+                                                                                                                    if(!tableIds.addNode(new IdNode(id,type,ambito_actual,size,offset))){//revisar si expr tiene el mismo type que id
                                                                                                                          System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
                                                                                                                     }
                                                                                                                }else{ 
@@ -2457,7 +2465,7 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
 		String type = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new VariableDeclarator(id,"As",type);
                                                                                                                 if(type != null){
-                                                                                                                    if(!tableIds.addNode(new IdNode(id,type,ambito_actual))){
+                                                                                                                    if(!tableIds.addNode(new IdNode(id,type,ambito_actual,size,offset))){
                                                                                                                         System.err.println("Variable id "+id+" already exists.");
                                                                                                                     }
                                                                                                                 } 
@@ -2478,7 +2486,7 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
 		String type = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){RESULT = new VariableDeclarator("Dim", id, "As", type);
                                                                                                                     if(type != null){
-                                                                                                                        if(!tableIds.addNode(new IdNode(id,type,ambito_actual))){
+                                                                                                                        if(!tableIds.addNode(new IdNode(id,type,ambito_actual,size,offset))){
                                                                                                                             System.err.println("Variable id "+id+" already exists.");
                                                                                                                         }
                                                                                                                     }

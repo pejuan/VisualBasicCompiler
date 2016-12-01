@@ -34,6 +34,24 @@ public class IdTable {
         return false;
     }
     
+    public int getNodeSize(String id, String ambito){
+        for(IdNode idlist1 : this.idlist){
+            if(idlist1.getName().equals(id) && ambito.contains(idlist1.getAmbito())){
+                return idlist1.getSize();
+            }
+        }
+        return 0;
+    }
+    
+    public int getRecordSize(String id){
+        for(IdNode idlist1 : this.idlist){
+            if(idlist1.getName().equals(id) && idlist1.getType().equals("Record")){
+                return idlist1.getSize();
+            }
+        }
+        return 0;
+    }
+    
     public String searchFunctionType(String id){
         for(IdNode idlist1:this.idlist){
             if(idlist1.getName().equals(id) && (idlist1.getProcedureType().equals("Function") || idlist1.getProcedureType().equals("Sub"))){
@@ -83,11 +101,11 @@ public class IdTable {
         
     }
     public void print(){
-        System.out.format("%20s%20s%20s%20s%20s", "Symbol ID","Data Type","Scope","Type","Procedure Type");
+        System.out.format("%20s%20s%20s%20s%20s%10s%10s", "Symbol ID","Data Type","Scope","Type","Procedure Type","Size","Offset");
         for (int i = 0; i < getIdlist().size()-1; i++) {
             IdNode nodo = getIdlist().get(i);
             System.out.println("");
-            System.out.format("%20s%20s%20s%20s%20s", nodo.getName(),nodo.getType(),nodo.getAmbito(),nodo.getType2(),nodo.getProcedureType());
+            System.out.format("%20s%20s%20s%20s%20s%10d%10d", nodo.getName(),nodo.getType(),nodo.getAmbito(),nodo.getType2(),nodo.getProcedureType(),nodo.getSize(),nodo.getOffset());
         }
     }
     

@@ -21,6 +21,8 @@ parser code {:
         public boolean hayUnIf = false;
         public int contadortemporales = 0;
         public int contadoretiquetas = 0;
+        public int size = 0;
+        public int offset = 0;
         public Stack pila_de_bloques = new Stack();
         public String ambito_actual = Integer.toString(bloque);
         public String partir_ambito[];
@@ -305,18 +307,22 @@ structure_statement ::= TK_STRUCTURE {:if(!foundError){
                                        }
                                       :} TK_ID:i statements:stmnts TK_END TK_STRUCTURE {:if(!foundError){RESULT = new StructureStatement("Structure",i,"End Structure",listastatements);listastatements = new ArrayList();
                                                                                                     String tipo_record = "";
+                                                                                                    int recordSize = 0;
                                                                                                     for(int k = 0; k < variables.size(); k++){
+                                                                                                        recordSize += tableIds.getNodeSize(variables.get(k).getId(),ambito_actual);
                                                                                                         if(k != variables.size()-1){
                                                                                                             tipo_record += variables.get(k).getDataType() + "x";
                                                                                                         }else{
                                                                                                             tipo_record += variables.get(k).getDataType();
                                                                                                         }
                                                                                                     }
-                                                                                                    tableIds.addNode(new IdNode(i,"Record",ambito_actual,"record("+tipo_record+")","Structure"));
+                                                                                                    offset += recordSize;
+                                                                                                    tableIds.addNode(new IdNode(i,"Record",ambito_actual,"record("+tipo_record+")","Structure",recordSize,offset));
                                                                                                     partir_ambito = ambito_actual.split("\\.");
                                                                                                     ambito_actual = remove_scope(partir_ambito);
                                                                                                     bloque = (int) pila_de_bloques.pop();
                                                                                                     variables = new ArrayList();
+                                                                                                    recordSize = 0;
                                                                                                 }:}
 ;
 
@@ -376,7 +382,7 @@ function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT 
                                                                                                                 }else{
                                                                                                                     tipo_funcion += listaparameters.get(k).getDataType();
                                                                                                                 }
-                                                                                                                if(!tableIds.addNode(new IdNode(listaparameters.get(k).getId(),listaparameters.get(k).getDataType(),ambito_actual,"Parameter",listaparameters.get(k).getParameterType()))){//revisar si expr tiene el mismo type que id
+                                                                                                                if(!tableIds.addNode(new IdNode(listaparameters.get(k).getId(),listaparameters.get(k).getDataType(),ambito_actual,"Parameter",listaparameters.get(k).getParameterType(),size,offset))){//revisar si expr tiene el mismo type que id
                                                                                                                     System.err.println("Parameter id "+i+" already exists.");//No estoy seguro si foundError debe cambiar
                                                                                                                 } 
                                                                                                                 
@@ -431,14 +437,16 @@ parameter_type ::=  TK_BYVAL                    {: if(!foundError){RESULT = "ByV
                     |TK_BYREF                   {: if(!foundError){RESULT = "ByRef";}:}
 ;
 
-data_type ::=	TK_INTEGER          {: if(!foundError){RESULT = "Integer";} :}
-		|TK_BOOLEAN         {: if(!foundError){RESULT = "Boolean";} :}
-		|TK_STRING          {: if(!foundError){RESULT = "String";} :}
+data_type ::=	TK_INTEGER          {: if(!foundError){RESULT = "Integer";size=4;offset += 4;} :}
+		|TK_BOOLEAN         {: if(!foundError){RESULT = "Boolean";size=1;offset += 1;} :}
+		|TK_STRING          {: if(!foundError){RESULT = "String";size=50;offset += 50;} :}
                 |TK_ID:i               {: if(!foundError){
                                             if(!tableIds.searchRecord(i)){
                                                 System.err.println("Error with variable declaration. Data Type: "+i+" cannot be found");
                                             }else{
                                                 RESULT = i;
+                                                size = tableIds.getRecordSize(i);
+                                                offset += tableIds.getRecordSize(i);
                                             }
                                         }
                                     :}
@@ -654,7 +662,7 @@ variable_declaration ::=    variable_declarator:var TK_COMMA variable_declaratio
 variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expression:expr                  {: if(!foundError){RESULT = new VariableDeclarator("Dim",id,"As",type,"=",expr);
                                                                                                                String auxtype = expr.bringType();
                                                                                                                if(auxtype==type){
-                                                                                                                    if(!tableIds.addNode(new IdNode(id,type,ambito_actual))){//revisar si expr tiene el mismo type que id
+                                                                                                                    if(!tableIds.addNode(new IdNode(id,type,ambito_actual,size,offset))){//revisar si expr tiene el mismo type que id
                                                                                                                         
                                                                                                                          System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
                                                                                                                     }
@@ -672,7 +680,7 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                             |TK_ID:id TK_AS data_type:type TK_EQUALS expression:expr                        {: if(!foundError){RESULT = new VariableDeclarator(id,"As",type,"=",expr);
                                                                                                                 String auxtype = expr.bringType();
                                                                                                                if(auxtype==type){
-                                                                                                                    if(!tableIds.addNode(new IdNode(id,type,ambito_actual))){//revisar si expr tiene el mismo type que id
+                                                                                                                    if(!tableIds.addNode(new IdNode(id,type,ambito_actual,size,offset))){//revisar si expr tiene el mismo type que id
                                                                                                                          System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
                                                                                                                     }
                                                                                                                }else{ 
@@ -705,14 +713,14 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                                                                                                             }:}
                             |TK_ID:id TK_AS data_type:type                                                  {:if(!foundError){RESULT = new VariableDeclarator(id,"As",type);
                                                                                                                 if(type != null){
-                                                                                                                    if(!tableIds.addNode(new IdNode(id,type,ambito_actual))){
+                                                                                                                    if(!tableIds.addNode(new IdNode(id,type,ambito_actual,size,offset))){
                                                                                                                         System.err.println("Variable id "+id+" already exists.");
                                                                                                                     }
                                                                                                                 } 
                                                                                                              }:}
                             |TK_DIM TK_ID:id TK_AS data_type:type                                              {:if(!foundError){RESULT = new VariableDeclarator("Dim", id, "As", type);
                                                                                                                     if(type != null){
-                                                                                                                        if(!tableIds.addNode(new IdNode(id,type,ambito_actual))){
+                                                                                                                        if(!tableIds.addNode(new IdNode(id,type,ambito_actual,size,offset))){
                                                                                                                             System.err.println("Variable id "+id+" already exists.");
                                                                                                                         }
                                                                                                                     }
