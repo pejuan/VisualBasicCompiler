@@ -1,28 +1,17 @@
-Structure Dog
-	Dim a As Integer = 0
-	Dim b As Boolean = True
-	Dim c As String = "Dentro del If"
-End Structure
-
-Structure Gato
-	Dim dog As Dog
-	Dim a As Integer = 0
-	Dim b As Boolean = True
-	Dim c As String = "Dentro del If"
-End Structure
-
 Sub main()
 
-	Dim perro As Dog
 	Dim o As Integer = 8
 	If o=7 Then
 		Write("Dentro del If")
 	ElseIf o<9 Then
 		Write("Dentro del ElseIf")
-	Else
-		Write("Dentro del Else")
+	ElseIf o<10000 Then
+		Write("Segundo ElseIf")
+	ElseIf o<99999 Then
+		Write("Ultimo ElseIf")
 	End If	
 	Write("Fuera del If")
 
 
 End Sub
+

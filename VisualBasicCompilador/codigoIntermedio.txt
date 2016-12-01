@@ -1,24 +1,26 @@
-a=0
-t0=1
-b=t0
-c="Dentro del If"
-a=0
-t1=1
-b=t1
-c="Dentro del If"
 o=8
 if o=7 GOTO etiqueta0
-GOTO 
+GOTO etiqueta1
 etiqueta0
 print "Dentro del If"
-GOTO 
+GOTO etiqueta7
 etiqueta1
 if o<9 GOTO etiqueta2
-GOTO 
+GOTO etiqueta3
 etiqueta2
 print "Dentro del ElseIf"
-GOTO 
+GOTO etiqueta7
 etiqueta3
-print "Dentro del Else"
+if o<10000 GOTO etiqueta4
+GOTO etiqueta5
 etiqueta4
+print "Segundo ElseIf"
+GOTO etiqueta7
+etiqueta5
+if o<99999 GOTO etiqueta6
+GOTO etiqueta7
+etiqueta6
+print "Ultimo ElseIf"
+GOTO etiqueta7
+etiqueta7
 print "Fuera del If"

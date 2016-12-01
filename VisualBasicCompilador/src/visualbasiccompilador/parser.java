@@ -851,6 +851,17 @@ public class parser extends java_cup.runtime.lr_parser {
             contadortemporales++;
             return tmp;
         }
+        public ArrayList<Integer> fusiona(ArrayList<Integer> lista1, ArrayList<Integer> lista2){
+            ArrayList<Integer> lista = new ArrayList();
+            for(int i=0;i<lista1.size();i++){
+                lista.add(lista1.get(i));
+            }
+            for(int i=0;i<lista2.size();i++){
+                lista.add(lista2.get(i));
+            }
+            return lista;
+            
+        }
 	public void syntax_error(Symbol s){
             if(s.sym==0){
 
@@ -1815,7 +1826,7 @@ if(!foundError){
 		IfStatement beg = (IfStatement)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 		int elseifStmntsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int elseifStmntsright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		Statements elseifStmnts = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		ElseIfStatement elseifStmnts = (ElseIfStatement)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		if(!foundError){
                                                                                                                      RESULT = new IfStatement("If",beg.getExpression(),"Then",null,listastatements,listaelseifs,null,"End IF");
                                                                                                                     listastatements = new ArrayList();listaelseifs = new ArrayList();
@@ -1823,7 +1834,10 @@ if(!foundError){
                                                                                                                     ambito_actual = remove_scope(partir_ambito);
                                                                                                                     bloque = (int) pila_de_bloques.pop();
                                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                                    cuadruplo.complete(elseifStmnts.getListasig(),"etiqueta"+contadoretiquetas);                                                      
+                                                                                                                    cuadruplo.complete(beg.getListasig(),"etiqueta"+contadoretiquetas);
                                                                                                                     contadoretiquetas++;
+                                                                                                                    cuadruplo.complete(beg.getListanumbersFalse(),elseifStmnts.getFirstEtiqueta());
                                                                                                                 }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("if_statement",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1838,7 +1852,7 @@ if(!foundError){
 		IfStatement beg = (IfStatement)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
 		int elseifStmntsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
 		int elseifStmntsright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
-		Statements elseifStmnts = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
+		ElseIfStatement elseifStmnts = (ElseIfStatement)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 		int elseStmntleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int elseStmntright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		ElseStatement elseStmnt = (ElseStatement)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
@@ -1912,14 +1926,19 @@ if(!foundError){
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 55: // elseif_statements ::= elseif_statement elseif_statements 
             {
-              Statements RESULT =null;
+              ElseIfStatement RESULT =null;
 		int elseifStmntleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int elseifStmntright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		ElseIfStatement elseifStmnt = (ElseIfStatement)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		int elseifStmntsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int elseifStmntsright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		Statements elseifStmnts = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		ElseIfStatement elseifStmnts = (ElseIfStatement)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){listaelseifs.add(elseifStmnt);} 
+                                                                                                          RESULT = new ElseIfStatement();
+                                                                                                          RESULT.setFirstEtiqueta(elseifStmnt.getFirstEtiqueta());
+                                                                                                          cuadruplo.complete(elseifStmnt.getListanumbersFalse(),elseifStmnts.getFirstEtiqueta());
+                                                                                                          RESULT.setListasig(fusiona(elseifStmnt.getListasig(),elseifStmnts.getListasig()));
+                                                                                                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("elseif_statements",16, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1927,11 +1946,16 @@ if(!foundError){
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 56: // elseif_statements ::= elseif_statement 
             {
-              Statements RESULT =null;
+              ElseIfStatement RESULT =null;
 		int elseifStmntleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int elseifStmntright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		ElseIfStatement elseifStmnt = (ElseIfStatement)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		if(!foundError){listaelseifs.add(elseifStmnt);}
+		if(!foundError){listaelseifs.add(elseifStmnt);
+                                                                                                          RESULT = new ElseIfStatement();
+                                                                                                          RESULT.setFirstEtiqueta(elseifStmnt.getFirstEtiqueta());
+                                                                                                          RESULT.setListanumbersFalse(elseifStmnt.getListanumbersFalse());
+                                                                                                          RESULT.setListasig(fusiona(elseifStmnt.getListasig(),elseifStmnt.getListanumbersFalse()));
+                                                                                                        }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("elseif_statements",16, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2001,7 +2025,7 @@ if(!foundError){
                             ambito_actual = remove_scope(partir_ambito);
                             bloque = (int) pila_de_bloques.pop();
                             cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
-                            contadoretiquetas++;
+                            //contadoretiquetas++;
                           }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$9",41, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2014,7 +2038,10 @@ if(!foundError){
 		int elsifleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int elsifright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		TokenEtiqueta elsif = (TokenEtiqueta)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-hayUnIf = true;
+hayUnIf = true; 
+                                                elsif.setEtiqueta("etiqueta"+contadoretiquetas);
+                                                contadoretiquetas++;
+                                               
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$10",42, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2066,6 +2093,7 @@ if(!foundError){
                                                                                                 RESULT.setListanumbersFalse(elsif.getListanumbersFalse());
                                                                                                 cuadruplo.addNode("GOTO","");     
                                                                                                 RESULT.getListasig().add(cuadruplo.getSize()-1);
+                                                                                                RESULT.setFirstEtiqueta(elsif.getEtiqueta());
                                                                                             } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("elseif_statement",17, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
