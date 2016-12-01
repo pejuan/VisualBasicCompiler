@@ -20,6 +20,7 @@ public class ElseIfStatement {
     private ArrayList<Integer> listanumbersFalse;
     private ArrayList<Integer> listasig;
     private String firstEtiqueta;
+    private ArrayList<Integer> lastelseif;
     public ElseIfStatement(String ElseIf, Expression expression, String Then, ArrayList<Statements> listastatements) {
         this.ElseIf = ElseIf;
         this.expression = expression;
@@ -28,11 +29,13 @@ public class ElseIfStatement {
         listanumbers = new ArrayList();
         listanumbersFalse = new ArrayList();
         listasig = new ArrayList();
+        lastelseif = new ArrayList();
     }
     public ElseIfStatement(){
         listanumbers = new ArrayList();
         listanumbersFalse = new ArrayList();
         listasig = new ArrayList();
+        lastelseif = new ArrayList();
     
     }
     
@@ -99,5 +102,13 @@ public class ElseIfStatement {
 
     public void setFirstEtiqueta(String firstEtiqueta) {
         this.firstEtiqueta = firstEtiqueta;
+    }
+
+    public ArrayList<Integer> getLastelseif() {
+        return lastelseif;
+    }
+
+    public void setLastelseif(ArrayList<Integer> lastelseif) {
+        this.lastelseif = lastelseif;
     }
 }

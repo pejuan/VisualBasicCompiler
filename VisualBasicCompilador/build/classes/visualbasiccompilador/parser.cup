@@ -522,7 +522,8 @@ if_statement ::=    begin_if:beg TK_END TK_IF                                   
                                                                                                                     ambito_actual = remove_scope(partir_ambito);
                                                                                                                     bloque = (int) pila_de_bloques.pop();
                                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
-                                                                                                                    cuadruplo.complete(elseifStmnts.getListasig(),"etiqueta"+contadoretiquetas);                                                      
+                                                                                                                    cuadruplo.complete(elseifStmnts.getListasig(),"etiqueta"+contadoretiquetas);
+                                                                                                                    cuadruplo.complete(elseifStmnts.getLastelseif(),"etiqueta"+contadoretiquetas);
                                                                                                                     cuadruplo.complete(beg.getListasig(),"etiqueta"+contadoretiquetas);
                                                                                                                     contadoretiquetas++;
                                                                                                                     cuadruplo.complete(beg.getListanumbersFalse(),elseifStmnts.getFirstEtiqueta());
@@ -534,6 +535,8 @@ if_statement ::=    begin_if:beg TK_END TK_IF                                   
                                                                                                                     ambito_actual = remove_scope(partir_ambito);
                                                                                                                     bloque = (int) pila_de_bloques.pop();
                                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                                    cuadruplo.complete(elseifStmnts.getListasig(),"etiqueta"+contadoretiquetas);
+                                                                                                                    
                                                                                                                     contadoretiquetas++;
                                                                                                                   } :}
 ;
@@ -562,12 +565,15 @@ elseif_statements ::=	elseif_statement:elseifStmnt elseif_statements:elseifStmnt
                                                                                                           RESULT.setFirstEtiqueta(elseifStmnt.getFirstEtiqueta());
                                                                                                           cuadruplo.complete(elseifStmnt.getListanumbersFalse(),elseifStmnts.getFirstEtiqueta());
                                                                                                           RESULT.setListasig(fusiona(elseifStmnt.getListasig(),elseifStmnts.getListasig()));
+                                                                                                          RESULT.setLastelseif(elseifStmnts.getLastelseif());
                                                                                                         :}
 			|elseif_statement:elseifStmnt                                                   {:if(!foundError){listaelseifs.add(elseifStmnt);
                                                                                                           RESULT = new ElseIfStatement();
                                                                                                           RESULT.setFirstEtiqueta(elseifStmnt.getFirstEtiqueta());
                                                                                                           RESULT.setListanumbersFalse(elseifStmnt.getListanumbersFalse());
-                                                                                                          RESULT.setListasig(fusiona(elseifStmnt.getListasig(),elseifStmnt.getListanumbersFalse()));
+                                                                                                          //RESULT.setListasig(fusiona(elseifStmnt.getListasig(),elseifStmnt.getListanumbersFalse()));
+                                                                                                          RESULT.setListasig(elseifStmnt.getListasig());
+                                                                                                          RESULT.setLastelseif(elseifStmnt.getListanumbersFalse());
                                                                                                         }:}
 ;
 

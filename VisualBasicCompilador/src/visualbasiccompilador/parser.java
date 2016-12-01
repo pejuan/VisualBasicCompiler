@@ -1834,7 +1834,8 @@ if(!foundError){
                                                                                                                     ambito_actual = remove_scope(partir_ambito);
                                                                                                                     bloque = (int) pila_de_bloques.pop();
                                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
-                                                                                                                    cuadruplo.complete(elseifStmnts.getListasig(),"etiqueta"+contadoretiquetas);                                                      
+                                                                                                                    cuadruplo.complete(elseifStmnts.getListasig(),"etiqueta"+contadoretiquetas);
+                                                                                                                    cuadruplo.complete(elseifStmnts.getLastelseif(),"etiqueta"+contadoretiquetas);
                                                                                                                     cuadruplo.complete(beg.getListasig(),"etiqueta"+contadoretiquetas);
                                                                                                                     contadoretiquetas++;
                                                                                                                     cuadruplo.complete(beg.getListanumbersFalse(),elseifStmnts.getFirstEtiqueta());
@@ -1863,6 +1864,8 @@ if(!foundError){
                                                                                                                     ambito_actual = remove_scope(partir_ambito);
                                                                                                                     bloque = (int) pila_de_bloques.pop();
                                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                                                                                                    cuadruplo.complete(elseifStmnts.getListasig(),"etiqueta"+contadoretiquetas);
+                                                                                                                    
                                                                                                                     contadoretiquetas++;
                                                                                                                   } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("if_statement",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -1938,6 +1941,7 @@ if(!foundError){
                                                                                                           RESULT.setFirstEtiqueta(elseifStmnt.getFirstEtiqueta());
                                                                                                           cuadruplo.complete(elseifStmnt.getListanumbersFalse(),elseifStmnts.getFirstEtiqueta());
                                                                                                           RESULT.setListasig(fusiona(elseifStmnt.getListasig(),elseifStmnts.getListasig()));
+                                                                                                          RESULT.setLastelseif(elseifStmnts.getLastelseif());
                                                                                                         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("elseif_statements",16, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1954,7 +1958,9 @@ if(!foundError){
                                                                                                           RESULT = new ElseIfStatement();
                                                                                                           RESULT.setFirstEtiqueta(elseifStmnt.getFirstEtiqueta());
                                                                                                           RESULT.setListanumbersFalse(elseifStmnt.getListanumbersFalse());
-                                                                                                          RESULT.setListasig(fusiona(elseifStmnt.getListasig(),elseifStmnt.getListanumbersFalse()));
+                                                                                                          //RESULT.setListasig(fusiona(elseifStmnt.getListasig(),elseifStmnt.getListanumbersFalse()));
+                                                                                                          RESULT.setListasig(elseifStmnt.getListasig());
+                                                                                                          RESULT.setLastelseif(elseifStmnt.getListanumbersFalse());
                                                                                                         }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("elseif_statements",16, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
