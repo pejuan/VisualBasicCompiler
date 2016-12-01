@@ -3,24 +3,20 @@ if o=7 GOTO etiqueta0
 GOTO etiqueta1
 etiqueta0
 print "Dentro del If"
-GOTO etiqueta7
+GOTO etiqueta6
 etiqueta1
 if o<9 GOTO etiqueta2
 GOTO etiqueta3
 etiqueta2
 print "Dentro del ElseIf"
-GOTO etiqueta7
+GOTO etiqueta6
 etiqueta3
 if o<10000 GOTO etiqueta4
 GOTO etiqueta5
 etiqueta4
 print "Segundo ElseIf"
-GOTO etiqueta7
+GOTO etiqueta6
 etiqueta5
-if o<99999 GOTO etiqueta6
-GOTO etiqueta7
+print "Dentro Else"
 etiqueta6
-print "Ultimo ElseIf"
-GOTO etiqueta7
-etiqueta7
 print "Fuera del If"

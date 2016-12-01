@@ -7,11 +7,11 @@ Sub main()
 		Write("Dentro del ElseIf")
 	ElseIf o<10000 Then
 		Write("Segundo ElseIf")
-	ElseIf o<99999 Then
-		Write("Ultimo ElseIf")
+	Else
+		Write("Dentro Else")
 	End If	
 	Write("Fuera del If")
-
+	
 
 End Sub
 

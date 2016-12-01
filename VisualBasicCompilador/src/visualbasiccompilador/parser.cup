@@ -536,8 +536,10 @@ if_statement ::=    begin_if:beg TK_END TK_IF                                   
                                                                                                                     bloque = (int) pila_de_bloques.pop();
                                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                                                                                     cuadruplo.complete(elseifStmnts.getListasig(),"etiqueta"+contadoretiquetas);
-                                                                                                                    
+                                                                                                                    cuadruplo.complete(elseifStmnts.getLastelseif(),elseStmnt.getEtiqueteinicio());
+                                                                                                                    cuadruplo.complete(beg.getListasig(),"etiqueta"+contadoretiquetas);
                                                                                                                     contadoretiquetas++;
+                                                                                                                    cuadruplo.complete(beg.getListanumbersFalse(),elseifStmnts.getFirstEtiqueta());
                                                                                                                   } :}
 ;
 
