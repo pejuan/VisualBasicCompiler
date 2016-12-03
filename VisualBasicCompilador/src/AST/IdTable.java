@@ -98,7 +98,7 @@ public class IdTable {
         }else{
             return false;
         }
-        
+
     }
     public void print(){
         System.out.format("%20s%20s%20s%20s%20s%10s%10s", "Symbol ID","Data Type","Scope","Type","Procedure Type","Size","Offset");

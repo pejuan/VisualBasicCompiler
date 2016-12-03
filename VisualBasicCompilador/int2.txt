@@ -1,6 +1,17 @@
+Structure Carro
+	Dim millas As Integer = 0
+	Dim combustible As String = "Gasolina"
+End Structure
+
+Sub Print()
+	Dim k As Boolean = True
+End Sub
+
 Sub main()
 
 	Dim o As Integer = 8
+	Dim millas As Integer = 0
+	Dim combustible As String = "Gasolina"
 	If o=7 Then
 		Write("Dentro del If")
 	ElseIf o<9 Then

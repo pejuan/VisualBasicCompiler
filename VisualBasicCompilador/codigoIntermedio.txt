@@ -1,4 +1,10 @@
+millas=0
+combustible="Gasolina"
+t0=1
+k=t0
 o=8
+millas=0
+combustible="Gasolina"
 if o=7 GOTO etiqueta0
 GOTO etiqueta1
 etiqueta0

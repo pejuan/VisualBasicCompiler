@@ -315,6 +315,7 @@ structure_statement ::= TK_STRUCTURE {:if(!foundError){
                                             ambito_actual += "." + Integer.toString(bloque);
                                             pila_de_bloques.push(bloque);
                                             bloque = 0;
+                                            offset = 0;
                                        }
                                       :} TK_ID:i statements:stmnts TK_END TK_STRUCTURE {:if(!foundError){RESULT = new StructureStatement("Structure",i,"End Structure",listastatements);listastatements = new ArrayList();
                                                                                                     String tipo_record = "";
@@ -327,13 +328,14 @@ structure_statement ::= TK_STRUCTURE {:if(!foundError){
                                                                                                             tipo_record += variables.get(k).getDataType();
                                                                                                         }
                                                                                                     }
-                                                                                                    offset += recordSize;
+                                                                                                    offset = 0;
                                                                                                     tableIds.addNode(new IdNode(i,"Record",ambito_actual,"record("+tipo_record+")","Structure",recordSize,offset));
                                                                                                     partir_ambito = ambito_actual.split("\\.");
                                                                                                     ambito_actual = remove_scope(partir_ambito);
                                                                                                     bloque = (int) pila_de_bloques.pop();
                                                                                                     variables = new ArrayList();
                                                                                                     recordSize = 0;
+                                                                                                    
                                                                                                 }:}
 ;
 
@@ -360,6 +362,7 @@ sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!fou
                                                                                                                 partir_ambito = ambito_actual.split("\\.");
                                                                                                                 ambito_actual = remove_scope(partir_ambito);
                                                                                                                 bloque = (int) pila_de_bloques.pop();
+                                                                                                                offset = 0;
                                                                                                             } :}
                     |TK_SUB TK_ID:i TK_PARIN TK_PAROUT {:if(!foundError){
                                                             bloque++;
@@ -376,6 +379,7 @@ sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!fou
                                                                                                                     partir_ambito = ambito_actual.split("\\.");
                                                                                                                     ambito_actual = remove_scope(partir_ambito);
                                                                                                                     bloque = (int) pila_de_bloques.pop();
+                                                                                                                    offset = 0;
                                                                                                                 }:}
                     |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts TK_END TK_SUB                      {:System.err.println("Error inside Sub statement");foundError=true;:}
                     |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts error TK_END TK_SUB                {:System.err.println("Several errors inside Sub statement");foundError=true;:}
@@ -403,6 +407,7 @@ function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT 
                                                                                                             }
                                                                                                             pila_de_bloques.push(bloque);
                                                                                                             bloque = 0;
+                                                                                                            
                                                                                                       }:} 
                                                                                                       statements:stmnts TK_END TK_FUNCTION  {:if(!foundError){
                                                                                                                                                 RESULT = new FunctionStatement("Function",i,listaparameters,listastatements,type,"End Function"); 
@@ -410,6 +415,7 @@ function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT 
                                                                                                                                                 partir_ambito = ambito_actual.split("\\.");
                                                                                                                                                 ambito_actual = remove_scope(partir_ambito);
                                                                                                                                                 bloque = (int) pila_de_bloques.pop();
+                                                                                                                                                offset = 0;
                                                                                                                                             }:}
                         
                         |TK_FUNCTION TK_ID:i TK_PARIN TK_PAROUT TK_AS data_type:type {:if(!foundError){
@@ -428,6 +434,7 @@ function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT 
                                                                                                                                 partir_ambito = ambito_actual.split("\\.");
                                                                                                                                 ambito_actual = remove_scope(partir_ambito);
                                                                                                                                 bloque = (int) pila_de_bloques.pop();
+                                                                                                                                offset = 0;
                                                                                                                              }:}
                         
                         |TK_FUNCTION TK_ID TK_PARIN parameters:prmts error TK_PAROUT statements:stmnts TK_END TK_FUNCTION                   {:System.err.println("Erroneous Function declaration.");foundError=true; :}

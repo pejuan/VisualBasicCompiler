@@ -1143,6 +1143,7 @@ if(!foundError){
                                             ambito_actual += "." + Integer.toString(bloque);
                                             pila_de_bloques.push(bloque);
                                             bloque = 0;
+                                            offset = 0;
                                        }
                                       
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$0",32, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -1172,13 +1173,14 @@ if(!foundError){
                                                                                                             tipo_record += variables.get(k).getDataType();
                                                                                                         }
                                                                                                     }
-                                                                                                    offset += recordSize;
+                                                                                                    offset = 0;
                                                                                                     tableIds.addNode(new IdNode(i,"Record",ambito_actual,"record("+tipo_record+")","Structure",recordSize,offset));
                                                                                                     partir_ambito = ambito_actual.split("\\.");
                                                                                                     ambito_actual = remove_scope(partir_ambito);
                                                                                                     bloque = (int) pila_de_bloques.pop();
                                                                                                     variables = new ArrayList();
                                                                                                     recordSize = 0;
+                                                                                                    
                                                                                                 }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("structure_statement",5, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1236,6 +1238,7 @@ if(!foundError){
                                                                                                                 partir_ambito = ambito_actual.split("\\.");
                                                                                                                 ambito_actual = remove_scope(partir_ambito);
                                                                                                                 bloque = (int) pila_de_bloques.pop();
+                                                                                                                offset = 0;
                                                                                                             } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("sub_statement",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1279,6 +1282,7 @@ if(!foundError){
                                                                                                                     partir_ambito = ambito_actual.split("\\.");
                                                                                                                     ambito_actual = remove_scope(partir_ambito);
                                                                                                                     bloque = (int) pila_de_bloques.pop();
+                                                                                                                    offset = 0;
                                                                                                                 }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("sub_statement",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1353,6 +1357,7 @@ if(!foundError){
                                                                                                             }
                                                                                                             pila_de_bloques.push(bloque);
                                                                                                             bloque = 0;
+                                                                                                            
                                                                                                       }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$3",35, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1382,6 +1387,7 @@ if(!foundError){
                                                                                                                                                 partir_ambito = ambito_actual.split("\\.");
                                                                                                                                                 ambito_actual = remove_scope(partir_ambito);
                                                                                                                                                 bloque = (int) pila_de_bloques.pop();
+                                                                                                                                                offset = 0;
                                                                                                                                             }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_statement",7, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-10)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1432,6 +1438,7 @@ if(!foundError){
                                                                                                                                 partir_ambito = ambito_actual.split("\\.");
                                                                                                                                 ambito_actual = remove_scope(partir_ambito);
                                                                                                                                 bloque = (int) pila_de_bloques.pop();
+                                                                                                                                offset = 0;
                                                                                                                              }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_statement",7, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-9)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
