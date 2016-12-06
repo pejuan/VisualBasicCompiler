@@ -1,27 +1,2 @@
-o=10
-millas=0
-combustible="Gasolina"
-if o=7 GOTO etiqueta0
-GOTO etiqueta1
-etiqueta0
-t0=1
-dentrodelif=t0
-print "Dentro del If"
-read o
-GOTO etiqueta6
-etiqueta1
-if o<9 GOTO etiqueta2
-GOTO etiqueta3
-etiqueta2
-print "Dentro del ElseIf"
-GOTO etiqueta6
-etiqueta3
-if o<10000 GOTO etiqueta4
-GOTO etiqueta5
-etiqueta4
-print "Segundo ElseIf"
-GOTO etiqueta6
-etiqueta5
-print "Dentro Else"
-etiqueta6
-print "Fuera del If"
+print "Hola Mundo "
+print 20

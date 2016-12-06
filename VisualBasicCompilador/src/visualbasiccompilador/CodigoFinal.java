@@ -12,6 +12,34 @@ import java.util.logging.Logger;
  *
  * @author joedhernandez95
  */
+
+class PrintMethod{
+    private String variable_name;
+    private String message;
+    
+    public PrintMethod(String variable_name,String message){
+        this.variable_name = variable_name;
+        this.message = message;
+    }
+    
+    public void setVariableName(String variable_name){
+        this.variable_name = variable_name;
+    }
+    
+    public String getVariableName(){
+        return this.variable_name;
+    }
+    
+    public void setMessage(String message){
+        this.message = message;
+    }
+    
+    public String getMessage(){
+        return this.message;
+    }
+}
+
+
 public class CodigoFinal {
     
     public final String $v0 = "$v0";
@@ -78,6 +106,7 @@ public class CodigoFinal {
         //Agarramos todas las variables del main
         ArrayList<IdNode> main_variables = this.tabla_simbolos.getVariables(main_scope);
         
+       
         
         //Comenzamos a general el texto para el ASM
         
@@ -87,12 +116,24 @@ public class CodigoFinal {
         ArrayList<String> direccion1 = this.cuadruplo.getDir1();
         ArrayList<String> direccion2 = this.cuadruplo.getDir2();
         ArrayList<String> direccion3 = this.cuadruplo.getDir3();
+        ArrayList<PrintMethod> imprimir = new ArrayList<PrintMethod>();
         
         //Ponemos todas las variables del main primero
-        for(int i = 0; i < direccion3.size(); i++){
+        int k = 1;
+        for(int i = 0; i < comandos_intermedio.size(); i++){
+            if(comandos_intermedio.get(i).equals("print")){
+                imprimir.add(new PrintMethod("_msg"+k,direccion3.get(i)));
+                if(direccion3.get(i).matches("[0-9]+")){
+                    assembly_file.append("_msg"+k+": .word "+direccion3.get(i)+"\n");
+                }else{
+                    assembly_file.append("_msg"+k+": .asciiz "+direccion3.get(i)+"\n");
+                }
+                
+                k++;
+            }
             for(IdNode main_variable:main_variables){
                 if(main_variable.getName().equals(direccion3.get(i))){
-                    if(main_variable.getType().equals("Integer") && comandos_intermedio.get(i).equals("=")){
+                    if(main_variable.getType().equals("Integer") && comandos_intermedio.get(i).equals("=") ){
                         assembly_file.append("_"+main_variable.getName()+": .word "+direccion1.get(i)+"\n");
                     }
                     if(main_variable.getType().equals("String") && comandos_intermedio.get(i).equals("=")){
@@ -106,6 +147,35 @@ public class CodigoFinal {
             
             }
         }
-        assembly_file.append("\n.text\n.globl main\n\nmain:\n\t");
+        assembly_file.append("\n.text\n.globl main\n\nmain:\n");
+        
+        //Todas las operaciones se hacen aqui
+        for(int i = 0; i < comandos_intermedio.size(); i++){
+            String comando = comandos_intermedio.get(i);
+            switch(comando){
+                case "print":
+                    System.out.println(direccion3.get(i));
+                    
+                    if(direccion3.get(i).matches("[0-9]+")){ //Si el mensaje es un entero
+                        assembly_file.append("\tli "+$v0+", 1\n");
+                        assembly_file.append("\tlw "+$a0+",");
+                    }
+                    if(direccion3.get(i).matches("[\\\"][\\w\\W]*[\\\"]")){ //Si el mensaje es alfanumerico
+                        assembly_file.append("\tli "+$v0+", 4\n");
+                        assembly_file.append("\tla "+$a0+",");
+                    }
+                    
+                    for(PrintMethod print:imprimir){
+                        if(print.getMessage().equals(direccion3.get(i))){
+                            assembly_file.append(print.getVariableName()+"\n");
+                        }
+                    }
+                    assembly_file.append("\tsyscall\n\n");
+                    break;
+            }
+        }
+        
+        assembly_file.append("\n\tli "+$v0+",10\n\tsyscall\n");
     }
+   
 }
