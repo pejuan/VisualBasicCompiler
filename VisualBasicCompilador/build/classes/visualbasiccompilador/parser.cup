@@ -490,7 +490,9 @@ statement ::=	if_statement:ifStatement                {:if(!foundError){
 write_statement ::= TK_WRITE TK_PARIN literal_expression:le TK_PAROUT           {:if(!foundError){RESULT = new WriteStatement("Write",le,null);
                                                                                     cuadruplo.addNode("print",le.getLugar());
                                                                                 } :}
-                    |TK_WRITE TK_PARIN TK_ID:i TK_PAROUT                        {:if(!foundError){RESULT = new WriteStatement("Write",null,i);}  :}
+                    |TK_WRITE TK_PARIN TK_ID:i TK_PAROUT                        {:if(!foundError){RESULT = new WriteStatement("Write",null,i);
+                                                                                    cuadruplo.addNode("print", i);
+                                                                                }  :}
                     |TK_WRITE TK_PARIN error TK_PAROUT                          {:System.err.println("\t\t\t\t\t  Problem near Console.Write()"); foundError=true;:}
 ;
 read_statement  ::= TK_READ TK_PARIN TK_ID:i TK_PAROUT               {:if(!foundError){RESULT = new ReadStatement("Read",i);

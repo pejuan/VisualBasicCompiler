@@ -1,2 +1,4 @@
+Unitec=96
 print "Hola Mundo "
 print 20
+print Unitec

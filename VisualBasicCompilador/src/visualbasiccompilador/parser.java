@@ -1738,7 +1738,9 @@ if(!foundError){
 		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		if(!foundError){RESULT = new WriteStatement("Write",null,i);}  
+		if(!foundError){RESULT = new WriteStatement("Write",null,i);
+                                                                                    cuadruplo.addNode("print", i);
+                                                                                }  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("write_statement",13, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

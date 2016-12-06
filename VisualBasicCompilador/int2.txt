@@ -1,7 +1,8 @@
 Sub main()
-
+	Dim Unitec As Integer = 96
 	Write("Hola Mundo ")
 	Write(20)
+	Write(Unitec)
 
 End Sub
 
