@@ -6,6 +6,7 @@ Sub main()
 	If o=7 Then
 		Dim dentrodelif As Boolean = True
 		Write("Dentro del If")
+		Read(o)
 	ElseIf o<9 Then
 		Write("Dentro del ElseIf")
 	ElseIf o<10000 Then

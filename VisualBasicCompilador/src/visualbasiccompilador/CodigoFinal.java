@@ -92,13 +92,13 @@ public class CodigoFinal {
         for(int i = 0; i < direccion3.size(); i++){
             for(IdNode main_variable:main_variables){
                 if(main_variable.getName().equals(direccion3.get(i))){
-                    if(main_variable.getType().equals("Integer")){
+                    if(main_variable.getType().equals("Integer") && comandos_intermedio.get(i).equals("=")){
                         assembly_file.append("_"+main_variable.getName()+": .word "+direccion1.get(i)+"\n");
                     }
-                    if(main_variable.getType().equals("String")){
+                    if(main_variable.getType().equals("String") && comandos_intermedio.get(i).equals("=")){
                         assembly_file.append("_"+main_variable.getName()+": .asciiz "+direccion1.get(i)+"\n");
                     }
-                    if(main_variable.getType().equals("Boolean")){
+                    if(main_variable.getType().equals("Boolean") && comandos_intermedio.get(i).equals("=")){
                         //No se como se guarda boolean en MIPS
                         System.out.println("");
                     }
