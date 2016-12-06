@@ -54,6 +54,9 @@ public class VisualBasicCompilador {
             System.out.println("");
             p.cuadruplo.print();
             p.cuadruplo.generateCode();
+            CodigoFinal finalcode = new CodigoFinal(p.cuadruplo,p.tableIds);
+            finalcode.generateFinalCode();
+            finalcode.generateASMFile();
             
         }catch(Exception e){
             e.printStackTrace();

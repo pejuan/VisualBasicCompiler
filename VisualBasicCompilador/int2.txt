@@ -1,18 +1,10 @@
-Structure Carro
-	Dim millas As Integer = 0
-	Dim combustible As String = "Gasolina"
-End Structure
-
-Sub Print()
-	Dim k As Boolean = True
-End Sub
-
 Sub main()
 
-	Dim o As Integer = 8
+	Dim o As Integer = 10
 	Dim millas As Integer = 0
 	Dim combustible As String = "Gasolina"
 	If o=7 Then
+		Dim dentrodelif As Boolean = True
 		Write("Dentro del If")
 	ElseIf o<9 Then
 		Write("Dentro del ElseIf")

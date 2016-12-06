@@ -25,6 +25,17 @@ public class IdTable {
     public IdTable() {
         
     }
+    
+    public IdNode getNode(String id){
+        for(IdNode idlist1:this.idlist){
+            if(idlist1.getName().equals(id)){
+                return idlist1;
+            }
+        }
+        return null;
+    }
+    
+    
     public boolean searchNode(IdNode nodo){//a esta busqueda habra que incluirle el ambito
         for (IdNode idlist1 : this.idlist) {
             if (idlist1.getName().equals(nodo.getName()) && nodo.getAmbito().contains(idlist1.getAmbito())) {
@@ -80,6 +91,16 @@ public class IdTable {
             }
         }
         return false;
+    }
+    
+    public ArrayList<IdNode> getVariables(String ambito){
+        ArrayList<IdNode> variables = new ArrayList<IdNode>();
+        for(IdNode idlist1:this.idlist){
+            if(idlist1.getType2().equals("Variable") && idlist1.getAmbito().contains(ambito)){
+                variables.add(idlist1);
+            }
+        }
+        return variables;
     }
     
     public boolean searchRecord(String id){

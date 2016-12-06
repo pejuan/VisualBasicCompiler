@@ -1,13 +1,11 @@
-millas=0
-combustible="Gasolina"
-t0=1
-k=t0
-o=8
+o=10
 millas=0
 combustible="Gasolina"
 if o=7 GOTO etiqueta0
 GOTO etiqueta1
 etiqueta0
+t0=1
+dentrodelif=t0
 print "Dentro del If"
 GOTO etiqueta6
 etiqueta1
