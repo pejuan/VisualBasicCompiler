@@ -1,9 +1,9 @@
 Sub main()
-	Dim Unitec As Integer = 0
-
-	Write("Hola Mundo ")
-	Write("Ingrese el valor para Unitec ")
-	Read(Unitec)
-	Write(Unitec)
+	Dim a As Integer = 0
+	Dim b As Integer = 0
+	Dim c As Integer = 0
+	
+	c = 50-10*2
+	Write(c)
 End Sub
 

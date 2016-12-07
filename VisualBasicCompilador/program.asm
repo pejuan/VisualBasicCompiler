@@ -1,26 +1,20 @@
 .data
-_Unitec: .word 0
-_msg1: .asciiz "Hola Mundo "
-_msg2: .asciiz "Ingrese el valor para Unitec "
+_a: .word 0
+_b: .word 0
+_c: .word 0
 
 .text
 .globl main
 
 main:
-	li $v0, 4
-	la $a0,_msg1
-	syscall
-
-	li $v0, 4
-	la $a0,_msg2
-	syscall
-
-	li $v0, 5
-	syscall
-	sw $v0,_Unitec
-
+	li $t0, 10
+	li $t1, 2
+	mul $t2, $t0, $t1
+	li $t0, 50
+	sub $t1, $t0, $t2
+	sw $t1,_c
 	li $v0, 1
-	lw $a0,_Unitec
+	lw $a0,_c
 	syscall
 
 

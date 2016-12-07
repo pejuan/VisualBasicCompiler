@@ -1,5 +1,7 @@
-Unitec=0
-print "Hola Mundo "
-print "Ingrese el valor para Unitec "
-read Unitec
-print Unitec
+a=0
+b=0
+c=0
+t0=10*2
+t1=50-t0
+c=t1
+print c
