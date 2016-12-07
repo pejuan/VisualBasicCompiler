@@ -198,9 +198,15 @@ public class CodigoFinal {
                     }
                     assembly_file.append("\tsyscall\n\n");
                     break;
-                    //Leer
+                    //Leer (solo enteros)
                 case "read":
-                    
+                    for(IdNode main_variable: main_variables){
+                        if(main_variable.getName().equals(direccion3.get(i))){
+                            assembly_file.append("\tli "+$v0+", 5");
+                            assembly_file.append("\n\tsyscall\n");
+                            assembly_file.append("\tsw "+$v0+",_"+main_variable.getName()+"\n\n");
+                        }
+                    }
                     break;
             }
         }
