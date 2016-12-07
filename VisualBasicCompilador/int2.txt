@@ -1,8 +1,20 @@
 Sub main()
-	Dim Unitec As Integer = 96
-	Write("Hola Mundo ")
-	Write(20)
-	Write(Unitec)
+	Dim Unitec As Integer = 10
+	Dim Unitec2 As Integer = 20
+	Dim Unitec3 As String = "Esto es una prueba "
+	Dim espacio As String = " "
 
+	
+	Write("Hola Mundo ")
+	Write("Probemos Esto ")
+	Write(20)
+	Write(espacio)
+	Write(Unitec)
+	Write(espacio)
+	Write(Unitec2)
+	Write(espacio)
+	Write(Unitec3)
+	Write(espacio)
+	Write("Este es el fin ")
 End Sub
 

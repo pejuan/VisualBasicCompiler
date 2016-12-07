@@ -119,18 +119,8 @@ public class CodigoFinal {
         ArrayList<PrintMethod> imprimir = new ArrayList<PrintMethod>();
         
         //Ponemos todas las variables del main primero
-        int k = 1;
+        
         for(int i = 0; i < comandos_intermedio.size(); i++){
-            if(comandos_intermedio.get(i).equals("print")){
-                imprimir.add(new PrintMethod("_msg"+k,direccion3.get(i)));
-                if(direccion3.get(i).matches("[0-9]+")){
-                    assembly_file.append("_msg"+k+": .word "+direccion3.get(i)+"\n");
-                }else{
-                    assembly_file.append("_msg"+k+": .asciiz "+direccion3.get(i)+"\n");
-                }
-                
-                k++;
-            }
             for(IdNode main_variable:main_variables){
                 if(main_variable.getName().equals(direccion3.get(i))){
                     if(main_variable.getType().equals("Integer") && comandos_intermedio.get(i).equals("=") ){
@@ -147,22 +137,58 @@ public class CodigoFinal {
             
             }
         }
+        
+       
+         int k = 1;
+        //Guardamos los mensajes en bruto en una variable de MIPS
+        for(int i = 0; i < comandos_intermedio.size(); i++){
+            if(comandos_intermedio.get(i).equals("print")){
+                if(direccion3.get(i).matches("[0-9]+")){
+                    assembly_file.append("_msg"+k+": .word "+direccion3.get(i)+"\n");
+                    imprimir.add(new PrintMethod("_msg"+k,direccion3.get(i)));
+                    k++;
+                }
+                if(direccion3.get(i).matches("[\\\"][\\w\\W]*[\\\"]")){
+                    assembly_file.append("_msg"+k+": .asciiz "+direccion3.get(i)+"\n");
+                    imprimir.add(new PrintMethod("_msg"+k,direccion3.get(i)));
+                    k++;
+                }
+            }
+            
+        }
+        
+        
         assembly_file.append("\n.text\n.globl main\n\nmain:\n");
         
         //Todas las operaciones se hacen aqui
         for(int i = 0; i < comandos_intermedio.size(); i++){
             String comando = comandos_intermedio.get(i);
+            
+            
             switch(comando){
+                //Imprimir
                 case "print":
-                    System.out.println(direccion3.get(i));
-                    
                     if(direccion3.get(i).matches("[0-9]+")){ //Si el mensaje es un entero
                         assembly_file.append("\tli "+$v0+", 1\n");
                         assembly_file.append("\tlw "+$a0+",");
                     }
-                    if(direccion3.get(i).matches("[\\\"][\\w\\W]*[\\\"]")){ //Si el mensaje es alfanumerico
+                    
+                    if(direccion3.get(i).matches("[\\\"][\\w\\W]*[\\\"]")){ //Si el mensaje es alfanumerico o variable
+                        
                         assembly_file.append("\tli "+$v0+", 4\n");
-                        assembly_file.append("\tla "+$a0+",");
+                        assembly_file.append("\tla "+$a0+","); 
+                    }else{
+                       for(IdNode main_variable:main_variables){
+                            if(main_variable.getName().equals(direccion3.get(i)) && main_variable.getType().equals("Integer")){
+                                assembly_file.append("\tli "+$v0+", 1\n");
+                                assembly_file.append("\tlw "+$a0+",");
+                                assembly_file.append("_"+main_variable.getName()+"\n");
+                            }else if (main_variable.getName().equals(direccion3.get(i)) && main_variable.getType().equals("String")){
+                                assembly_file.append("\tli "+$v0+", 4\n");
+                                assembly_file.append("\tla "+$a0+",");
+                                assembly_file.append("_"+main_variable.getName()+"\n");
+                            }
+                        } 
                     }
                     
                     for(PrintMethod print:imprimir){
@@ -171,6 +197,10 @@ public class CodigoFinal {
                         }
                     }
                     assembly_file.append("\tsyscall\n\n");
+                    break;
+                    //Leer
+                case "read":
+                    
                     break;
             }
         }

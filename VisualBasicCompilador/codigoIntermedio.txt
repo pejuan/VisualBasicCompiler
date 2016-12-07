@@ -1,4 +1,15 @@
-Unitec=96
+Unitec=10
+Unitec2=20
+Unitec3="Esto es una prueba "
+espacio=" "
 print "Hola Mundo "
+print "Probemos Esto "
 print 20
+print espacio
 print Unitec
+print espacio
+print Unitec2
+print espacio
+print Unitec3
+print espacio
+print "Este es el fin "
