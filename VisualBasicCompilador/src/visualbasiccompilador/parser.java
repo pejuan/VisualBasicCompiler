@@ -2661,7 +2661,7 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                if(!hayUnIf){
+                                                                                                if(!hayUnIf || true){
                                                                                                     RESULT.setLugar(nuevoTemporal());
                                                                                                     int tmpet = contadoretiquetas;
                                                                                                     cuadruplo.addNode(">",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
@@ -2724,7 +2724,7 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                if(!hayUnIf){
+                                                                                                if(!hayUnIf || true){
                                                                                                     RESULT.setLugar(nuevoTemporal());
                                                                                                     int tmpet = contadoretiquetas;
                                                                                                     cuadruplo.addNode("<",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
@@ -2787,7 +2787,7 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                if(!hayUnIf){
+                                                                                                if(!hayUnIf || true){
                                                                                                     RESULT.setLugar(nuevoTemporal());
                                                                                                     int tmpet = contadoretiquetas;
                                                                                                     cuadruplo.addNode(">=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
@@ -2850,7 +2850,7 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                if(!hayUnIf){
+                                                                                                if(!hayUnIf || true){
                                                                                                     RESULT.setLugar(nuevoTemporal());
                                                                                                     int tmpet = contadoretiquetas;
                                                                                                     cuadruplo.addNode("<=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
@@ -2913,7 +2913,7 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                if(!hayUnIf){
+                                                                                                if(!hayUnIf || true){
                                                                                                     RESULT.setLugar(nuevoTemporal());
                                                                                                     int tmpet = contadoretiquetas;
                                                                                                     cuadruplo.addNode("==",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
@@ -2976,7 +2976,7 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                if(!hayUnIf){
+                                                                                                if(!hayUnIf || true){
                                                                                                     RESULT.setLugar(nuevoTemporal());
                                                                                                     int tmpet = contadoretiquetas;
                                                                                                     cuadruplo.addNode("!=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);

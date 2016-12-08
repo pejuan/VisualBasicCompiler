@@ -820,7 +820,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                if(!hayUnIf){
+                                                                                                if(!hayUnIf || true){
                                                                                                     RESULT.setLugar(nuevoTemporal());
                                                                                                     int tmpet = contadoretiquetas;
                                                                                                     cuadruplo.addNode(">",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
@@ -870,7 +870,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                if(!hayUnIf){
+                                                                                                if(!hayUnIf || true){
                                                                                                     RESULT.setLugar(nuevoTemporal());
                                                                                                     int tmpet = contadoretiquetas;
                                                                                                     cuadruplo.addNode("<",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
@@ -919,7 +919,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                if(!hayUnIf){
+                                                                                                if(!hayUnIf || true){
                                                                                                     RESULT.setLugar(nuevoTemporal());
                                                                                                     int tmpet = contadoretiquetas;
                                                                                                     cuadruplo.addNode(">=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
@@ -968,7 +968,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                if(!hayUnIf){
+                                                                                                if(!hayUnIf || true){
                                                                                                     RESULT.setLugar(nuevoTemporal());
                                                                                                     int tmpet = contadoretiquetas;
                                                                                                     cuadruplo.addNode("<=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
@@ -1017,7 +1017,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                if(!hayUnIf){
+                                                                                                if(!hayUnIf || true){
                                                                                                     RESULT.setLugar(nuevoTemporal());
                                                                                                     int tmpet = contadoretiquetas;
                                                                                                     cuadruplo.addNode("==",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);
@@ -1066,7 +1066,7 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                if(!hayUnIf){
+                                                                                                if(!hayUnIf || true){
                                                                                                     RESULT.setLugar(nuevoTemporal());
                                                                                                     int tmpet = contadoretiquetas;
                                                                                                     cuadruplo.addNode("!=",e1.getLugar(),e2.getLugar(),"etiqueta"+tmpet);

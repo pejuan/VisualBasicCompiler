@@ -2,7 +2,9 @@ Sub main()
 	Dim a As Integer = 0
 	Dim b As Integer = 0
 	Dim c As Integer = 0
-	
+	If a>b And c<b Then
+
+	End If
 	c = 50-10*2
 	Write(c)
 End Sub

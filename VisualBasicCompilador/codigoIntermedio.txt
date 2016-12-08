@@ -1,7 +1,25 @@
 a=0
 b=0
 c=0
-t0=10*2
-t1=50-t0
-c=t1
+if a>b GOTO etiqueta0
+t0=0
+GOTO etiqueta1
+etiqueta0
+t0=1
+etiqueta1
+if c<b GOTO etiqueta2
+t1=0
+GOTO etiqueta3
+etiqueta2
+t1=1
+etiqueta3
+t2=t0 and t1
+if t2 GOTO etiqueta4
+GOTO etiqueta5
+etiqueta4
+GOTO etiqueta5
+etiqueta5
+t3=10*2
+t4=50-t3
+c=t4
 print c
