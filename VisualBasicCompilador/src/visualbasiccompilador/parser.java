@@ -1357,6 +1357,7 @@ if(!foundError){
                                                                                                             }
                                                                                                             pila_de_bloques.push(bloque);
                                                                                                             bloque = 0;
+                                                                                                            cuadruplo.addNode("ETIQ","fun_"+i);
                                                                                                             
                                                                                                       }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$3",35, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -1388,6 +1389,7 @@ if(!foundError){
                                                                                                                                                 ambito_actual = remove_scope(partir_ambito);
                                                                                                                                                 bloque = (int) pila_de_bloques.pop();
                                                                                                                                                 offset = 0;
+                                                                                                                                                cuadruplo.addNode("FINFUN","");
                                                                                                                                             }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_statement",7, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-10)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1411,7 +1413,7 @@ if(!foundError){
                                                                                             }
                                                                                             pila_de_bloques.push(bloque);
                                                                                             bloque = 0;
-                                                                                            
+                                                                                            cuadruplo.addNode("ETIQ","fun_"+i);
                                                                                       }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$4",36, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1439,6 +1441,7 @@ if(!foundError){
                                                                                                                                 ambito_actual = remove_scope(partir_ambito);
                                                                                                                                 bloque = (int) pila_de_bloques.pop();
                                                                                                                                 offset = 0;
+                                                                                                                                cuadruplo.addNode("FINFUN","");
                                                                                                                              }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_statement",7, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-9)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1703,7 +1706,9 @@ if(!foundError){
 		int expleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int expright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression exp = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		if(!foundError){RESULT = new ReturnExpression("Return",exp);}
+		if(!foundError){RESULT = new ReturnExpression("Return",exp);
+                                                            cuadruplo.addNode("RET",exp.getLugar());
+                                                        }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("statement",12, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

@@ -407,6 +407,7 @@ function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT 
                                                                                                             }
                                                                                                             pila_de_bloques.push(bloque);
                                                                                                             bloque = 0;
+                                                                                                            cuadruplo.addNode("ETIQ","fun_"+i);
                                                                                                             
                                                                                                       }:} 
                                                                                                       statements:stmnts TK_END TK_FUNCTION  {:if(!foundError){
@@ -416,6 +417,7 @@ function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT 
                                                                                                                                                 ambito_actual = remove_scope(partir_ambito);
                                                                                                                                                 bloque = (int) pila_de_bloques.pop();
                                                                                                                                                 offset = 0;
+                                                                                                                                                cuadruplo.addNode("FINFUN","");
                                                                                                                                             }:}
                         
                         |TK_FUNCTION TK_ID:i TK_PARIN TK_PAROUT TK_AS data_type:type {:if(!foundError){
@@ -426,7 +428,7 @@ function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT 
                                                                                             }
                                                                                             pila_de_bloques.push(bloque);
                                                                                             bloque = 0;
-                                                                                            
+                                                                                            cuadruplo.addNode("ETIQ","fun_"+i);
                                                                                       }:} 
                                                                                       statements:stmnts TK_END TK_FUNCTION {:if(!foundError){
                                                                                                                                 RESULT = new FunctionStatement("Function",i,null,listastatements,type,"End Function"); 
@@ -435,6 +437,7 @@ function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT 
                                                                                                                                 ambito_actual = remove_scope(partir_ambito);
                                                                                                                                 bloque = (int) pila_de_bloques.pop();
                                                                                                                                 offset = 0;
+                                                                                                                                cuadruplo.addNode("FINFUN","");
                                                                                                                              }:}
                         
                         |TK_FUNCTION TK_ID TK_PARIN parameters:prmts error TK_PAROUT statements:stmnts TK_END TK_FUNCTION                   {:System.err.println("Erroneous Function declaration.");foundError=true; :}
@@ -484,7 +487,9 @@ statement ::=	if_statement:ifStatement                {:if(!foundError){
                 |read_statement:readStatement           {:if(!foundError){RESULT = readStatement;} :}
                 |variable_declaration:var_declare       {:if(!foundError){RESULT = var_declare;} :}
 		|expression:expr                        {:if(!foundError){RESULT = expr;}:}
-		|TK_RETURN expression:exp               {:if(!foundError){RESULT = new ReturnExpression("Return",exp);}:}
+		|TK_RETURN expression:exp               {:if(!foundError){RESULT = new ReturnExpression("Return",exp);
+                                                            cuadruplo.addNode("RET",exp.getLugar());
+                                                        }:}
 		|TK_EXIT                                {:if(!foundError){RESULT = new ExitStatement("Exit");} :}
 ;
 write_statement ::= TK_WRITE TK_PARIN literal_expression:le TK_PAROUT           {:if(!foundError){RESULT = new WriteStatement("Write",le,null);
