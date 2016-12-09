@@ -1,7 +1,12 @@
+Function operar(ByVal personas As Integer, ByVal goku As Boolean) As Integer
+
+End Function
+
 Sub main()
-	Dim a As Integer = 0
+	Dim a As Integer = operar(1,True)
 	Dim b As Integer = 0
 	Dim c As Integer = 0
+	a = 2
 	If a>b And c<b Then
 
 	End If

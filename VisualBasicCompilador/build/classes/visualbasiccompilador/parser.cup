@@ -279,7 +279,7 @@ non terminal NumericExpression numeric_expression;
 non terminal BooleanExpression boolean_expression;
 non terminal LiteralExpression literal_expression;
 non terminal LogicalExpression logical_expression;
-non terminal Expression function_call;
+non terminal FunctionCall function_call;
 non terminal Argument arguments;
 non terminal Argument argument;
 
@@ -755,7 +755,6 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                             |TK_ID:id TK_EQUALS expression:expr                                             {: if(!foundError){RESULT = new VariableDeclarator(id,"=",expr);
                                                                                                                String auxtype1 =tableIds.searchNodeType(id,ambito_actual);
                                                                                                                String auxtype2 = expr.bringType();
-                                                                                                               
                                                                                                                if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),ambito_actual);}
                                                                                                                if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
                                                                                                                cuadruplo.addNode("=",expr.getLugar(),"",id);
@@ -783,7 +782,7 @@ expression ::=	numeric_expression:num_exp      {: if(!foundError){RESULT = new N
 		|logical_expression:logic_exp   {:if(!foundError){RESULT = new LogicalExpression(((LogicalExpression)logic_exp).isValue(),((LogicalExpression)logic_exp).getOperador(),((LogicalExpression)logic_exp).getExpression1(),((LogicalExpression)logic_exp).getExpression2(),null); RESULT.setLugar(logic_exp.getLugar());} :}
 		|literal_expression:lit_exp     {:if(!foundError){RESULT = new LiteralExpression(((LiteralExpression)lit_exp).getStringval(),((LiteralExpression)lit_exp).getNumber(),null); RESULT.setLugar(lit_exp.getLugar());} :}
 		|TK_ID:id                       {:if(!foundError){RESULT = new Expression(id); RESULT.setLugar(id);} :}
-		|function_call:call             {:if(!foundError){RESULT = new FunctionCall(((FunctionCall)call).getArguments(),((FunctionCall)call).getId()); RESULT.setLugar(call.getLugar());} :}
+		|function_call:call             {:if(!foundError){RESULT = new FunctionCall(((FunctionCall)call).getArguments(),((FunctionCall)call).getId(),((FunctionCall)call).getReturns()); RESULT.setLugar(call.getLugar());} :}
 ;
 
 boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2                       {: if(!foundError){RESULT = new BooleanExpression(e1,">",e2,null);
@@ -1418,7 +1417,7 @@ literal_expression ::= 	TK_NUMBER:num                                       {:if
 ;
 
 function_call ::=   TK_ID:i TK_PARIN arguments:args TK_PAROUT             {:if(!foundError){
-                                                                                RESULT = new FunctionCall(listaarguments,i);
+                                                                                RESULT = new FunctionCall(listaarguments,i,tableIds.searchNodeType(i,ambito_actual));
                                                                                 String parameterType = tableIds.searchFunctionType(i);
                                                                                 if(parameterType=="none"){
                                                                                     System.err.println("Function or Sub "+i+" not found");
@@ -1443,18 +1442,25 @@ function_call ::=   TK_ID:i TK_PARIN arguments:args TK_PAROUT             {:if(!
                                                                                     
                                                                                     
                                                                                 }
+                                                                                //RESULT.setReturns(tableIds.searchNodeType(i,ambito_actual));
+                                                                                cuadruplo.addNode("CALL",i,listaarguments.size()+"","");
+                                                                                RESULT.setLugar("RET");
                                                                                 listaarguments = new ArrayList();
                                                                            }:}
 
                     |TK_ID:i TK_PARIN TK_PAROUT                           {:if(!foundError){
-                                                                                RESULT = new FunctionCall(null,i);
+                                                                                RESULT = new FunctionCall(null,i,tableIds.searchNodeType(i,ambito_actual));
                                                                             }:}
                     |TK_ID TK_PARIN error                                 {:System.err.println("Function call expects ')'");foundError=true;:}
                     |TK_ID:i TK_PARIN arguments:args error                {:System.err.println("Function call expects2 ')'");foundError=true;:}
 ;
 
-arguments ::=   argument:arg TK_COMMA arguments:args                    {:if(!foundError){listaarguments.add(arg);} :}
-                |argument:arg                                           {:if(!foundError){listaarguments.add(arg);} :}
+arguments ::=   argument:arg TK_COMMA arguments:args                    {:if(!foundError){listaarguments.add(arg);} 
+                                                                            cuadruplo.addNode("PARAM",arg.getExpression().getLugar());
+                                                                        :}
+                |argument:arg                                           {:if(!foundError){listaarguments.add(arg);} 
+                                                                            cuadruplo.addNode("PARAM",arg.getExpression().getLugar());
+                                                                        :}
 ;
 
 argument ::= expression:expr                                            {:if(!foundError){RESULT = new Argument(expr);} :}

@@ -1,25 +1,32 @@
-a=0
+fun_operar
+FINFUN
+t0=1
+param t0
+param 1
+call operar, 2
+a=RET
 b=0
 c=0
+a=2
 if a>b GOTO etiqueta0
-t0=0
+t1=0
 GOTO etiqueta1
 etiqueta0
-t0=1
+t1=1
 etiqueta1
 if c<b GOTO etiqueta2
-t1=0
+t2=0
 GOTO etiqueta3
 etiqueta2
-t1=1
+t2=1
 etiqueta3
-t2=t0 and t1
-if t2 GOTO etiqueta4
+t3=t1 and t2
+if t3 GOTO etiqueta4
 GOTO etiqueta5
 etiqueta4
 GOTO etiqueta5
 etiqueta5
-t3=10*2
-t4=50-t3
-c=t4
+t4=10*2
+t5=50-t4
+c=t5
 print c

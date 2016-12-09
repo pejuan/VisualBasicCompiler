@@ -1,5 +1,5 @@
 .data
-_a: .word 0
+_a: .word RET
 _b: .word 0
 _c: .word 0
 

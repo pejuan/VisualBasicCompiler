@@ -2493,7 +2493,6 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
 		 if(!foundError){RESULT = new VariableDeclarator(id,"=",expr);
                                                                                                                String auxtype1 =tableIds.searchNodeType(id,ambito_actual);
                                                                                                                String auxtype2 = expr.bringType();
-                                                                                                               
                                                                                                                if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),ambito_actual);}
                                                                                                                if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
                                                                                                                cuadruplo.addNode("=",expr.getLugar(),"",id);
@@ -2611,8 +2610,8 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
               Expression RESULT =null;
 		int callleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int callright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		Expression call = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		if(!foundError){RESULT = new FunctionCall(((FunctionCall)call).getArguments(),((FunctionCall)call).getId()); RESULT.setLugar(call.getLugar());} 
+		FunctionCall call = (FunctionCall)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		if(!foundError){RESULT = new FunctionCall(((FunctionCall)call).getArguments(),((FunctionCall)call).getId(),((FunctionCall)call).getReturns()); RESULT.setLugar(call.getLugar());} 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expression",24, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -3569,7 +3568,7 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 114: // function_call ::= TK_ID TK_PARIN arguments TK_PAROUT 
             {
-              Expression RESULT =null;
+              FunctionCall RESULT =null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
@@ -3577,7 +3576,7 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
 		int argsright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Argument args = (Argument)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		if(!foundError){
-                                                                                RESULT = new FunctionCall(listaarguments,i);
+                                                                                RESULT = new FunctionCall(listaarguments,i,tableIds.searchNodeType(i,ambito_actual));
                                                                                 String parameterType = tableIds.searchFunctionType(i);
                                                                                 if(parameterType=="none"){
                                                                                     System.err.println("Function or Sub "+i+" not found");
@@ -3602,6 +3601,9 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
                                                                                     
                                                                                     
                                                                                 }
+                                                                                //RESULT.setReturns(tableIds.searchNodeType(i,ambito_actual));
+                                                                                cuadruplo.addNode("CALL",i,listaarguments.size()+"","");
+                                                                                RESULT.setLugar("RET");
                                                                                 listaarguments = new ArrayList();
                                                                            }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_call",29, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -3611,12 +3613,12 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 115: // function_call ::= TK_ID TK_PARIN TK_PAROUT 
             {
-              Expression RESULT =null;
+              FunctionCall RESULT =null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		if(!foundError){
-                                                                                RESULT = new FunctionCall(null,i);
+                                                                                RESULT = new FunctionCall(null,i,tableIds.searchNodeType(i,ambito_actual));
                                                                             }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_call",29, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -3625,7 +3627,7 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 116: // function_call ::= TK_ID TK_PARIN error 
             {
-              Expression RESULT =null;
+              FunctionCall RESULT =null;
 		System.err.println("Function call expects ')'");foundError=true;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_call",29, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -3634,7 +3636,7 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 117: // function_call ::= TK_ID TK_PARIN arguments error 
             {
-              Expression RESULT =null;
+              FunctionCall RESULT =null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
@@ -3657,6 +3659,8 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
 		int argsright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Argument args = (Argument)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){listaarguments.add(arg);} 
+                                                                            cuadruplo.addNode("PARAM",arg.getExpression().getLugar());
+                                                                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arguments",30, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -3669,6 +3673,8 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
 		int argright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Argument arg = (Argument)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		if(!foundError){listaarguments.add(arg);} 
+                                                                            cuadruplo.addNode("PARAM",arg.getExpression().getLugar());
+                                                                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arguments",30, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

@@ -65,6 +65,10 @@ public class Cuadruplo {
                 writer.println("FINFUN");
             }else if(comandos.get(i).equals("RET")){
                 writer.println("RET "+dir3.get(i));
+            }else if(comandos.get(i).equals("PARAM")){
+                writer.println("param "+dir3.get(i));
+            }else if(comandos.get(i).equals("CALL")){
+                writer.println("call "+dir1.get(i)+", "+dir2.get(i));
             }
         }
         writer.close();
