@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 fun_operar
 hola=9
 RET hola
