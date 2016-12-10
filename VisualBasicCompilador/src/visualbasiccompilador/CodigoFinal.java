@@ -219,6 +219,7 @@ public class CodigoFinal {
                     }
                     if(main_variable.getVariableType().equals("String") && comandos_intermedio.get(i).equals("=")){
                         assembly_file.append("_"+main_variable.getVariableName()+": .asciiz "+direccion1.get(i)+"\n");
+                        main_variable.setAmountFound(1);
                     }
                     if(main_variable.getVariableType().equals("Boolean") && comandos_intermedio.get(i).equals("=")){
                         //No se como se guarda boolean en MIPS
@@ -343,9 +344,9 @@ public class CodigoFinal {
                         t3 = getAvailableTemp();
                         assembly_file.append("\tadd "+t3+", "+t1+", "+t2+"\n");
                         System.out.println(direccion3.get(i));
-                        if(this.tabla_simbolos.getNode(direccion3.get(i+1)) != null){
+                        if(this.tabla_simbolos.getNode(direccion3.get(i)) != null){
                             
-                            assembly_file.append("\tsw "+t3+",_"+direccion3.get(i+1)+"\n");
+                            assembly_file.append("\tsw "+t3+",_"+direccion3.get(i)+"\n");
                             setAvailableTemp(t3);
                         }else{
                             
@@ -403,9 +404,9 @@ public class CodigoFinal {
                         t3 = getAvailableTemp();
                         assembly_file.append("\tsub "+t3+", "+t1+", "+t2+"\n");
                         System.out.println(direccion3.get(i));
-                        if(this.tabla_simbolos.getNode(direccion3.get(i+1)) != null){
+                        if(this.tabla_simbolos.getNode(direccion3.get(i)) != null){
                             
-                            assembly_file.append("\tsw "+t3+",_"+direccion3.get(i+1)+"\n");
+                            assembly_file.append("\tsw "+t3+",_"+direccion3.get(i)+"\n");
                             setAvailableTemp(t3);
                         }else{
                             
@@ -462,9 +463,9 @@ public class CodigoFinal {
                         t3 = getAvailableTemp();
                         assembly_file.append("\tmul "+t3+", "+t1+", "+t2+"\n");
                         System.out.println(direccion3.get(i));
-                        if(this.tabla_simbolos.getNode(direccion3.get(i+1)) != null){
+                        if(this.tabla_simbolos.getNode(direccion3.get(i)) != null){
                             
-                            assembly_file.append("\tsw "+t3+",_"+direccion3.get(i+1)+"\n");
+                            assembly_file.append("\tsw "+t3+",_"+direccion3.get(i)+"\n");
                             setAvailableTemp(t3);
                         }else{
                             
@@ -521,8 +522,8 @@ public class CodigoFinal {
                         t3 = getAvailableTemp();
                         assembly_file.append("\tdiv "+t3+", "+t1+", "+t2+"\n");
                         System.out.println(direccion3.get(i));
-                        if(this.tabla_simbolos.getNode(direccion3.get(i+1)) != null){
-                            assembly_file.append("\tsw "+t3+",_"+direccion3.get(i+1)+"\n");
+                        if(this.tabla_simbolos.getNode(direccion3.get(i)) != null){
+                            assembly_file.append("\tsw "+t3+",_"+direccion3.get(i)+"\n");
                             setAvailableTemp(t3);
                         }else{
                             
@@ -539,6 +540,57 @@ public class CodigoFinal {
                     setAvailableTemp(t1);
                     setAvailableTemp(t2);
                     break;
+                }
+                
+                case "=":{
+                    
+                    OperationType type = null;
+                    
+                    if(direccion1.get(i).matches("[0-9]+")){
+                        for(MainVariables main_variable:main_variables){
+                            if(direccion3.get(i).equals(main_variable.getVariableName())){
+                                if(main_variable.getAmountFound() < 0){
+                                    String t1 = null;
+                                    if(finalTemps.get(direccion1.get(i)) != null){
+                                        t1 = finalTemps.get(direccion1.get(i)).reg;
+                                        type = finalTemps.get(direccion1.get(i)).type;
+                                    }else{
+                                        t1 = getAvailableTemp();
+                                        assembly_file.append("\tli " + t1 + "," + direccion1.get(i) + "\n");
+                                    }
+                                    assembly_file.append("\tsw " + t1 + ",_" + direccion3.get(i)+"\n");
+
+                                    setAvailableTemp(t1);
+                                    if (finalTemps.get(direccion1.get(i)) != null) {
+                                        finalTemps.remove(direccion1.get(i));
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }else{
+                        if(this.tabla_simbolos.getNode(direccion1.get(i)) != null){
+                            for(MainVariables main_variable:main_variables){
+                                if(main_variable.getAmountFound() < 0){
+                                    if(main_variable.getVariableType().equals("Integer")){
+                                        String t1 = getAvailableTemp();
+                                        assembly_file.append("\tlw " + t1 + ", " + direccion1.get(i) + "\n");
+                                        assembly_file.append("\tsw " + t1 + ",_" + direccion3.get(i) + "\n");
+                                
+                                        setAvailableTemp(t1);
+                                    }
+                                }
+                            }
+                        }else{
+                            String t1 = finalTemps.get(direccion1.get(i)).reg;
+                            type = finalTemps.get(direccion1.get(i)).type;
+
+                            if (type == OperationType.INTEGER_OPERATION) {
+                                assembly_file.append("\tsw " + t1 + ",_" + direccion3.get(i)+"\n");
+                            }
+                            setAvailableTemp(t1);
+                        }
+                    }
                 }
             }
         }
