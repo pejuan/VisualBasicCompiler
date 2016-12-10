@@ -23,6 +23,7 @@ public class IfStatement extends Statements{
     private ArrayList<Integer> listanumbers;
     private ArrayList<Integer> listanumbersFalse;
     private ArrayList<Integer> listasig;
+    private String etiqueta;
 
     public IfStatement(String IF, Expression expression, String Then, String Else, ArrayList<Statements> statements, ArrayList<ElseIfStatement> elseIfStatements, ElseStatement elseStatements, String endIf) {
         this.IF = IF;
@@ -127,5 +128,13 @@ public class IfStatement extends Statements{
 
     public void setListasig(ArrayList<Integer> listasig) {
         this.listasig = listasig;
+    }
+
+    public String getEtiqueta() {
+        return etiqueta;
+    }
+
+    public void setEtiqueta(String etiqueta) {
+        this.etiqueta = etiqueta;
     }
 }

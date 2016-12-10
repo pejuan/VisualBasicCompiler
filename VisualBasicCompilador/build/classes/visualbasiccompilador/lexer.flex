@@ -133,11 +133,11 @@ whitespace = {linebreak} | [\s\t\f]
 	{GreaterEqual}                                          {return symbol(sym.TK_GREATEREQUAL);}
 	{LessEqual}						{return symbol(sym.TK_LESSEQUAL);}
         {NotEqual}						{return symbol(sym.TK_NOTEQUAL);}
-	{And}							{return symbol(sym.TK_AND);}
-	{Or}							{return symbol(sym.TK_OR);}
-	{Not}							{return symbol(sym.TK_NOT);}
-	{Xor}							{return symbol(sym.TK_XOR);}
-	{Equals}						{return symbol(sym.TK_EQUALS);}	
+	{And}							{return symbol(sym.TK_AND,new TokenEtiqueta());}
+	{Or}							{return symbol(sym.TK_OR,new TokenEtiqueta());}
+	{Not}							{return symbol(sym.TK_NOT,new TokenEtiqueta());}
+	{Xor}							{return symbol(sym.TK_XOR,new TokenEtiqueta());}
+	{Equals}						{return symbol(sym.TK_EQUALS,new TokenEtiqueta());}	
 	{comma}							{return symbol(sym.TK_COMMA);}
 	{parIn}							{return symbol(sym.TK_PARIN);}
 	{parOut}						{return symbol(sym.TK_PAROUT);}

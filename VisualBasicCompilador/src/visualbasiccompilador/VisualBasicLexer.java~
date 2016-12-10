@@ -846,7 +846,7 @@ public class VisualBasicLexer extends sym implements java_cup.runtime.Scanner {
             }
           case 70: break;
           case 18: 
-            { return symbol(sym.TK_IF);
+            { return symbol(sym.TK_IF,new TokenEtiqueta());
             }
           case 71: break;
           case 19: 
@@ -858,7 +858,7 @@ public class VisualBasicLexer extends sym implements java_cup.runtime.Scanner {
             }
           case 73: break;
           case 21: 
-            { return symbol(sym.TK_TO);
+            { return symbol(sym.TK_TO, new TokenEtiqueta());
             }
           case 74: break;
           case 22: 
@@ -894,7 +894,7 @@ public class VisualBasicLexer extends sym implements java_cup.runtime.Scanner {
             }
           case 82: break;
           case 30: 
-            { return symbol(sym.TK_FOR);
+            { return symbol(sym.TK_FOR,new TokenEtiqueta());
             }
           case 83: break;
           case 31: 
@@ -918,11 +918,11 @@ public class VisualBasicLexer extends sym implements java_cup.runtime.Scanner {
             }
           case 88: break;
           case 36: 
-            { return symbol(sym.TK_THEN);
+            { return symbol(sym.TK_THEN, new TokenEtiqueta());
             }
           case 89: break;
           case 37: 
-            { return symbol(sym.TK_ELSE);
+            { return symbol(sym.TK_ELSE, new TokenEtiqueta());
             }
           case 90: break;
           case 38: 
@@ -930,7 +930,7 @@ public class VisualBasicLexer extends sym implements java_cup.runtime.Scanner {
             }
           case 91: break;
           case 39: 
-            { return symbol(sym.TK_LOOP);
+            { return symbol(sym.TK_LOOP, new TokenEtiqueta());
             }
           case 92: break;
           case 40: 
@@ -954,7 +954,7 @@ public class VisualBasicLexer extends sym implements java_cup.runtime.Scanner {
             }
           case 97: break;
           case 45: 
-            { return symbol(sym.TK_WHILE);
+            { return symbol(sym.TK_WHILE,new TokenEtiqueta());
             }
           case 98: break;
           case 46: 
@@ -970,7 +970,7 @@ public class VisualBasicLexer extends sym implements java_cup.runtime.Scanner {
             }
           case 101: break;
           case 49: 
-            { return symbol(sym.TK_ELSEIF);
+            { return symbol(sym.TK_ELSEIF,new TokenEtiqueta());
             }
           case 102: break;
           case 50: 

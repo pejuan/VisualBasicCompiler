@@ -1,4 +1,6 @@
 fun_operar
+hola=9
+RET hola
 FINFUN
 t0=1
 param t0

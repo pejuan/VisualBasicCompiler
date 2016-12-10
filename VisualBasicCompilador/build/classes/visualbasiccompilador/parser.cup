@@ -229,7 +229,7 @@ terminal TK_FUNCTION, TK_SUB, TK_STRUCTURE;
 terminal TK_SUM, TK_MINUS, TK_PRODUCT, TK_DIVISION, TK_AMPERSAND; 
 
 /* Operadores logicos */
-terminal TK_AND, TK_OR, TK_NOT, TK_XOR;
+terminal TokenEtiqueta TK_AND, TK_OR, TK_NOT, TK_XOR;
 
 /*Operadores Relacionales */
 terminal TK_GREATERTHAN, TK_LESSTHAN, TK_GREATEREQUAL, TK_LESSEQUAL, TK_EQUALS, TK_NOTEQUAL;
@@ -1101,8 +1101,10 @@ logical_expression ::= TK_NOT expression:e1                             {:if(!fo
                                                                                     }
                                                                                 }
                                                                             }
-                                                                            RESULT.setLugar(nuevoTemporal());
-                                                                            cuadruplo.addNode("NOT",e1.getLugar(),"",RESULT.getLugar());
+                                                                            RESULT.setListaverdaderas(e1.getListafalsas());
+                                                                            RESULT.setListafalsas(e1.getListaverdaderas());
+                                                                            //RESULT.setLugar(nuevoTemporal());
+                                                                            //cuadruplo.addNode("NOT",e1.getLugar(),"",RESULT.getLugar());
                                                                         }:}
                        |TK_NOT TK_PARIN expression:e1 TK_PAROUT         {:if(!foundError){RESULT = new LogicalExpression("Not",e1,null);
                                                                            if(e1.getId() != null && !tableIds.searchScope(e1.getId(),ambito_actual)){
@@ -1118,10 +1120,16 @@ logical_expression ::= TK_NOT expression:e1                             {:if(!fo
                                                                                     }
                                                                                 }
                                                                             }
-                                                                            RESULT.setLugar(nuevoTemporal());
-                                                                            cuadruplo.addNode("NOT",e1.getLugar(),"",RESULT.getLugar());
+                                                                            RESULT.setListaverdaderas(e1.getListafalsas());
+                                                                            RESULT.setListafalsas(e1.getListaverdaderas());
+                                                                            //RESULT.setLugar(nuevoTemporal());
+                                                                            //cuadruplo.addNode("NOT",e1.getLugar(),"",RESULT.getLugar());
                                                                         }:}
-                       |expression:e1 TK_OR expression:e2               {:if(!foundError){RESULT = new LogicalExpression("Or",e1,e2,null);
+                       |expression:e1 TK_OR:tkor {:cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                              tkor.setEtiqueta("etiqueta"+contadoretiquetas);
+                                              contadoretiquetas++;                                             
+                                            :} 
+                                               expression:e2               {:if(!foundError){RESULT = new LogicalExpression("Or",e1,e2,null);
                                                                             if(e1.getId() != null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                 System.err.println("Variable "+e1.getId()+" has not been declared in this scope"); 
                                                                             }else{
@@ -1145,10 +1153,18 @@ logical_expression ::= TK_NOT expression:e1                             {:if(!fo
                                                                                     }else{System.err.println("Error at *expression* Or *expression*, not a boolean expression. Is "+auxtype2+".");}
                                                                                 }
                                                                             }
-                                                                            RESULT.setLugar(nuevoTemporal());
-                                                                            cuadruplo.addNode("Or",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
+                                                                            
+                                                                            //comenzar por aqui
+                                                                            cuadruplo.complete(e1.getListafalsas(),tkor.getEtiqueta());
+                                                                            RESULT.setListaverdaderas(fusiona(e1.getListaverdaderas(),e2.getListaverdaderas()));
+                                                                            RESULT.setListafalsas(e2.getListafalsas());
+                                                                            //RESULT.setLugar(nuevoTemporal());
+                                                                            //cuadruplo.addNode("Or",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
                                                                         }:}
-                       |expression:e1 TK_AND expression:e2              {:if(!foundError){RESULT = new LogicalExpression("And",e1,e2,null);
+                       |expression:e1 TK_AND:tkand {:cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
+                                              tkand.setEtiqueta("etiqueta"+contadoretiquetas);
+                                              contadoretiquetas++;                                             
+                                            :} expression:e2              {:if(!foundError){RESULT = new LogicalExpression("And",e1,e2,null);
                                                                             if(e1.getId() != null && !tableIds.searchScope(e1.getId(),ambito_actual)){
                                                                                 System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
                                                                             }else{
@@ -1172,8 +1188,11 @@ logical_expression ::= TK_NOT expression:e1                             {:if(!fo
                                                                                     }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype2+".");}
                                                                                 }
                                                                             }
-                                                                            RESULT.setLugar(nuevoTemporal());
-                                                                            cuadruplo.addNode("And",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
+                                                                            cuadruplo.complete(e1.getListaverdaderas(),tkand.getEtiqueta());
+                                                                            RESULT.setListaverdaderas(e2.getListaverdaderas());
+                                                                            RESULT.setListafalsas(fusiona(e1.getListafalsas(),e2.getListafalsas()));
+                                                                            //RESULT.setLugar(nuevoTemporal());
+                                                                            //cuadruplo.addNode("And",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
                                                                             
                                                                         } :}
                        |expression:e1 TK_XOR expression:e2              {:if(!foundError){RESULT = new LogicalExpression("Xor",e1,e2,null);

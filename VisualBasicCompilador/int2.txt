@@ -1,5 +1,6 @@
 Function operar(ByVal personas As Integer, ByVal goku As Boolean) As Integer
-
+	Dim hola As Integer = 9
+	Return hola
 End Function
 
 Sub main()
