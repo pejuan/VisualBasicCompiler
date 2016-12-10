@@ -898,7 +898,7 @@ public class VisualBasicLexer extends sym implements java_cup.runtime.Scanner {
             }
           case 83: break;
           case 31: 
-            { return symbol(sym.TK_END);
+            { return symbol(sym.TK_END, new TokenEtiqueta());
             }
           case 84: break;
           case 32: 

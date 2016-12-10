@@ -2,31 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/parser.cup</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/parser.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/Cuadruplo.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/IdTable.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/VisualBasicCompilador.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/Expression.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/lexer.flex</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/TokenEtiqueta.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/Argument.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/CodigoFinal.java</file>
-            <file>file:/C:/Users/Jose%20Alberto%20Pejuan/Documents/Alojamiento%20Compiladores/VisualBasicCompiler/VisualBasicCompilador/src/AST/FunctionCall.java</file>
-=======
-            <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/AST/IdNode.java</file>
-            <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/AST/IdTable.java</file>
-            <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/parser.java</file>
-            <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/Cuadruplo.java</file>
-            <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/VisualBasicLexer.java</file>
-            <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/VisualBasicCompilador.java</file>
-            <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/CodigoFinal.java</file>
-            <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/AST/IfStatement.java</file>
-            <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/visualbasiccompilador/parser.cup</file>
-            <file>file:/Users/joedhernandez95/Desktop/VisualBasicCompiler/VisualBasicCompilador/src/AST/WriteStatement.java</file>
->>>>>>> 297999bfd6c53f4539b551385ac0c7021c967e4a
-        </group>
+        <group/>
     </open-files>
 </project-private>

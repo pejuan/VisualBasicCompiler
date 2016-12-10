@@ -115,7 +115,7 @@ whitespace = {linebreak} | [\s\t\f]
 	{Loop}							{return symbol(sym.TK_LOOP, new TokenEtiqueta());}
 	{Do}							{return symbol(sym.TK_DO);}
 	{While}							{return symbol(sym.TK_WHILE,new TokenEtiqueta());}
-	{End}							{return symbol(sym.TK_END);}
+	{End}							{return symbol(sym.TK_END, new TokenEtiqueta());}
 	{Until}							{return symbol(sym.TK_UNTIL);}
 	{Function}						{return symbol(sym.TK_FUNCTION);}
 	{Sub}							{return symbol(sym.TK_SUB);}

@@ -5,10 +5,44 @@
  */
 package AST;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Jose Alberto Pejuan
  */
-public abstract class Statements {
+public class Statements {
+    protected ArrayList<Integer> listanumbers;
+    protected ArrayList<Integer> listanumbersFalse;
+    protected ArrayList<Integer> listasig;
+
+    public Statements() {
+        listanumbers = new ArrayList();
+        listanumbersFalse = new ArrayList();
+        listasig = new ArrayList();
+    }
     
+    public ArrayList<Integer> getListanumbers() {
+        return listanumbers;
+    }
+
+    public void setListanumbers(ArrayList<Integer> listanumbers) {
+        this.listanumbers = listanumbers;
+    }
+
+    public ArrayList<Integer> getListanumbersFalse() {
+        return listanumbersFalse;
+    }
+
+    public void setListanumbersFalse(ArrayList<Integer> listanumbersFalse) {
+        this.listanumbersFalse = listanumbersFalse;
+    }
+
+    public ArrayList<Integer> getListasig() {
+        return listasig;
+    }
+
+    public void setListasig(ArrayList<Integer> listasig) {
+        this.listasig = listasig;
+    }
 }

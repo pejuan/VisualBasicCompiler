@@ -69,6 +69,18 @@ public class Cuadruplo {
                 writer.println("param "+dir3.get(i));
             }else if(comandos.get(i).equals("CALL")){
                 writer.println("call "+dir1.get(i)+", "+dir2.get(i));
+            }else if(comandos.get(i).equals("If>")){
+                writer.println("if "+dir1.get(i)+">"+dir2.get(i)+" GOTO "+dir3.get(i));
+            }else if(comandos.get(i).equals("If>=")){
+                writer.println("if "+dir1.get(i)+">="+dir2.get(i)+" GOTO "+dir3.get(i));
+            }else if(comandos.get(i).equals("If<")){
+                writer.println("if "+dir1.get(i)+"<"+dir2.get(i)+" GOTO "+dir3.get(i));
+            }else if(comandos.get(i).equals("If<=")){
+                writer.println("if "+dir1.get(i)+"<="+dir2.get(i)+" GOTO "+dir3.get(i));
+            }else if(comandos.get(i).equals("If=")){
+                writer.println("if "+dir1.get(i)+"="+dir2.get(i)+" GOTO "+dir3.get(i));
+            }else if(comandos.get(i).equals("If!=")){
+                writer.println("if "+dir1.get(i)+"!="+dir2.get(i)+" GOTO "+dir3.get(i));
             }
         }
         writer.close();
@@ -125,8 +137,10 @@ public class Cuadruplo {
     }
     
     public void complete(ArrayList<Integer> lista, String etiqueta){
+        System.out.println("COMPLETANDO por "+etiqueta);
         for (int i = 0; i < lista.size(); i++) {
             dir3.set(lista.get(i), etiqueta);
+            System.out.println(lista.get(i));
         }
     }
     

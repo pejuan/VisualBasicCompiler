@@ -1,14 +1,12 @@
-Function operar(ByVal personas As Integer, ByVal goku As Boolean) As Integer
-	Dim hola As Integer = 9
-	Return hola
-End Function
 Sub main()
 	Dim a As Integer = 10
 	Dim b As Integer = 20
 	Dim c As Integer = 30
-	a = b * 2
-	c = 50-10*b
-	Write(a)
-	Write(b)
-	Write(c)
+	'Dim D As Boolean = a>b Or b>c
+	If Not(a>b And b>c) Then
+		Write("Hola")
+		If a<10 Then
+			Write("If anidado")
+		End If
+	End If
 End Sub
