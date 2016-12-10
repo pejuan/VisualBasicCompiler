@@ -13,7 +13,6 @@ public class BooleanExpression extends Expression{
     private Expression expression1;
     private String operador;
     private Expression expression2;
-    private String lugarFor;
 
 
     public BooleanExpression(Expression expression1, String operador, Expression expression2, String Id) {
@@ -52,11 +51,4 @@ public class BooleanExpression extends Expression{
         return "Boolean";
     }
 
-    public String getLugarFor() {
-        return lugarFor;
-    }
-
-    public void setLugarFor(String lugarFor) {
-        this.lugarFor = lugarFor;
-    }
 }

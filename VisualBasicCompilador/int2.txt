@@ -3,10 +3,7 @@ Sub main()
 	Dim b As Integer = 20
 	Dim c As Integer = 30
 	'Dim D As Boolean = a>b Or b>c
-	If Not(a>b And b>c) Then
+	Do While a<b
 		Write("Hola")
-		If a<10 Then
-			Write("If anidado")
-		End If
-	End If
+	Loop
 End Sub

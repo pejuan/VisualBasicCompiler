@@ -16,6 +16,7 @@ public class Expression extends Statements{
     private String lugar;
     private ArrayList<Integer> listaverdaderas = new ArrayList();
     private ArrayList<Integer> listafalsas = new ArrayList();
+    private String lugarFor;
     public Expression(String Id) {
         this.Id = Id;
     }
@@ -53,6 +54,14 @@ public class Expression extends Statements{
 
     public void setListafalsas(ArrayList<Integer> listafalsas) {
         this.listafalsas = listafalsas;
+    }
+
+    public String getLugarFor() {
+        return lugarFor;
+    }
+
+    public void setLugarFor(String lugarFor) {
+        this.lugarFor = lugarFor;
     }
 
     

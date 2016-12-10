@@ -22,6 +22,7 @@ parser code {:
         public int contadortemporales = 0;
         public int contadoretiquetas = 0;
         public int size = 0;
+        public boolean hayUnFor = false;
         public int offset = 0;
         public Stack pila_de_bloques = new Stack();
         public String ambito_actual = Integer.toString(bloque);
@@ -592,14 +593,15 @@ for_statement ::=	TK_FOR:fr {:if(!foundError){
                                                                         fr.setEtiqueta("etiqueta"+contadoretiquetas);
                                                                        contadoretiquetas++;
                                                                        /////////////cuadruplo.addNode("GOTO","");
-                                                                     :} TK_TO:tkto {:hayUnIf = true;:} expression:expr {:
-                                                                                                cuadruplo.addNode("If",expr.getLugar(),"","etiqueta"+contadoretiquetas);
+                                                                     :} TK_TO:tkto {:hayUnIf = true; hayUnFor =true;:} expression:expr {:
+                                                                                                cuadruplo.addNode("If",expr.getLugarFor(),"","etiqueta"+contadoretiquetas);
                                                                                                 tkto.getListanumbers().add(cuadruplo.getSize()-1);
                                                                                                 cuadruplo.addNode("GOTO","");
                                                                                                 tkto.getListanumbersFalse().add(cuadruplo.getSize()-1);
                                                                                                 cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                                                                 contadoretiquetas++;
                                                                                                 hayUnIf = false;
+                                                                                                hayUnFor = false;
                                                                                          :} statements:stmnts {:String auxtmp = nuevoTemporal();
                                                                                                                 cuadruplo.addNode("+",var_declare.getLugar(),"1",auxtmp);
                                                                                                                 cuadruplo.addNode("=",auxtmp,"",var_declare.getLugar());
@@ -622,13 +624,15 @@ do_statement ::=    TK_DO TK_WHILE:whil{:cuadruplo.addNode("ETIQ","etiqueta"+con
                                         whil.setEtiqueta("etiqueta"+contadoretiquetas);
                                         contadoretiquetas++;
                                         hayUnIf = true;
+                                        hayUnFor = true;
                                       :} expression:expr {:if(!foundError){
                                                             bloque++;
                                                             ambito_actual += "."+Integer.toString(bloque);
                                                             pila_de_bloques.push(bloque);
                                                             bloque = 0;
                                                             hayUnIf=false;
-                                                        }:} statements:stmnts {:cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());:}
+                                                            hayUnFor=false;
+                                                        }:} statements:stmnts {:cuadruplo.addNode("If",expr.getLugarFor(),"",whil.getEtiqueta());:}
                                                                                    TK_LOOP {:if(!foundError){ 
                                                                                         RESULT = new DoStatement("Do","While",listastatements,"Loop",null,expr);
                                                                                         listastatements = new ArrayList();
@@ -717,7 +721,7 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
 
 
 expression ::=	numeric_expression:num_exp      {: if(!foundError){RESULT = new NumericExpression(((NumericExpression)num_exp).getExpression1(),((NumericExpression)num_exp).getExpression2(),((NumericExpression)num_exp).getOperador(),null); RESULT.setLugar(num_exp.getLugar());} :}
-		|boolean_expression:bool_exp    {:if(!foundError){RESULT = new BooleanExpression(((BooleanExpression)bool_exp).getExpression1(), ((BooleanExpression)bool_exp).getOperador(), ((BooleanExpression)bool_exp).getExpression2(),null); RESULT.setLugar(bool_exp.getLugar()); RESULT.setListaverdaderas(bool_exp.getListaverdaderas());RESULT.setListafalsas(bool_exp.getListafalsas());} :}
+		|boolean_expression:bool_exp    {:if(!foundError){RESULT = new BooleanExpression(((BooleanExpression)bool_exp).getExpression1(), ((BooleanExpression)bool_exp).getOperador(), ((BooleanExpression)bool_exp).getExpression2(),null); RESULT.setLugar(bool_exp.getLugar()); RESULT.setListaverdaderas(bool_exp.getListaverdaderas());RESULT.setListafalsas(bool_exp.getListafalsas()); RESULT.setLugarFor(bool_exp.getLugarFor());} :}
 		|logical_expression:logic_exp   {:if(!foundError){RESULT = new LogicalExpression(((LogicalExpression)logic_exp).isValue(),((LogicalExpression)logic_exp).getOperador(),((LogicalExpression)logic_exp).getExpression1(),((LogicalExpression)logic_exp).getExpression2(),null); RESULT.setLugar(logic_exp.getLugar()); RESULT.setListaverdaderas(logic_exp.getListaverdaderas());RESULT.setListafalsas(logic_exp.getListafalsas());} :}
 		|literal_expression:lit_exp     {:if(!foundError){RESULT = new LiteralExpression(((LiteralExpression)lit_exp).getStringval(),((LiteralExpression)lit_exp).getNumber(),null); RESULT.setLugar(lit_exp.getLugar());} :}
 		|TK_ID:id                       {:if(!foundError){RESULT = new Expression(id); RESULT.setLugar(id);} :}
@@ -895,13 +899,13 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
                                                                                                     cuadruplo.addNode("=","1","",RESULT.getLugar());
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
-                                                                                                }else{RESULT.setLugar(e1.getLugar()+">"+e2.getLugar());
-                                                                                                    //RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                }else if(!hayUnFor){//RESULT.setLugar(e1.getLugar()+">"+e2.getLugar());
+                                                                                                    RESULT.setLugarFor(e1.getLugar()+">"+e2.getLugar());
                                                                                                     RESULT.getListaverdaderas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("If>",e1.getLugar(),e2.getLugar(),"");
                                                                                                     RESULT.getListafalsas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("GOTO","");
-                                                                                                }
+                                                                                                }else{RESULT.setLugarFor(e1.getLugar()+">"+e2.getLugar());}
                                                                                                                                                                                
                                                                                         }:}
 
@@ -951,12 +955,13 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
                                                                                                     cuadruplo.addNode("=","1","",RESULT.getLugar());
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
-                                                                                                }else{//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                }else if(!hayUnFor){//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                    RESULT.setLugarFor(e1.getLugar()+"<"+e2.getLugar());
                                                                                                     RESULT.getListaverdaderas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("If<",e1.getLugar(),e2.getLugar(),"");
                                                                                                     RESULT.getListafalsas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("GOTO","");
-                                                                                                }
+                                                                                                }else{RESULT.setLugarFor(e1.getLugar()+"<"+e2.getLugar());}
                                                                                             
                                                                                         }:}
                        |expression:e1 TK_GREATEREQUAL expression:e2                     {: if(!foundError){RESULT = new BooleanExpression(e1,">=",e2,null);
@@ -1005,12 +1010,13 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
                                                                                                     cuadruplo.addNode("=","1","",RESULT.getLugar());
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
-                                                                                                }else{//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                }else if(!hayUnFor){//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                    RESULT.setLugarFor(e1.getLugar()+">="+e2.getLugar());
                                                                                                     RESULT.getListaverdaderas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("If>=",e1.getLugar(),e2.getLugar(),"");
                                                                                                     RESULT.getListafalsas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("GOTO","");
-                                                                                                }
+                                                                                                }else{RESULT.setLugarFor(e1.getLugar()+">="+e2.getLugar());}
                                                                                              
                                                                                         }:}
                        |expression:e1 TK_LESSEQUAL expression:e2                        {: if(!foundError){RESULT = new BooleanExpression(e1,"<=",e2,null);
@@ -1059,11 +1065,13 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
                                                                                                     cuadruplo.addNode("=","1","",RESULT.getLugar());
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
-                                                                                                }else{//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                }else if(!hayUnFor){//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                    RESULT.setLugarFor(e1.getLugar()+"<="+e2.getLugar());
                                                                                                     RESULT.getListaverdaderas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("If<=",e1.getLugar(),e2.getLugar(),"");
                                                                                                     RESULT.getListafalsas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("GOTO","");}
+                                                                                                    else{RESULT.setLugarFor(e1.getLugar()+"<="+e2.getLugar());}
                                                                                              
                                                                                         }:}
                        |expression:e1 TK_EQUALS expression:e2                           {: if(!foundError){RESULT = new BooleanExpression(e1,"=",e2,null);
@@ -1112,11 +1120,13 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
                                                                                                     cuadruplo.addNode("=","1","",RESULT.getLugar());
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
-                                                                                                }else{//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                }else if(!hayUnFor){//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                    RESULT.setLugarFor(e1.getLugar()+"="+e2.getLugar());
                                                                                                     RESULT.getListaverdaderas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("If=",e1.getLugar(),e2.getLugar(),"");
                                                                                                     RESULT.getListafalsas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("GOTO","");}
+                                                                                                else{RESULT.setLugarFor(e1.getLugar()+"="+e2.getLugar());}
                                                                                             
                                                                                         }:}
                        |expression:e1 TK_NOTEQUAL expression:e2                         {: if(!foundError){RESULT = new BooleanExpression(e1,"<>",e2,null);
@@ -1165,13 +1175,15 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
                                                                                                     cuadruplo.addNode("=","1","",RESULT.getLugar());
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
-                                                                                                }else{//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                }else if(!hayUnFor){//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                    RESULT.setLugarFor(e1.getLugar()+"!="+e2.getLugar());
                                                                                                     RESULT.getListaverdaderas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("If!=",e1.getLugar(),e2.getLugar(),"");
                                                                                                     RESULT.getListafalsas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("GOTO","");}
-                                                                                            
-                                                                                        } :}
+                                                                                                else{RESULT.setLugarFor(e1.getLugar()+"!="+e2.getLugar());} 
+                                                                                             }
+:}
 ;
 numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!foundError){RESULT = new NumericExpression(e1,e2,"+",null);
                                                                             

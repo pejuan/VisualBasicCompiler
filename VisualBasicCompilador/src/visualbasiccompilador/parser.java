@@ -765,6 +765,7 @@ public class parser extends java_cup.runtime.lr_parser {
         public int contadortemporales = 0;
         public int contadoretiquetas = 0;
         public int size = 0;
+        public boolean hayUnFor = false;
         public int offset = 0;
         public Stack pila_de_bloques = new Stack();
         public String ambito_actual = Integer.toString(bloque);
@@ -1984,7 +1985,7 @@ cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
 		int tktoleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int tktoright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		TokenEtiqueta tkto = (TokenEtiqueta)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-hayUnIf = true;
+hayUnIf = true; hayUnFor =true;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$13",46, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2006,13 +2007,14 @@ hayUnIf = true;
 		int exprright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression expr = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 
-                                                                                                cuadruplo.addNode("If",expr.getLugar(),"","etiqueta"+contadoretiquetas);
+                                                                                                cuadruplo.addNode("If",expr.getLugarFor(),"","etiqueta"+contadoretiquetas);
                                                                                                 tkto.getListanumbers().add(cuadruplo.getSize()-1);
                                                                                                 cuadruplo.addNode("GOTO","");
                                                                                                 tkto.getListanumbersFalse().add(cuadruplo.getSize()-1);
                                                                                                 cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                                                                 contadoretiquetas++;
                                                                                                 hayUnIf = false;
+                                                                                                hayUnFor = false;
                                                                                          
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$14",47, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2093,6 +2095,7 @@ cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                         whil.setEtiqueta("etiqueta"+contadoretiquetas);
                                         contadoretiquetas++;
                                         hayUnIf = true;
+                                        hayUnFor = true;
                                       
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$16",49, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2114,6 +2117,7 @@ if(!foundError){
                                                             pila_de_bloques.push(bloque);
                                                             bloque = 0;
                                                             hayUnIf=false;
+                                                            hayUnFor=false;
                                                         }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$17",50, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2132,7 +2136,7 @@ if(!foundError){
 		int stmntsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int stmntsright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Statements stmnts = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
+cuadruplo.addNode("If",expr.getLugarFor(),"",whil.getEtiqueta());
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$18",51, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2377,7 +2381,7 @@ cuadruplo.addNode("If",expr.getLugar(),"",whil.getEtiqueta());
 		int bool_expleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int bool_expright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		BooleanExpression bool_exp = (BooleanExpression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		if(!foundError){RESULT = new BooleanExpression(((BooleanExpression)bool_exp).getExpression1(), ((BooleanExpression)bool_exp).getOperador(), ((BooleanExpression)bool_exp).getExpression2(),null); RESULT.setLugar(bool_exp.getLugar()); RESULT.setListaverdaderas(bool_exp.getListaverdaderas());RESULT.setListafalsas(bool_exp.getListafalsas());} 
+		if(!foundError){RESULT = new BooleanExpression(((BooleanExpression)bool_exp).getExpression1(), ((BooleanExpression)bool_exp).getOperador(), ((BooleanExpression)bool_exp).getExpression2(),null); RESULT.setLugar(bool_exp.getLugar()); RESULT.setListaverdaderas(bool_exp.getListaverdaderas());RESULT.setListafalsas(bool_exp.getListafalsas()); RESULT.setLugarFor(bool_exp.getLugarFor());} 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expression",24, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2713,13 +2717,13 @@ cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
                                                                                                     cuadruplo.addNode("=","1","",RESULT.getLugar());
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
-                                                                                                }else{RESULT.setLugar(e1.getLugar()+">"+e2.getLugar());
-                                                                                                    //RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                }else if(!hayUnFor){//RESULT.setLugar(e1.getLugar()+">"+e2.getLugar());
+                                                                                                    RESULT.setLugarFor(e1.getLugar()+">"+e2.getLugar());
                                                                                                     RESULT.getListaverdaderas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("If>",e1.getLugar(),e2.getLugar(),"");
                                                                                                     RESULT.getListafalsas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("GOTO","");
-                                                                                                }
+                                                                                                }else{RESULT.setLugarFor(e1.getLugar()+">"+e2.getLugar());}
                                                                                                                                                                                
                                                                                         }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",26, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -2782,12 +2786,13 @@ cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
                                                                                                     cuadruplo.addNode("=","1","",RESULT.getLugar());
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
-                                                                                                }else{//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                }else if(!hayUnFor){//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                    RESULT.setLugarFor(e1.getLugar()+"<"+e2.getLugar());
                                                                                                     RESULT.getListaverdaderas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("If<",e1.getLugar(),e2.getLugar(),"");
                                                                                                     RESULT.getListafalsas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("GOTO","");
-                                                                                                }
+                                                                                                }else{RESULT.setLugarFor(e1.getLugar()+"<"+e2.getLugar());}
                                                                                             
                                                                                         }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",26, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -2850,12 +2855,13 @@ cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
                                                                                                     cuadruplo.addNode("=","1","",RESULT.getLugar());
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
-                                                                                                }else{//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                }else if(!hayUnFor){//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                    RESULT.setLugarFor(e1.getLugar()+">="+e2.getLugar());
                                                                                                     RESULT.getListaverdaderas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("If>=",e1.getLugar(),e2.getLugar(),"");
                                                                                                     RESULT.getListafalsas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("GOTO","");
-                                                                                                }
+                                                                                                }else{RESULT.setLugarFor(e1.getLugar()+">="+e2.getLugar());}
                                                                                              
                                                                                         }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",26, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -2918,11 +2924,13 @@ cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
                                                                                                     cuadruplo.addNode("=","1","",RESULT.getLugar());
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
-                                                                                                }else{//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                }else if(!hayUnFor){//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                    RESULT.setLugarFor(e1.getLugar()+"<="+e2.getLugar());
                                                                                                     RESULT.getListaverdaderas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("If<=",e1.getLugar(),e2.getLugar(),"");
                                                                                                     RESULT.getListafalsas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("GOTO","");}
+                                                                                                    else{RESULT.setLugarFor(e1.getLugar()+"<="+e2.getLugar());}
                                                                                              
                                                                                         }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",26, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -2985,11 +2993,13 @@ cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
                                                                                                     cuadruplo.addNode("=","1","",RESULT.getLugar());
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
-                                                                                                }else{//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                }else if(!hayUnFor){//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                    RESULT.setLugarFor(e1.getLugar()+"="+e2.getLugar());
                                                                                                     RESULT.getListaverdaderas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("If=",e1.getLugar(),e2.getLugar(),"");
                                                                                                     RESULT.getListafalsas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("GOTO","");}
+                                                                                                else{RESULT.setLugarFor(e1.getLugar()+"="+e2.getLugar());}
                                                                                             
                                                                                         }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",26, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -3052,13 +3062,15 @@ cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet);
                                                                                                     cuadruplo.addNode("=","1","",RESULT.getLugar());
                                                                                                     cuadruplo.addNode("ETIQ","etiqueta"+tmpet2);
-                                                                                                }else{//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                }else if(!hayUnFor){//RESULT.setLugarFor(e1.getLugar()+op+e2.getLugar());
+                                                                                                    RESULT.setLugarFor(e1.getLugar()+"!="+e2.getLugar());
                                                                                                     RESULT.getListaverdaderas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("If!=",e1.getLugar(),e2.getLugar(),"");
                                                                                                     RESULT.getListafalsas().add(cuadruplo.getSize());
                                                                                                     cuadruplo.addNode("GOTO","");}
-                                                                                            
-                                                                                        } 
+                                                                                                else{RESULT.setLugarFor(e1.getLugar()+"!="+e2.getLugar());} 
+                                                                                             }
+
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",26, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

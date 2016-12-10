@@ -1,16 +1,6 @@
 a=10
 b=20
 c=30
-if a>b GOTO etiqueta0
-GOTO etiqueta1
 etiqueta0
-if b>c GOTO etiqueta4
-GOTO etiqueta1
-etiqueta1
 print "Hola"
-if a<10 GOTO etiqueta2
-GOTO etiqueta3
-etiqueta2
-print "If anidado"
-etiqueta3
-etiqueta4
+if a<b GOTO etiqueta0
