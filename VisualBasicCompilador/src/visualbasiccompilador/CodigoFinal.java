@@ -343,7 +343,6 @@ public class CodigoFinal {
                     if(type == OperationType.INTEGER_OPERATION){
                         t3 = getAvailableTemp();
                         assembly_file.append("\tadd "+t3+", "+t1+", "+t2+"\n");
-                        System.out.println(direccion3.get(i));
                         if(this.tabla_simbolos.getNode(direccion3.get(i)) != null){
                             
                             assembly_file.append("\tsw "+t3+",_"+direccion3.get(i)+"\n");
@@ -403,7 +402,6 @@ public class CodigoFinal {
                     if(type == OperationType.INTEGER_OPERATION){
                         t3 = getAvailableTemp();
                         assembly_file.append("\tsub "+t3+", "+t1+", "+t2+"\n");
-                        System.out.println(direccion3.get(i));
                         if(this.tabla_simbolos.getNode(direccion3.get(i)) != null){
                             
                             assembly_file.append("\tsw "+t3+",_"+direccion3.get(i)+"\n");
@@ -462,7 +460,6 @@ public class CodigoFinal {
                     if(type == OperationType.INTEGER_OPERATION){
                         t3 = getAvailableTemp();
                         assembly_file.append("\tmul "+t3+", "+t1+", "+t2+"\n");
-                        System.out.println(direccion3.get(i));
                         if(this.tabla_simbolos.getNode(direccion3.get(i)) != null){
                             
                             assembly_file.append("\tsw "+t3+",_"+direccion3.get(i)+"\n");
@@ -521,7 +518,6 @@ public class CodigoFinal {
                     if(type == OperationType.INTEGER_OPERATION){
                         t3 = getAvailableTemp();
                         assembly_file.append("\tdiv "+t3+", "+t1+", "+t2+"\n");
-                        System.out.println(direccion3.get(i));
                         if(this.tabla_simbolos.getNode(direccion3.get(i)) != null){
                             assembly_file.append("\tsw "+t3+",_"+direccion3.get(i)+"\n");
                             setAvailableTemp(t3);
@@ -591,6 +587,7 @@ public class CodigoFinal {
                             setAvailableTemp(t1);
                         }
                     }
+                    break;
                 }
             }
         }
