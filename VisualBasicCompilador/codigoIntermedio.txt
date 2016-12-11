@@ -8,15 +8,13 @@ if b>c GOTO etiqueta1
 GOTO etiqueta5
 etiqueta1
 if b!=20 GOTO etiqueta2
-GOTO etiqueta6
+GOTO etiqueta3
 etiqueta2
 print "If dentro del If se cumplio"
-GOTO etiqueta6
+GOTO etiqueta4
 etiqueta3
 print "If dentro del If se NO cumplio"
 etiqueta4
 print "True"
-GOTO etiqueta6
-etiqueta5
 print "False"
-etiqueta6
+etiqueta5

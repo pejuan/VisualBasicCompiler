@@ -10,7 +10,7 @@ Sub main()
 			Write("If dentro del If se NO cumplio")
 		End If
 		Write("True")
-	Else
+	'Else
 		Write("False")
 	End If
 End Sub

@@ -1737,7 +1737,7 @@ if(!foundError){
                                                                                                                  ambito_actual = remove_scope(partir_ambito);
                                                                                                                  bloque = (int) pila_de_bloques.pop();
                                                                                                                  cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
-                                                                                                                 cuadruplo.complete(beg.getListasig(),"etiqueta"+contadoretiquetas);
+                                                                                                                 //////cuadruplo.complete(beg.getListasig(),"etiqueta"+contadoretiquetas);
                                                                                                                  cuadruplo.complete(beg.getListanumbersFalse(),"etiqueta"+contadoretiquetas);
                                                                                                                  contadoretiquetas++;
                                                                                                                }
@@ -1793,9 +1793,10 @@ if(!foundError){
                                                                                                                    
                                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                                                                                    RESULT.setListasig(fusiona(beg.getListasig(),fusiona(n.getListasig(),elseStmnt.getListasig())));
-                                                                                                                   cuadruplo.complete(beg.getListasig(),"etiqueta"+contadoretiquetas);
+                                                                                                                   //////cuadruplo.complete(beg.getListasig(),"etiqueta"+contadoretiquetas);
                                                                                                                    cuadruplo.complete(n.getListasig(),"etiqueta"+contadoretiquetas);
                                                                                                                    cuadruplo.complete(beg.getListanumbersFalse(),elseStmnt.getEtiqueteinicio());
+                                                                                                                   //RESULT.setEtiqueta("etiqueta"+contadoretiquetas);
                                                                                                                    contadoretiquetas++;
                                                                                                                 }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("if_statement",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);

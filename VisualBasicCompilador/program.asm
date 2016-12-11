@@ -28,7 +28,7 @@ _etiqueta1:
 	lw $t0, _b
 li $t1, 20
 	bne $t0, $t1, _etiqueta2
-	b _etiqueta6
+	b _etiqueta3
 
 _etiqueta2:
 
@@ -36,7 +36,7 @@ _etiqueta2:
 	la $a0,_msg1
 	syscall
 
-	b _etiqueta6
+	b _etiqueta4
 
 _etiqueta3:
 
@@ -50,15 +50,11 @@ _etiqueta4:
 	la $a0,_msg3
 	syscall
 
-	b _etiqueta6
-
-_etiqueta5:
-
 	li $v0, 4
 	la $a0,_msg4
 	syscall
 
-_etiqueta6:
+_etiqueta5:
 
 
 	li $v0,10

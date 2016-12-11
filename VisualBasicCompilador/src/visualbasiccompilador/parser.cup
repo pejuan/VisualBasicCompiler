@@ -518,7 +518,7 @@ if_statement ::=    begin_if:beg TK_END TK_IF                                   
                                                                                                                  ambito_actual = remove_scope(partir_ambito);
                                                                                                                  bloque = (int) pila_de_bloques.pop();
                                                                                                                  cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
-                                                                                                                 cuadruplo.complete(beg.getListasig(),"etiqueta"+contadoretiquetas);
+                                                                                                                 //////cuadruplo.complete(beg.getListasig(),"etiqueta"+contadoretiquetas);
                                                                                                                  cuadruplo.complete(beg.getListanumbersFalse(),"etiqueta"+contadoretiquetas);
                                                                                                                  contadoretiquetas++;
                                                                                                                }:}
@@ -531,9 +531,10 @@ if_statement ::=    begin_if:beg TK_END TK_IF                                   
                                                                                                                    
                                                                                                                    cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                                                                                    RESULT.setListasig(fusiona(beg.getListasig(),fusiona(n.getListasig(),elseStmnt.getListasig())));
-                                                                                                                   cuadruplo.complete(beg.getListasig(),"etiqueta"+contadoretiquetas);
+                                                                                                                   //////cuadruplo.complete(beg.getListasig(),"etiqueta"+contadoretiquetas);
                                                                                                                    cuadruplo.complete(n.getListasig(),"etiqueta"+contadoretiquetas);
                                                                                                                    cuadruplo.complete(beg.getListanumbersFalse(),elseStmnt.getEtiqueteinicio());
+                                                                                                                   //RESULT.setEtiqueta("etiqueta"+contadoretiquetas);
                                                                                                                    contadoretiquetas++;
                                                                                                                 }:}
 ;
