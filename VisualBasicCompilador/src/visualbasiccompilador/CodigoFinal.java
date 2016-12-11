@@ -589,6 +589,303 @@ public class CodigoFinal {
                     }
                     break;
                 }
+                case "GOTO":{
+                    assembly_file.append("\tb _"+direccion3.get(i)+"\n\n");
+                    break;
+                }
+                
+                case "ETIQ":{
+                    assembly_file.append("_"+direccion3.get(i)+":\n\n");
+                    break;
+                }
+                case "If<":{
+                    String t1 = null;
+                    String t2 = null;
+                    OperationType type = null;
+                    
+                    //Operando1
+                    if(finalTemps.get(direccion1.get(i)) != null){
+                        t1 = finalTemps.get(direccion1.get(i)).reg;
+                        type = finalTemps.get(direccion1.get(i)).type;
+                    }else{
+                        if(direccion1.get(i).matches("[0-9]+")){
+                            t1 = getAvailableTemp();
+                            assembly_file.append("li "+t1+", "+direccion1.get(i)+"\n");
+                            type = OperationType.INTEGER_OPERATION;
+                        }else{
+                            if(this.tabla_simbolos.getNode(direccion1.get(i)).getType().equals("Integer")){
+                                t1 = getAvailableTemp();
+                                assembly_file.append("\tlw "+t1+", _"+direccion1.get(i)+"\n");
+                                type = OperationType.INTEGER_OPERATION;
+                            }
+                        }
+                    }
+                    
+                    //Operando2
+                    if(finalTemps.get(direccion2.get(i)) != null){
+                        t2 = finalTemps.get(direccion2.get(i)).reg;
+                        type = finalTemps.get(direccion2.get(i)).type;
+                    }else{
+                        if(direccion2.get(i).matches("[0-9]+")){
+                            t2 = getAvailableTemp();
+                            assembly_file.append("li "+t2+", "+direccion2.get(i)+"\n");
+                            type = OperationType.INTEGER_OPERATION;
+                        }else{
+                            if(this.tabla_simbolos.getNode(direccion1.get(i)).getType().equals("Integer")){
+                                t2 = getAvailableTemp();
+                                assembly_file.append("\tlw "+t2+", _"+direccion2.get(i)+"\n");
+                                type = OperationType.INTEGER_OPERATION;
+                            }
+                        }
+                    }
+                    
+                    if(type == OperationType.INTEGER_OPERATION){
+                        assembly_file.append("\tblt "+t1+", "+t2+", _"+direccion3.get(i)+"\n");
+                    }
+                    setAvailableTemp(t1);
+                    setAvailableTemp(t2);
+                    break;
+                }
+                case "If>":{
+                    String t1 = null;
+                    String t2 = null;
+                    OperationType type = null;
+                    
+                    //Operando1
+                    if(finalTemps.get(direccion1.get(i)) != null){
+                        t1 = finalTemps.get(direccion1.get(i)).reg;
+                        type = finalTemps.get(direccion1.get(i)).type;
+                    }else{
+                        if(direccion1.get(i).matches("[0-9]+")){
+                            t1 = getAvailableTemp();
+                            assembly_file.append("li "+t1+", "+direccion1.get(i)+"\n");
+                            type = OperationType.INTEGER_OPERATION;
+                        }else{
+                            if(this.tabla_simbolos.getNode(direccion1.get(i)).getType().equals("Integer")){
+                                t1 = getAvailableTemp();
+                                assembly_file.append("\tlw "+t1+", _"+direccion1.get(i)+"\n");
+                                type = OperationType.INTEGER_OPERATION;
+                            }
+                        }
+                    }
+                    
+                    //Operando2
+                    if(finalTemps.get(direccion2.get(i)) != null){
+                        t2 = finalTemps.get(direccion2.get(i)).reg;
+                        type = finalTemps.get(direccion2.get(i)).type;
+                    }else{
+                        if(direccion2.get(i).matches("[0-9]+")){
+                            t2 = getAvailableTemp();
+                            assembly_file.append("li "+t2+", "+direccion2.get(i)+"\n");
+                            type = OperationType.INTEGER_OPERATION;
+                        }else{
+                            if(this.tabla_simbolos.getNode(direccion1.get(i)).getType().equals("Integer")){
+                                t2 = getAvailableTemp();
+                                assembly_file.append("\tlw "+t2+", _"+direccion2.get(i)+"\n");
+                                type = OperationType.INTEGER_OPERATION;
+                            }
+                        }
+                    }
+                    
+                    if(type == OperationType.INTEGER_OPERATION){
+                        assembly_file.append("\tbge "+t1+", "+t2+", _"+direccion3.get(i)+"\n");
+                    }
+                    setAvailableTemp(t1);
+                    setAvailableTemp(t2);
+                    break;
+                }
+                case "If<=":{
+                    String t1 = null;
+                    String t2 = null;
+                    OperationType type = null;
+                    
+                    //Operando1
+                    if(finalTemps.get(direccion1.get(i)) != null){
+                        t1 = finalTemps.get(direccion1.get(i)).reg;
+                        type = finalTemps.get(direccion1.get(i)).type;
+                    }else{
+                        if(direccion1.get(i).matches("[0-9]+")){
+                            t1 = getAvailableTemp();
+                            assembly_file.append("li "+t1+", "+direccion1.get(i)+"\n");
+                            type = OperationType.INTEGER_OPERATION;
+                        }else{
+                            if(this.tabla_simbolos.getNode(direccion1.get(i)).getType().equals("Integer")){
+                                t1 = getAvailableTemp();
+                                assembly_file.append("\tlw "+t1+", _"+direccion1.get(i)+"\n");
+                                type = OperationType.INTEGER_OPERATION;
+                            }
+                        }
+                    }
+                    
+                    //Operando2
+                    if(finalTemps.get(direccion2.get(i)) != null){
+                        t2 = finalTemps.get(direccion2.get(i)).reg;
+                        type = finalTemps.get(direccion2.get(i)).type;
+                    }else{
+                        if(direccion2.get(i).matches("[0-9]+")){
+                            t2 = getAvailableTemp();
+                            assembly_file.append("li "+t2+", "+direccion2.get(i)+"\n");
+                            type = OperationType.INTEGER_OPERATION;
+                        }else{
+                            if(this.tabla_simbolos.getNode(direccion1.get(i)).getType().equals("Integer")){
+                                t2 = getAvailableTemp();
+                                assembly_file.append("\tlw "+t2+", _"+direccion2.get(i)+"\n");
+                                type = OperationType.INTEGER_OPERATION;
+                            }
+                        }
+                    }
+                    
+                    if(type == OperationType.INTEGER_OPERATION){
+                        assembly_file.append("\tble "+t1+", "+t2+", _"+direccion3.get(i)+"\n");
+                    }
+                    setAvailableTemp(t1);
+                    setAvailableTemp(t2);
+                    break;
+                }
+                case "If>=":{
+                    String t1 = null;
+                    String t2 = null;
+                    OperationType type = null;
+                    
+                    //Operando1
+                    if(finalTemps.get(direccion1.get(i)) != null){
+                        t1 = finalTemps.get(direccion1.get(i)).reg;
+                        type = finalTemps.get(direccion1.get(i)).type;
+                    }else{
+                        if(direccion1.get(i).matches("[0-9]+")){
+                            t1 = getAvailableTemp();
+                            assembly_file.append("li "+t1+", "+direccion1.get(i)+"\n");
+                            type = OperationType.INTEGER_OPERATION;
+                        }else{
+                            if(this.tabla_simbolos.getNode(direccion1.get(i)).getType().equals("Integer")){
+                                t1 = getAvailableTemp();
+                                assembly_file.append("\tlw "+t1+", _"+direccion1.get(i)+"\n");
+                                type = OperationType.INTEGER_OPERATION;
+                            }
+                        }
+                    }
+                    
+                    //Operando2
+                    if(finalTemps.get(direccion2.get(i)) != null){
+                        t2 = finalTemps.get(direccion2.get(i)).reg;
+                        type = finalTemps.get(direccion2.get(i)).type;
+                    }else{
+                        if(direccion2.get(i).matches("[0-9]+")){
+                            t2 = getAvailableTemp();
+                            assembly_file.append("li "+t2+", "+direccion2.get(i)+"\n");
+                            type = OperationType.INTEGER_OPERATION;
+                        }else{
+                            if(this.tabla_simbolos.getNode(direccion1.get(i)).getType().equals("Integer")){
+                                t2 = getAvailableTemp();
+                                assembly_file.append("\tlw "+t2+", _"+direccion2.get(i)+"\n");
+                                type = OperationType.INTEGER_OPERATION;
+                            }
+                        }
+                    }
+                    
+                    if(type == OperationType.INTEGER_OPERATION){
+                        assembly_file.append("\tbge "+t1+", "+t2+", _"+direccion3.get(i)+"\n");
+                    }
+                    setAvailableTemp(t1);
+                    setAvailableTemp(t2);
+                    break;
+                }
+                case "If!=":{
+                    String t1 = null;
+                    String t2 = null;
+                    OperationType type = null;
+                    
+                    //Operando1
+                    if(finalTemps.get(direccion1.get(i)) != null){
+                        t1 = finalTemps.get(direccion1.get(i)).reg;
+                        type = finalTemps.get(direccion1.get(i)).type;
+                    }else{
+                        if(direccion1.get(i).matches("[0-9]+")){
+                            t1 = getAvailableTemp();
+                            assembly_file.append("li "+t1+", "+direccion1.get(i)+"\n");
+                            type = OperationType.INTEGER_OPERATION;
+                        }else{
+                            if(this.tabla_simbolos.getNode(direccion1.get(i)).getType().equals("Integer")){
+                                t1 = getAvailableTemp();
+                                assembly_file.append("\tlw "+t1+", _"+direccion1.get(i)+"\n");
+                                type = OperationType.INTEGER_OPERATION;
+                            }
+                        }
+                    }
+                    
+                    //Operando2
+                    if(finalTemps.get(direccion2.get(i)) != null){
+                        t2 = finalTemps.get(direccion2.get(i)).reg;
+                        type = finalTemps.get(direccion2.get(i)).type;
+                    }else{
+                        if(direccion2.get(i).matches("[0-9]+")){
+                            t2 = getAvailableTemp();
+                            assembly_file.append("li "+t2+", "+direccion2.get(i)+"\n");
+                            type = OperationType.INTEGER_OPERATION;
+                        }else{
+                            if(this.tabla_simbolos.getNode(direccion1.get(i)).getType().equals("Integer")){
+                                t2 = getAvailableTemp();
+                                assembly_file.append("\tlw "+t2+", _"+direccion2.get(i)+"\n");
+                                type = OperationType.INTEGER_OPERATION;
+                            }
+                        }
+                    }
+                    
+                    if(type == OperationType.INTEGER_OPERATION){
+                        assembly_file.append("\tbne "+t1+", "+t2+", _"+direccion3.get(i)+"\n");
+                    }
+                    setAvailableTemp(t1);
+                    setAvailableTemp(t2);
+                    break;
+                }
+                case "If==":{
+                    String t1 = null;
+                    String t2 = null;
+                    OperationType type = null;
+                    
+                    //Operando1
+                    if(finalTemps.get(direccion1.get(i)) != null){
+                        t1 = finalTemps.get(direccion1.get(i)).reg;
+                        type = finalTemps.get(direccion1.get(i)).type;
+                    }else{
+                        if(direccion1.get(i).matches("[0-9]+")){
+                            t1 = getAvailableTemp();
+                            assembly_file.append("li "+t1+", "+direccion1.get(i)+"\n");
+                            type = OperationType.INTEGER_OPERATION;
+                        }else{
+                            if(this.tabla_simbolos.getNode(direccion1.get(i)).getType().equals("Integer")){
+                                t1 = getAvailableTemp();
+                                assembly_file.append("\tlw "+t1+", _"+direccion1.get(i)+"\n");
+                                type = OperationType.INTEGER_OPERATION;
+                            }
+                        }
+                    }
+                    
+                    //Operando2
+                    if(finalTemps.get(direccion2.get(i)) != null){
+                        t2 = finalTemps.get(direccion2.get(i)).reg;
+                        type = finalTemps.get(direccion2.get(i)).type;
+                    }else{
+                        if(direccion2.get(i).matches("[0-9]+")){
+                            t2 = getAvailableTemp();
+                            assembly_file.append("li "+t2+", "+direccion2.get(i)+"\n");
+                            type = OperationType.INTEGER_OPERATION;
+                        }else{
+                            if(this.tabla_simbolos.getNode(direccion1.get(i)).getType().equals("Integer")){
+                                t2 = getAvailableTemp();
+                                assembly_file.append("\tlw "+t2+", _"+direccion2.get(i)+"\n");
+                                type = OperationType.INTEGER_OPERATION;
+                            }
+                        }
+                    }
+                    
+                    if(type == OperationType.INTEGER_OPERATION){
+                        assembly_file.append("\tbeq "+t1+", "+t2+", _"+direccion3.get(i)+"\n");
+                    }
+                    setAvailableTemp(t1);
+                    setAvailableTemp(t2);
+                    break;
+                }
             }
         }
         

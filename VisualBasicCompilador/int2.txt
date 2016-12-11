@@ -1,9 +1,16 @@
 Sub main()
 	Dim a As Integer = 10
-	Dim b As Integer = 20
-	Dim c As Integer = 30
+	Dim b As Integer = 30
+	Dim c As Integer = 20
 	'Dim D As Boolean = a>b Or b>c
-	Do While a<b
-		Write("Hola")
-	Loop
+	If a<b And b>c Then
+		If b<>20 Then
+			Write("If dentro del If se cumplio")
+		Else
+			Write("If dentro del If se NO cumplio")
+		End If
+		Write("True")
+	Else
+		Write("False")
+	End If
 End Sub

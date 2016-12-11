@@ -1,6 +1,22 @@
 a=10
-b=20
-c=30
-etiqueta0
-print "Hola"
+b=30
+c=20
 if a<b GOTO etiqueta0
+GOTO etiqueta5
+etiqueta0
+if b>c GOTO etiqueta1
+GOTO etiqueta5
+etiqueta1
+if b!=20 GOTO etiqueta2
+GOTO etiqueta6
+etiqueta2
+print "If dentro del If se cumplio"
+GOTO etiqueta6
+etiqueta3
+print "If dentro del If se NO cumplio"
+etiqueta4
+print "True"
+GOTO etiqueta6
+etiqueta5
+print "False"
+etiqueta6
