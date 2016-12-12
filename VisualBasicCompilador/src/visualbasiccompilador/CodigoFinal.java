@@ -838,7 +838,7 @@ public class CodigoFinal {
                     setAvailableTemp(t2);
                     break;
                 }
-                case "If==":{
+                case "If=":{
                     String t1 = null;
                     String t2 = null;
                     OperationType type = null;

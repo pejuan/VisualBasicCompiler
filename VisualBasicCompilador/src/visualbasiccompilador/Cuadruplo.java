@@ -89,10 +89,55 @@ public class Cuadruplo {
         }
     }
     public void addNode(String comando,String dir1, String dir2, String dir3){
-        comandos.add(comando);
-        this.dir1.add(dir1);
-        this.dir2.add(dir2);
-        this.dir3.add(dir3);
+        
+        if(comando.equals("If")){
+            if(dir1.contains("<")){
+                if(dir1.contains("=")){
+                    String[] cut = dir1.split("<=");
+                    this.comandos.add("If<=");
+                    this.dir1.add(cut[0]);
+                    this.dir2.add(cut[1]);
+                }else{
+                    String[] cut = dir1.split("<");
+                    this.comandos.add("If<");
+                    this.dir1.add(cut[0]);
+                    this.dir2.add(cut[1]);
+                }
+            }else if(dir1.contains(">")){
+                if(dir1.contains("=")){
+                    String[] cut = dir1.split(">=");
+                    this.comandos.add("If>=");
+                    this.dir1.add(cut[0]);
+                    this.dir2.add(cut[1]);
+                }else{
+                    String[] cut = dir1.split(">");
+                    this.comandos.add("If>");
+                    this.dir1.add(cut[0]);
+                    this.dir2.add(cut[1]);
+                }
+            }else if(dir1.contains("=")){
+                if (dir1.contains("!")) {
+                    String[] cut = dir1.split("!=");
+                    this.comandos.add("If!=");
+                    this.dir1.add(cut[0]);
+                    this.dir2.add(cut[1]);
+                }else{
+                    String[] cut = dir1.split("=");
+                    this.comandos.add("If=");
+                    this.dir1.add(cut[0]);
+                    this.dir2.add(cut[1]);
+                
+                }                
+            }
+            
+            this.dir3.add(dir3);
+        }else{
+           comandos.add(comando);
+            this.dir1.add(dir1);
+            this.dir2.add(dir2);
+            this.dir3.add(dir3); 
+        }
+        
     
     }
     public void addNode(String comando, String dir3){

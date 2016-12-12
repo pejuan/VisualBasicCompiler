@@ -633,7 +633,8 @@ do_statement ::=    TK_DO TK_WHILE:whil{:cuadruplo.addNode("ETIQ","etiqueta"+con
                                                             bloque = 0;
                                                             hayUnIf=false;
                                                             hayUnFor=false;
-                                                        }:} statements:stmnts {:cuadruplo.addNode("If",expr.getLugarFor(),"",whil.getEtiqueta());:}
+                                                        }:} statements:stmnts {:
+                                                                                   cuadruplo.addNode("If",expr.getLugarFor(),"",whil.getEtiqueta());:}
                                                                                    TK_LOOP {:if(!foundError){ 
                                                                                         RESULT = new DoStatement("Do","While",listastatements,"Loop",null,expr);
                                                                                         listastatements = new ArrayList();
