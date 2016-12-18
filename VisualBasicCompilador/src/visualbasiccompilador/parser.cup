@@ -353,7 +353,7 @@ sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!fou
                                                                                 }
                                                                             }
                                                                             if (!tableIds.addNode(new IdNode(i,"void",ambito_actual,"void->"+tipo_sub,"Sub"))){
-                                                                                System.err.println("Function or Sub"+i+" has already been defined");
+                                                                                System.err.println("Function or Sub"+i+" has already been defined. Line "+ileft);
                                                                             }
                                                                             pila_de_bloques.push(bloque);
                                                                             bloque = 0;
@@ -378,7 +378,7 @@ sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!fou
                                                             bloque++;
                                                             ambito_actual += "." + Integer.toString(bloque);
                                                             if (!tableIds.addNode(new IdNode(i, "void", ambito_actual,"void->void","Sub"))){
-                                                                System.err.println("Function or Sub "+i+" has already been defined");
+                                                                System.err.println("Function or Sub "+i+" has already been defined. Line "+ileft);
                                                             }
                                                             pila_de_bloques.push(bloque);
                                                             bloque = 0;
@@ -399,10 +399,9 @@ sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!fou
                                                                                                                         cuadruplo.addNode("FINSUB","");
                                                                                                                     }
                                                                                                                 }:}
-                    |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts TK_END TK_SUB                      {:System.err.println("Error inside Sub statement");foundError=true;:}
-                    |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts error TK_END TK_SUB                {:System.err.println("Several errors inside Sub statement");foundError=true;:}
-                    |TK_SUB error TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                            {:System.err.println("Erroneous Sub declaration.");foundError=true;:}
-                    |TK_SUB TK_ID:i TK_PARIN error TK_PAROUT statements:stmnts TK_END TK_SUB                      {:System.err.println("Errorneous parameters in Sub "+i); foundError=true;:}
+                    |TK_SUB TK_ID TK_PARIN TK_PAROUT error:er statements:stmnts error TK_END TK_SUB                {:System.err.println("Several errors inside Sub statement. Line "+erleft);foundError=true;:}
+                    |TK_SUB error:er TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                            {:System.err.println("Erroneous Sub declaration. Line "+erleft);foundError=true;:}
+                    |TK_SUB TK_ID:i TK_PARIN error:er TK_PAROUT statements:stmnts TK_END TK_SUB                      {:System.err.println("Errorneous parameters in Sub "+i+". Line "+erleft); foundError=true;:}
 ;
 
 
@@ -417,12 +416,12 @@ function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT 
                                                                                                                     tipo_funcion += listaparameters.get(k).getDataType();
                                                                                                                 }
                                                                                                                 if(!tableIds.addNode(new IdNode(listaparameters.get(k).getId(),listaparameters.get(k).getDataType(),ambito_actual,"Parameter",listaparameters.get(k).getParameterType(),size,offset))){//revisar si expr tiene el mismo type que id
-                                                                                                                    System.err.println("Parameter id "+i+" already exists.");//No estoy seguro si foundError debe cambiar
+                                                                                                                    System.err.println("Parameter id "+i+" already exists. Line "+ileft);//No estoy seguro si foundError debe cambiar
                                                                                                                 } 
                                                                                                                 
                                                                                                             }
                                                                                                             if(!tableIds.addNode(new IdNode(i,type,ambito_actual,type+"->"+tipo_funcion,"Function"))){
-                                                                                                                System.err.println("Function "+i+" already exists "+type+"->"+tipo_funcion);
+                                                                                                                System.err.println("Function "+i+" already exists "+type+"->"+tipo_funcion+". Line "+ileft);
                                                                                                             }
                                                                                                             pila_de_bloques.push(bloque);
                                                                                                             bloque = 0;
@@ -443,7 +442,7 @@ function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT 
                                                                                             bloque++;
                                                                                             ambito_actual += "."+Integer.toString(bloque);
                                                                                             if(!tableIds.addNode(new IdNode(i,type,ambito_actual,type+"->void","Function"))){
-                                                                                                System.err.println("Function "+i+" already exists "+type+"->void");
+                                                                                                System.err.println("Function "+i+" already exists "+type+"->void. Line "+ileft);
                                                                                             }
                                                                                             pila_de_bloques.push(bloque);
                                                                                             bloque = 0;
@@ -459,8 +458,8 @@ function_statement ::= 	TK_FUNCTION TK_ID:i TK_PARIN parameters:prmts TK_PAROUT 
                                                                                                                                 cuadruplo.addNode("FINFUN","");
                                                                                                                              }:}
                         
-                        |TK_FUNCTION TK_ID TK_PARIN parameters:prmts error TK_PAROUT statements:stmnts TK_END TK_FUNCTION                   {:System.err.println("Erroneous Function declaration.");foundError=true; :}
-                        |TK_FUNCTION TK_ID TK_PARIN TK_PAROUT statements:stmnts error TK_END TK_FUNCTION                                    {:System.err.println("Error inside Function statement.");foundError=true;:}
+                        |TK_FUNCTION TK_ID TK_PARIN parameters:prmts error:er TK_PAROUT statements:stmnts TK_END TK_FUNCTION                   {:System.err.println("Erroneous Function declaration. Line "+erleft);foundError=true; :}
+                        |TK_FUNCTION TK_ID TK_PARIN TK_PAROUT statements:stmnts error:er TK_END TK_FUNCTION                                    {:System.err.println("Error inside Function statement. Line "+erleft);foundError=true;:}
 ;
 
 parameters ::= 	parameter:prmt TK_COMMA parameters:prmts        {: if(!foundError){listaparameters.add(prmt);}:}
@@ -482,7 +481,7 @@ data_type ::=	TK_INTEGER          {: if(!foundError){RESULT = "Integer";size=4;o
 		|TK_STRING          {: if(!foundError){RESULT = "String";size=50;offset += 50;} :}
                 |TK_ID:i               {: if(!foundError){
                                             if(!tableIds.searchRecord(i)){
-                                                System.err.println("Error with variable declaration. Data Type: "+i+" cannot be found");
+                                                System.err.println("Error with variable declaration. Data Type: "+i+" cannot be found. Line "+ileft);
                                             }else{
                                                 RESULT = i;
                                                 size = tableIds.getRecordSize(i);
@@ -520,13 +519,13 @@ write_statement ::= TK_WRITE TK_PARIN literal_expression:le TK_PAROUT           
                     |TK_WRITE TK_PARIN TK_ID:i TK_PAROUT                        {:if(!foundError){RESULT = new WriteStatement("Write",null,i);
                                                                                     cuadruplo.addNode("print", i);
                                                                                 }  :}
-                    |TK_WRITE TK_PARIN error TK_PAROUT                          {:System.err.println("\t\t\t\t\t  Problem near Console.Write()"); foundError=true;:}
+                    |TK_WRITE TK_PARIN error:er TK_PAROUT                          {:System.err.println("\t\t\t\t\t  Problem near Write(). Line "+erleft); foundError=true;:}
 ;
 read_statement  ::= TK_READ TK_PARIN TK_ID:i TK_PAROUT               {:if(!foundError){RESULT = new ReadStatement("Read",i);
                                                                          //hay que buscar que este declarada i
                                                                          cuadruplo.addNode("read",i);
                                                                      } :}
-                    |TK_READ TK_PARIN error TK_PAROUT              {:System.err.println("\t\t\t\t\t  Problem near Console.Read().");foundError=true; :}
+                    |TK_READ TK_PARIN error:er TK_PAROUT              {:System.err.println("\t\t\t\t\t  Problem near Read(). Line "+erleft);foundError=true; :}
 ;
 if_statement ::=    begin_if:beg TK_END TK_IF                                                                {:if(!foundError){
                                                                                                                  RESULT = new IfStatement("If",beg.getExpression(),"Then",null,listastatements,null,null,"End IF");
@@ -659,7 +658,7 @@ do_statement ::=    TK_DO TK_WHILE:whil{:cuadruplo.addNode("ETIQ","etiqueta"+con
                                                                                         ambito_actual = remove_scope(partir_ambito);
                                                                                         bloque = (int) pila_de_bloques.pop();
                                                                                    }:}
-                    |TK_DO TK_WHILE error TK_LOOP                                               {:System.err.println("Error in Do While");foundError=true;:}
+                    |TK_DO TK_WHILE error:er TK_LOOP                                               {:System.err.println("Error in Do While. Line "+erleft);foundError=true;:}
 ;
 
 variable_declaration ::=    variable_declarator:var TK_COMMA variable_declaration:var_declare   {: if(!foundError){RESULT = new VariableDeclaration(var,var_declare);}:}
@@ -676,15 +675,15 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                                                                                                                if(auxtype==type){
                                                                                                                     if(!tableIds.addNode(new IdNode(id,type,ambito_actual,size,offset))){//revisar si expr tiene el mismo type que id
                                                                                                                         
-                                                                                                                         System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
+                                                                                                                         System.err.println("Variable id "+id+" already exists. Line "+idleft);//No estoy seguro si foundError debe cambiar
                                                                                                                     }
                                                                                                                }else{ 
                                                                                                                     if(auxtype=="none"){ 
                                                                                                                         auxtype = tableIds.searchNodeType(expr.getId(),ambito_actual);
                                                                                                                         if(!(auxtype==type))
-                                                                                                                            System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
+                                                                                                                            System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+". Line "+idleft);
                                                                                                                     }else   
-                                                                                                                        System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
+                                                                                                                        System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+". Line "+idleft);
                                                                                                                }
                                                                                                                cuadruplo.addNode("=",expr.getLugar(),"",id);
                                                                                                                RESULT.setLugar(id);
@@ -693,15 +692,15 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                                                                                                                 String auxtype = expr.bringType();
                                                                                                                if(auxtype==type){
                                                                                                                     if(!tableIds.addNode(new IdNode(id,type,ambito_actual,size,offset))){//revisar si expr tiene el mismo type que id
-                                                                                                                         System.err.println("Variable id "+id+" already exists.");//No estoy seguro si foundError debe cambiar
+                                                                                                                         System.err.println("Variable id "+id+" already exists. Line "+idleft);//No estoy seguro si foundError debe cambiar
                                                                                                                     }
                                                                                                                }else{ 
                                                                                                                     if(auxtype=="none"){ 
                                                                                                                         auxtype = tableIds.searchNodeType(expr.getId(),ambito_actual);
                                                                                                                         if(!(auxtype==type))
-                                                                                                                            System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
+                                                                                                                            System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+". Line "+idleft);
                                                                                                                     }else   
-                                                                                                                        System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+".");
+                                                                                                                        System.err.println("Error with variable "+id+". Type "+auxtype+" has no implicit conversion to "+type+". Line "+idleft);
                                                                                                                }
                                                                                                                cuadruplo.addNode("=",expr.getLugar(),"",id);
                                                                                                                RESULT.setLugar(id);
@@ -710,7 +709,7 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                                                                                                                String auxtype1 =tableIds.searchNodeType(id,ambito_actual);
                                                                                                                String auxtype2 = expr.bringType();
                                                                                                                if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),ambito_actual);}
-                                                                                                               if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
+                                                                                                               if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+". Line "+idleft);}
                                                                                                                cuadruplo.addNode("=",expr.getLugar(),"",id);
                                                                                                                RESULT.setLugar(id);
                                                                                                             } :}
@@ -718,21 +717,21 @@ variable_declarator  ::=    TK_DIM TK_ID:id TK_AS data_type:type TK_EQUALS expre
                                                                                                                String auxtype1 =tableIds.searchNodeType(id,ambito_actual);
                                                                                                                String auxtype2 = expr.bringType();
                                                                                                                if(auxtype2=="none"){ auxtype2 = tableIds.searchNodeType(expr.getId(),ambito_actual);}
-                                                                                                               if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+".");}
+                                                                                                               if(auxtype1 != auxtype2){System.err.println("Error with variable "+id+". Type "+auxtype2+" has no implicit conversion to "+auxtype1+". Line "+idleft);}
                                                                                                                cuadruplo.addNode("=",expr.getLugar(),"",id);
                                                                                                                RESULT.setLugar(id);
                                                                                                             }:}
                             |TK_ID:id TK_AS data_type:type                                                  {:if(!foundError){RESULT = new VariableDeclarator(id,"As",type);
                                                                                                                 if(type != null){
                                                                                                                     if(!tableIds.addNode(new IdNode(id,type,ambito_actual,size,offset))){
-                                                                                                                        System.err.println("Variable id "+id+" already exists.");
+                                                                                                                        System.err.println("Variable id "+id+" already exists. Line "+idleft);
                                                                                                                     }
                                                                                                                 } 
                                                                                                              }:}
                             |TK_DIM TK_ID:id TK_AS data_type:type                                              {:if(!foundError){RESULT = new VariableDeclarator("Dim", id, "As", type);
                                                                                                                     if(type != null){
                                                                                                                         if(!tableIds.addNode(new IdNode(id,type,ambito_actual,size,offset))){
-                                                                                                                            System.err.println("Variable id "+id+" already exists.");
+                                                                                                                            System.err.println("Variable id "+id+" already exists. Line "+idleft);
                                                                                                                         }
                                                                                                                     }
                                                                                                                 }:}                                                                                  
@@ -751,15 +750,15 @@ expression ::=	numeric_expression:num_exp      {: if(!foundError){RESULT = new N
 
 logical_expression ::= TK_NOT expression:e1                             {:if(!foundError){RESULT = new LogicalExpression("Not",e1,null);
                                                                             if(e1.getId() != null && !tableIds.searchScope(e1.getId(),ambito_actual)){
-                                                                                System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                System.err.println("Variable "+e1.getId()+" has not been declared in this scope. Line "+e1left);
                                                                             }else{
                                                                                 String auxtype = e1.bringType();
                                                                                 if(auxtype != "Boolean"){
                                                                                     if(auxtype == "none"){
                                                                                         auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
-                                                                                        if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
+                                                                                        if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+". Line "+e1left);}
                                                                                     }else{
-                                                                                        System.err.println("Error at NOT *expression*, not a boolean expression. Is "+auxtype+".");
+                                                                                        System.err.println("Error at NOT *expression*, not a boolean expression. Is "+auxtype+". Line "+e1left);
                                                                                     }
                                                                                 }
                                                                             }
@@ -770,15 +769,15 @@ logical_expression ::= TK_NOT expression:e1                             {:if(!fo
                                                                         }:}
                        |TK_NOT TK_PARIN expression:e1 TK_PAROUT         {:if(!foundError){RESULT = new LogicalExpression("Not",e1,null);
                                                                            if(e1.getId() != null && !tableIds.searchScope(e1.getId(),ambito_actual)){
-                                                                                System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                System.err.println("Variable "+e1.getId()+" has not been declared in this scope. Line "+e1left);
                                                                            }else{
                                                                                 String auxtype = e1.bringType();
                                                                                 if(auxtype != "Boolean"){
                                                                                     if(auxtype == "none"){
                                                                                         auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
-                                                                                        if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
+                                                                                        if(auxtype != "Boolean"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+". Line "+e1left);}
                                                                                     }else{
-                                                                                        System.err.println("Error at NOT *(expression)*, not a boolean expression. Is "+auxtype+".");
+                                                                                        System.err.println("Error at NOT *(expression)*, not a boolean expression. Is "+auxtype+". Line "+e1left);
                                                                                     }
                                                                                 }
                                                                             }
@@ -793,26 +792,26 @@ logical_expression ::= TK_NOT expression:e1                             {:if(!fo
                                             :} 
                                                expression:e2               {:if(!foundError){RESULT = new LogicalExpression("Or",e1,e2,null);
                                                                             if(e1.getId() != null && !tableIds.searchScope(e1.getId(),ambito_actual)){
-                                                                                System.err.println("Variable "+e1.getId()+" has not been declared in this scope"); 
+                                                                                System.err.println("Variable "+e1.getId()+" has not been declared in this scope. Line "+e1left); 
                                                                             }else{
                                                                                 String auxtype = e1.bringType();
                                                                                 if(auxtype != "Boolean"){
                                                                                     if(auxtype == "none"){
                                                                                         auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
-                                                                                        if((auxtype != "Boolean") && auxtype!="Integer"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
-                                                                                    }else{System.err.println("Error at *expression* Or *expression*, not a boolean expression. Is "+auxtype+".");}
+                                                                                        if((auxtype != "Boolean") && auxtype!="Integer"){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+". Line "+e1left);}
+                                                                                    }else{System.err.println("Error at *expression* Or *expression*, not a boolean expression. Is "+auxtype+". Line "+e1left);}
                                                                                 }
                                                                             }
                                                                             
                                                                             if(e2.getId() != null && !tableIds.searchScope(e2.getId(),ambito_actual)){
-                                                                                System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                System.err.println("Variable "+e2.getId()+" has not been declared in this scope. Line "+e2left);
                                                                             }else{
                                                                                 String auxtype2 = e2.bringType();
                                                                                 if(auxtype2 != "Boolean"){
                                                                                     if(auxtype2 == "none"){
                                                                                         auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
-                                                                                        if((auxtype2 != "Boolean") && auxtype2!="Integer"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
-                                                                                    }else{System.err.println("Error at *expression* Or *expression*, not a boolean expression. Is "+auxtype2+".");}
+                                                                                        if((auxtype2 != "Boolean") && auxtype2!="Integer"){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+". Line "+e2left);}
+                                                                                    }else{System.err.println("Error at *expression* Or *expression*, not a boolean expression. Is "+auxtype2+". Line "+e2left);}
                                                                                 }
                                                                             }
                                                                             
@@ -828,26 +827,26 @@ logical_expression ::= TK_NOT expression:e1                             {:if(!fo
                                               contadoretiquetas++;                                             
                                             :} expression:e2              {:if(!foundError){RESULT = new LogicalExpression("And",e1,e2,null);
                                                                             if(e1.getId() != null && !tableIds.searchScope(e1.getId(),ambito_actual)){
-                                                                                System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                System.err.println("Variable "+e1.getId()+" has not been declared in this scope. Line "+e1left+" "+e1right);
                                                                             }else{
                                                                                 String auxtype = e1.bringType();
                                                                                 if(auxtype != "Boolean"){
                                                                                     if(auxtype == "none"){
                                                                                         auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
-                                                                                        if((auxtype != "Boolean") && (auxtype!="Integer")){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+".");}
-                                                                                    }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype+".");}
+                                                                                        if((auxtype != "Boolean") && (auxtype!="Integer")){System.err.println("Error with variable "+e1.getId()+", not a boolean expression. Is "+auxtype+". Line "+e1left);}
+                                                                                    }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype+". Line "+e1left);}
                                                                                 }
                                                                             }
                                                                             
                                                                             if(e2.getId() != null && !tableIds.searchScope(e2.getId(), ambito_actual)){
-                                                                                System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                System.err.println("Variable "+e2.getId()+" has not been declared in this scope. Line "+e2left);
                                                                             }else{
                                                                                 String auxtype2 = e2.bringType();
                                                                                 if(auxtype2 != "Boolean"){
                                                                                     if(auxtype2 == "none"){
                                                                                         auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
-                                                                                        if((auxtype2 != "Boolean") && (auxtype2!="Integer")){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+".");}
-                                                                                    }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype2+".");}
+                                                                                        if((auxtype2 != "Boolean") && (auxtype2!="Integer")){System.err.println("Error with variable "+e2.getId()+", not a boolean expression. Is "+auxtype2+". Line "+e2left);}
+                                                                                    }else{System.err.println("Error at *expression* And *expression*, not a boolean expression. Is "+auxtype2+". Line "+e2left);}
                                                                                 }
                                                                             }
                                                                             cuadruplo.complete(e1.getListaverdaderas(),tkand.getEtiqueta());
@@ -871,17 +870,17 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                             
                                                                                             
                                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
-                                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope. Line "+e1left);
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
                                                                                                     if(auxtype != "Integer"){
                                                                                                         if(auxtype == "none"){
                                                                                                             auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                             if(auxtype != "Integer"){
-                                                                                                                System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");
+                                                                                                                System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                                             }
                                                                                                         }else{
-                                                                                                            System.err.println("Error at *expression1* > *expression2*, expression1 is not an Integer. Is "+auxtype+".");
+                                                                                                            System.err.println("Error at *expression1* > *expression2*, expression1 is not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                                         }
                                                                                                     }else{
                                                                                                         
@@ -892,17 +891,17 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                                                                                             
                                                                                             
                                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
-                                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope. Line "+e2left);
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
                                                                                                     if(auxtype2 != "Integer"){
                                                                                                         if(auxtype2 == "none"){
                                                                                                             auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                                             if(auxtype2 != "Integer"){
-                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                                             }
                                                                                                         }else{
-                                                                                                            System.err.println("Error at *expression1* > *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
+                                                                                                            System.err.println("Error at *expression1* > *expression2*, expression2 is not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                                         }
                                                                                                     }
                                                                                                 }
@@ -931,34 +930,34 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                        |expression:e1 TK_LESSTHAN expression:e2                         {: if(!foundError){RESULT = new BooleanExpression(e1,"<",e2,null);
                                                                                             
                                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
-                                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope. Line "+e1left);
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
                                                                                                     if(auxtype != "Integer"){
                                                                                                         if(auxtype == "none"){
                                                                                                             auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                             if(auxtype != "Integer"){
-                                                                                                                System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");
+                                                                                                                System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                                             }
                                                                                                         }else{
-                                                                                                            System.err.println("Error at *expression1* < *expression2*, expression1 is not an Integer. Is "+auxtype+".");
+                                                                                                            System.err.println("Error at *expression1* < *expression2*, expression1 is not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                                         }
                                                                                                     }
                                                                                                 }
                                                                                             
                                                                                             
                                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
-                                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope. Line "+e2left);
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
                                                                                                     if(auxtype2 != "Integer"){
                                                                                                         if(auxtype2 == "none"){
                                                                                                             auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                                             if(auxtype2 != "Integer"){
-                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                                             }
                                                                                                         }else{
-                                                                                                            System.err.println("Error at *expression1* < *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
+                                                                                                            System.err.println("Error at *expression1* < *expression2*, expression2 is not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                                         }
                                                                                                     }
                                                                                                 }
@@ -986,34 +985,34 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                        |expression:e1 TK_GREATEREQUAL expression:e2                     {: if(!foundError){RESULT = new BooleanExpression(e1,">=",e2,null);
                                                                                             
                                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
-                                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope. Line "+e1left);
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
                                                                                                     if(auxtype != "Integer"){
                                                                                                         if(auxtype == "none"){
                                                                                                             auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                             if(auxtype != "Integer"){
-                                                                                                                System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");
+                                                                                                                System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                                             }
                                                                                                         }else{
-                                                                                                            System.err.println("Error at *expression1* >= *expression2*, expression1 is not an Integer. Is "+auxtype+".");
+                                                                                                            System.err.println("Error at *expression1* >= *expression2*, expression1 is not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                                         }
                                                                                                     }
                                                                                                 }
                                                                                             
                                                                                             
                                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
-                                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope. Line "+e2left);
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
                                                                                                     if(auxtype2 != "Integer"){
                                                                                                         if(auxtype2 == "none"){
                                                                                                             auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                                             if(auxtype2 != "Integer"){
-                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                                             }
                                                                                                         }else{
-                                                                                                            System.err.println("Error at *expression1* >= *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
+                                                                                                            System.err.println("Error at *expression1* >= *expression2*, expression2 is not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                                         }
                                                                                                     }
                                                                                                 }
@@ -1041,34 +1040,34 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                        |expression:e1 TK_LESSEQUAL expression:e2                        {: if(!foundError){RESULT = new BooleanExpression(e1,"<=",e2,null);
                                                                                             
                                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
-                                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope. Line "+e1left);
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
                                                                                                     if(auxtype != "Integer"){
                                                                                                         if(auxtype == "none"){
                                                                                                             auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                             if(auxtype != "Integer"){
-                                                                                                                System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");
+                                                                                                                System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                                             }
                                                                                                         }else{
-                                                                                                            System.err.println("Error at *expression1* <= *expression2*, expression1 is not an Integer. Is "+auxtype+".");
+                                                                                                            System.err.println("Error at *expression1* <= *expression2*, expression1 is not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                                         }
                                                                                                     }
                                                                                                 }
                                                                                             
                                                                                             
                                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
-                                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope. Line "+e2left);
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
                                                                                                     if(auxtype2 != "Integer"){
                                                                                                         if(auxtype2 == "none"){
                                                                                                             auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                                             if(auxtype2 != "Integer"){
-                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                                             }
                                                                                                         }else{
-                                                                                                            System.err.println("Error at *expression1* <= *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
+                                                                                                            System.err.println("Error at *expression1* <= *expression2*, expression2 is not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                                         }
                                                                                                     }
                                                                                                 }
@@ -1096,34 +1095,34 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                        |expression:e1 TK_EQUALS expression:e2                           {: if(!foundError){RESULT = new BooleanExpression(e1,"=",e2,null);
                                                                                             
                                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
-                                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope. Line "+e1left);
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
                                                                                                     if(auxtype != "Integer"){
                                                                                                         if(auxtype == "none"){
                                                                                                             auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                             if(auxtype != "Integer"){
-                                                                                                                System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");
+                                                                                                                System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                                             }
                                                                                                         }else{
-                                                                                                            System.err.println("Error at *expression1* = *expression2*, expression1 is not an Integer. Is "+auxtype+".");
+                                                                                                            System.err.println("Error at *expression1* = *expression2*, expression1 is not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                                         }
                                                                                                     }
                                                                                                 }
                                                                                             
                                                                                             
                                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
-                                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope. Line "+e2left);
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
                                                                                                     if(auxtype2 != "Integer"){
                                                                                                         if(auxtype2 == "none"){
                                                                                                             auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                                             if(auxtype2 != "Integer"){
-                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                                             }
                                                                                                         }else{
-                                                                                                           System.err.println("Error at *expression1* = *expression2*, expression2 is not an Integer. Is "+auxtype2+"."); 
+                                                                                                           System.err.println("Error at *expression1* = *expression2*, expression2 is not an Integer. Is "+auxtype2+". Line "+e2left); 
                                                                                                         }
                                                                                                     }
                                                                                                 }
@@ -1151,34 +1150,34 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
                        |expression:e1 TK_NOTEQUAL expression:e2                         {: if(!foundError){RESULT = new BooleanExpression(e1,"<>",e2,null);
                                                                                             
                                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
-                                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope. Line "+e1left);
                                                                                                 }else{
                                                                                                     String auxtype = e1.bringType();
                                                                                                     if(auxtype != "Integer"){
                                                                                                         if(auxtype == "none"){
                                                                                                             auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                             if(auxtype != "Integer"){
-                                                                                                                System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");
+                                                                                                                System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                                             }
                                                                                                         }else{
-                                                                                                            System.err.println("Error at *expression1* <> *expression2*, expression1 is not an Integer. Is "+auxtype+".");
+                                                                                                            System.err.println("Error at *expression1* <> *expression2*, expression1 is not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                                         }
                                                                                                     }
                                                                                                 }
                                                                                             
                                                                                             
                                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
-                                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope. Line "+e2left);
                                                                                                 }else{
                                                                                                     String auxtype2 = e2.bringType();
                                                                                                     if(auxtype2 != "Integer"){
                                                                                                         if(auxtype2 == "none"){
                                                                                                             auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                                             if(auxtype2 != "Integer"){
-                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+".");
+                                                                                                                System.err.println("Error with variable "+e2.getId()+", is not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                                             }
                                                                                                         }else{
-                                                                                                            System.err.println("Error at *expression1* <> *expression2*, expression2 is not an Integer. Is "+auxtype2+".");
+                                                                                                            System.err.println("Error at *expression1* <> *expression2*, expression2 is not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                                         }
                                                                                                     }
                                                                                                 }
@@ -1207,34 +1206,34 @@ boolean_expression ::= expression:e1 TK_GREATERTHAN expression:e2               
 numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!foundError){RESULT = new NumericExpression(e1,e2,"+",null);
                                                                             
                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
-                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope. Line "+e1left);
                                                                                 }else{
                                                                                     String auxtype = e1.bringType();
                                                                                     if(auxtype != "Integer"){
                                                                                         if(auxtype == "none"){
                                                                                             auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                 if(auxtype != "Integer"){
-                                                                                                    System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");
+                                                                                                    System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                                 }
                                                                                         }else{
-                                                                                            System.err.println("Error at *expression1* + *expression2*, first operand is not an Integer. Is "+auxtype+".");
+                                                                                            System.err.println("Error at *expression1* + *expression2*, first operand is not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                         }
                                                                                     }
                                                                                 }
                                                                             
                                                                             
                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
-                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope. Line "+e2left);
                                                                                 }else{
                                                                                     String auxtype2 = e2.bringType();
                                                                                     if(auxtype2 != "Integer"){
                                                                                         if(auxtype2 == "none"){
                                                                                             auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                             if(auxtype2 != "Integer"){
-                                                                                                System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");
+                                                                                                System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                             }
                                                                                         }else{
-                                                                                           System.err.println("Error at *expression1* + *expression2*, second operand is not an Integer. Is "+auxtype2+"."); 
+                                                                                           System.err.println("Error at *expression1* + *expression2*, second operand is not an Integer. Is "+auxtype2+". Line "+e2left); 
                                                                                         }
                                                                                     }
                                                                                 }
@@ -1245,34 +1244,34 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                        |expression:e1 TK_MINUS expression:e2            {:if(!foundError){RESULT = new NumericExpression(e1,e2,"-",null);
                                                                             
                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
-                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope. Line "+e1left);
                                                                                 }else{
                                                                                     String auxtype = e1.bringType();
                                                                                     if(auxtype != "Integer"){
                                                                                         if(auxtype == "none"){
                                                                                             auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                 if(auxtype != "Integer"){
-                                                                                                    System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");
+                                                                                                    System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                                 }
                                                                                         }else{
-                                                                                            System.err.println("Error at *expression1* - *expression2*, first operand is not an Integer. Is "+auxtype+".");
+                                                                                            System.err.println("Error at *expression1* - *expression2*, first operand is not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                         }
                                                                                     }
                                                                                 }
                                                                             
                                                                             
                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
-                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope. Line "+e2left);
                                                                                 }else{
                                                                                     String auxtype2 = e2.bringType();
                                                                                     if(auxtype2 != "Integer"){
                                                                                         if(auxtype2 == "none"){
                                                                                             auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                             if(auxtype2 != "Integer"){
-                                                                                                System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");
+                                                                                                System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                             }
                                                                                         }else{
-                                                                                           System.err.println("Error at *expression1* - *expression2*, second operand is not an Integer. Is "+auxtype2+"."); 
+                                                                                           System.err.println("Error at *expression1* - *expression2*, second operand is not an Integer. Is "+auxtype2+". Line "+e2left); 
                                                                                         }
                                                                                     }
                                                                                 }
@@ -1282,34 +1281,34 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                        |expression:e1 TK_PRODUCT expression:e2          {:if(!foundError){RESULT = new NumericExpression(e1,e2,"*",null);
                                                                             
                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
-                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope. Line "+e1left);
                                                                                 }else{
                                                                                     String auxtype = e1.bringType();
                                                                                     if(auxtype != "Integer"){
                                                                                         if(auxtype == "none"){
                                                                                             auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                 if(auxtype != "Integer"){
-                                                                                                    System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");
+                                                                                                    System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                                 }
                                                                                         }else{
-                                                                                            System.err.println("Error at *expression1* * *expression2*, first operand is not an Integer. Is "+auxtype+".");
+                                                                                            System.err.println("Error at *expression1* * *expression2*, first operand is not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                         }
                                                                                     }
                                                                                 }
                                                                             
                                                                             
                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
-                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope. Line "+e2left);
                                                                                 }else{
                                                                                     String auxtype2 = e2.bringType();
                                                                                     if(auxtype2 != "Integer"){
                                                                                         if(auxtype2 == "none"){
                                                                                             auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                             if(auxtype2 != "Integer"){
-                                                                                                System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");
+                                                                                                System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                             }
                                                                                         }else{
-                                                                                            System.err.println("Error at *expression1* * *expression2*, second operand is not an Integer. Is "+auxtype2+".");
+                                                                                            System.err.println("Error at *expression1* * *expression2*, second operand is not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                         }
                                                                                     }
                                                                                 }
@@ -1320,34 +1319,34 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                        |expression:e1 TK_DIVISION expression:e2         {:if(!foundError){RESULT = new NumericExpression(e1,e2,"/",null);
                                                                             
                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
-                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope. Line "+e1left);
                                                                                 }else{
                                                                                     String auxtype = e1.bringType();
                                                                                     if(auxtype != "Integer"){
                                                                                         if(auxtype == "none"){
                                                                                             auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                 if(auxtype != "Integer"){
-                                                                                                    System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+".");
+                                                                                                    System.err.println("Error with variable "+e1.getId()+", not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                                 }
                                                                                         }else{
-                                                                                            System.err.println("Error at *expression1* / *expression2*, first operand is not an Integer. Is "+auxtype+".");
+                                                                                            System.err.println("Error at *expression1* / *expression2*, first operand is not an Integer. Is "+auxtype+". Line "+e1left);
                                                                                         }
                                                                                     }
                                                                                 }
                                                                             
                                                                             
                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
-                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope. Line "+e2left);
                                                                                 }else{
                                                                                     String auxtype2 = e2.bringType();
                                                                                     if(auxtype2 != "Integer"){
                                                                                         if(auxtype2 == "none"){
                                                                                             auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                             if(auxtype2 != "Integer"){
-                                                                                                System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+".");
+                                                                                                System.err.println("Error with variable "+e2.getId()+", not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                             }
                                                                                         }else{
-                                                                                            System.err.println("Error at *expression1* / *expression2*, second operand is not an Integer. Is "+auxtype2+".");
+                                                                                            System.err.println("Error at *expression1* / *expression2*, second operand is not an Integer. Is "+auxtype2+". Line "+e2left);
                                                                                         }
                                                                                     }
                                                                                 }
@@ -1358,34 +1357,34 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                        |expression:e1 TK_AMPERSAND expression:e2        {:if(!foundError){RESULT = new NumericExpression(e1,e2,"&",null);
                                                                             
                                                                                 if(e1.getId()!=null && !tableIds.searchScope(e1.getId(),ambito_actual)){
-                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope");
+                                                                                    System.err.println("Variable "+e1.getId()+" has not been declared in this scope. Line "+e1left);
                                                                                 }else{
                                                                                     String auxtype = e1.bringType();
                                                                                     if(auxtype != "String"){
                                                                                         if(auxtype == "none"){
                                                                                             auxtype = tableIds.searchNodeType(e1.getId(),ambito_actual);
                                                                                                 if(auxtype != "String"){
-                                                                                                    System.err.println("Error with variable "+e1.getId()+", not a String. Is "+auxtype+".");
+                                                                                                    System.err.println("Error with variable "+e1.getId()+", not a String. Is "+auxtype+". Line "+e1left);
                                                                                                 }
                                                                                         }else{
-                                                                                            System.err.println("Error at *expression1* & *expression2*, first operand is not a String. Is "+auxtype+".");
+                                                                                            System.err.println("Error at *expression1* & *expression2*, first operand is not a String. Is "+auxtype+". Line "+e1left);
                                                                                         }
                                                                                     }
                                                                                 }
                                                                             
                                                                             
                                                                                 if(e2.getId()!=null && !tableIds.searchScope(e2.getId(),ambito_actual)){
-                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope");
+                                                                                    System.err.println("Variable "+e2.getId()+" has not been declared in this scope. Line "+e2left);
                                                                                 }else{
                                                                                     String auxtype2 = e2.bringType();
                                                                                     if(auxtype2 != "String"){
                                                                                         if(auxtype2 == "none"){
                                                                                             auxtype2 = tableIds.searchNodeType(e2.getId(),ambito_actual);
                                                                                             if(auxtype2 != "String"){
-                                                                                                System.err.println("Error with variable "+e2.getId()+", is not a String Is "+auxtype2+".");
+                                                                                                System.err.println("Error with variable "+e2.getId()+", is not a String Is "+auxtype2+". Line "+e2left);
                                                                                             }
                                                                                         }else{
-                                                                                            System.err.println("Error at *expression1* / *expression2*, second operand is not a String. Is "+auxtype2+".");
+                                                                                            System.err.println("Error at *expression1* / *expression2*, second operand is not a String. Is "+auxtype2+". Line "+e2left);
                                                                                         }
                                                                                     }
                                                                                 }
@@ -1393,11 +1392,11 @@ numeric_expression ::= expression:e1 TK_SUM expression:e2               {:if(!fo
                                                                                 cuadruplo.addNode("&",e1.getLugar(),e2.getLugar(),RESULT.getLugar());
                                                                             
                                                                         } :}
-                       |expression:e1 TK_SUM error expression:e2              {: System.err.println("Error in numeric expression.");foundError=true;:}
-                       |expression:e1 TK_MINUS error expression:e2            {: System.err.println("Error in numeric expression.");foundError=true;:}
-                       |expression:e1 TK_PRODUCT error expression:e2          {: System.err.println("Error in numeric expression.");foundError=true;:}
-                       |expression:e1 TK_DIVISION error expression:e2         {: System.err.println("Error in numeric expression.");foundError=true;:}
-                       |expression:e1 TK_AMPERSAND error expression:e2        {: System.err.println("Error in numeric expression.");foundError=true;:}
+                       |expression:e1 TK_SUM error:er expression:e2              {: System.err.println("Error in numeric expression."+" Line "+erleft);foundError=true;:}
+                       |expression:e1 TK_MINUS error:er expression:e2            {: System.err.println("Error in numeric expression."+" Line "+erleft);foundError=true;:}
+                       |expression:e1 TK_PRODUCT error:er expression:e2          {: System.err.println("Error in numeric expression."+" Line "+erleft);foundError=true;:}
+                       |expression:e1 TK_DIVISION error:er expression:e2         {: System.err.println("Error in numeric expression."+" Line "+erleft);foundError=true;:}
+                       |expression:e1 TK_AMPERSAND error:er expression:e2        {: System.err.println("Error in numeric expression."+" Line "+erleft);foundError=true;:}
 ;   
 
 literal_expression ::= 	TK_NUMBER:num                                       {:if(!foundError){RESULT = new LiteralExpression(null,num,null);} 
@@ -1412,21 +1411,21 @@ function_call ::=   TK_ID:i TK_PARIN arguments:args TK_PAROUT             {:if(!
                                                                                 RESULT = new FunctionCall(listaarguments,i,tableIds.searchNodeType(i,ambito_actual));
                                                                                 String parameterType = tableIds.searchFunctionType(i);
                                                                                 if(parameterType=="none"){
-                                                                                    System.err.println("Function or Sub "+i+" not found");
+                                                                                    System.err.println("Function or Sub "+i+" not found. Line "+ileft);
                                                                                 }else{
                                                                                     String[] split1 = parameterType.split("->");
                                                                                     
                                                                                     if(split1[1].equals("void") && listaarguments.size() > 0){
-                                                                                        System.err.println("Error with function or sub "+i+". Expects no arguments");
+                                                                                        System.err.println("Error with function or sub "+i+". Expects no arguments. Line "+ileft);
                                                                                     }else if(!split1.equals("void")){
                                                                                         String[] split2 = split1[1].split("x");
                                                                                     
                                                                                         if(split2.length != listaarguments.size()){
-                                                                                            System.err.println("Error with function or sub "+i+" wrong number of arguments");
+                                                                                            System.err.println("Error with function or sub "+i+" wrong number of arguments. Line "+ileft);
                                                                                         }else{
                                                                                             for(int k = 0; k < listaarguments.size(); k++){
                                                                                                 if(!tableIds.searchNodeType(listaarguments.get(k).getExpression().getId(),ambito_actual).equals(split2[k]) && listaarguments.get(k).getExpression().getId() != null) {
-                                                                                                    System.err.println("Error with function or sub "+i+" on call. Wrong parameter "+listaarguments.get(k).getExpression().getId()+". Expected: "+tableIds.searchNodeType(listaarguments.get(k).getExpression().getId(),ambito_actual)+" found "+split2[k]);
+                                                                                                    System.err.println("Error with function or sub "+i+" on call. Wrong parameter "+listaarguments.get(k).getExpression().getId()+". Expected: "+tableIds.searchNodeType(listaarguments.get(k).getExpression().getId(),ambito_actual)+" found "+split2[k]+". Line "+ileft);
                                                                                                 }
                                                                                             } 
                                                                                         }

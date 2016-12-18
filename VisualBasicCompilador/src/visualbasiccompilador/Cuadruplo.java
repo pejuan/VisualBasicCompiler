@@ -186,7 +186,7 @@ public class Cuadruplo {
     }
     
     public void complete(ArrayList<Integer> lista, String etiqueta){
-        System.out.println("COMPLETANDO por "+etiqueta);
+        //System.out.println("COMPLETANDO por "+etiqueta);
         for (int i = 0; i < lista.size(); i++) {
             dir3.set(lista.get(i), etiqueta);
             System.out.println(lista.get(i));

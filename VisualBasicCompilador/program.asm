@@ -24,6 +24,12 @@ _etiqueta0:
 	lw $t0, _b
 	lw $t1, _a
 	bgt $t0, $t1, _etiqueta0
+_etiqueta1:
+
+_etiqueta2:
+
+_etiqueta3:
+
 
 	li $v0,10
 	syscall

@@ -8,3 +8,6 @@ print "Hola"
 t1=a+1
 a=t1
 if b>a GOTO etiqueta0
+etiqueta1:
+etiqueta2:
+etiqueta3:

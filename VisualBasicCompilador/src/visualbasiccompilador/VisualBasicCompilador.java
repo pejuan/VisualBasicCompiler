@@ -39,6 +39,7 @@ public class VisualBasicCompilador {
                 .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
                 .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
             parser p = new parser(new VisualBasicLexer(new FileReader("./int2.txt")));
+            
             p.parse();
             //System.out.println(p.FINALOBJECT.getDeclarations().size());
             mapper.writeValue(new File("./AST.json"), p.FINALOBJECT);
