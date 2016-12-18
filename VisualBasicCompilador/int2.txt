@@ -1,8 +1,15 @@
+'Sub joy(ByVal C As Integer)
+	'Dim D As Integer = 1+10*29+2
+'End Sub
 Sub main()
 	Dim a As Integer = 10
 	Dim b As Integer = 20
+	b = b+3
 	Do While b > a
 		Write("Hola")
 		a = a+1
 	Loop
+	'joy(b)
 End Sub
+
+

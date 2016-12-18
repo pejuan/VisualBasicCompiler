@@ -7,6 +7,10 @@ _msg1: .asciiz "Hola"
 .globl main
 
 main:
+	lw $t0, _b
+	li $t1, 3
+	add $t2, $t0, $t1
+	sw $t2,_b
 _etiqueta0:
 
 	li $v0, 4
@@ -19,7 +23,7 @@ _etiqueta0:
 	sw $t2,_a
 	lw $t0, _b
 	lw $t1, _a
-	bge $t0, $t1, _etiqueta0
+	bgt $t0, $t1, _etiqueta0
 
 	li $v0,10
 	syscall

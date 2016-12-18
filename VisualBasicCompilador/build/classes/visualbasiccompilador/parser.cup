@@ -357,6 +357,11 @@ sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!fou
                                                                             }
                                                                             pila_de_bloques.push(bloque);
                                                                             bloque = 0;
+                                                                            if(!"main".equals(i)){
+                                                                                cuadruplo.addNode("ETIQ","sub_"+i);
+                                                                            }else{
+                                                                                cuadruplo.addNode("Main",i);
+                                                                            }
                                                                         }:} 
                                                                         statements:stmnts   TK_END TK_SUB  {:if(!foundError){
                                                                                                                 RESULT = new SubStatement("Sub",i,listaparameters,listastatements,"End Sub");
@@ -365,6 +370,9 @@ sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!fou
                                                                                                                 ambito_actual = remove_scope(partir_ambito);
                                                                                                                 bloque = (int) pila_de_bloques.pop();
                                                                                                                 offset = 0;
+                                                                                                                if(!"main".equals(i)){
+                                                                                                                    cuadruplo.addNode("FINSUB","");
+                                                                                                                }
                                                                                                             } :}
                     |TK_SUB TK_ID:i TK_PARIN TK_PAROUT {:if(!foundError){
                                                             bloque++;
@@ -374,6 +382,11 @@ sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!fou
                                                             }
                                                             pila_de_bloques.push(bloque);
                                                             bloque = 0;
+                                                            if(!"main".equals(i) && !"algo".equals(i)){
+                                                                cuadruplo.addNode("ETIQ","sub_"+i);
+                                                            }else if("main".equals(i)){
+                                                                cuadruplo.addNode("Main","");
+                                                            }
                                                         }:} 
                                                         statements:stmnts TK_END TK_SUB                         {:if(!foundError){
                                                                                                                     RESULT = new SubStatement("Sub",i,null,listastatements,"End Sub");
@@ -382,10 +395,14 @@ sub_statement ::=   TK_SUB TK_ID:i TK_PARIN parameters:prmts TK_PAROUT {:if(!fou
                                                                                                                     ambito_actual = remove_scope(partir_ambito);
                                                                                                                     bloque = (int) pila_de_bloques.pop();
                                                                                                                     offset = 0;
+                                                                                                                    if(!"main".equals(i) && !"algo".equals(i)){
+                                                                                                                        cuadruplo.addNode("FINSUB","");
+                                                                                                                    }
                                                                                                                 }:}
                     |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts TK_END TK_SUB                      {:System.err.println("Error inside Sub statement");foundError=true;:}
                     |TK_SUB TK_ID TK_PARIN TK_PAROUT error statements:stmnts error TK_END TK_SUB                {:System.err.println("Several errors inside Sub statement");foundError=true;:}
                     |TK_SUB error TK_PARIN TK_PAROUT statements:stmnts TK_END TK_SUB                            {:System.err.println("Erroneous Sub declaration.");foundError=true;:}
+                    |TK_SUB TK_ID:i TK_PARIN error TK_PAROUT statements:stmnts TK_END TK_SUB                      {:System.err.println("Errorneous parameters in Sub "+i); foundError=true;:}
 ;
 
 

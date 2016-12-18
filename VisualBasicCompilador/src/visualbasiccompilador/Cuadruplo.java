@@ -47,7 +47,7 @@ public class Cuadruplo {
                 int aux = comp.indexOf(comandos.get(i));
                 writer.println("if "+dir1.get(i)+comp.get(aux)+dir2.get(i)+" GOTO "+dir3.get(i));
             }else if(comandos.get(i).equals("ETIQ")){
-                writer.println(dir3.get(i));
+                writer.println(dir3.get(i)+":");
             }else if(comandos.get(i).equals("GOTO")){
                 writer.println("GOTO "+dir3.get(i));
             }else if(comandos.get(i).equals("=")){
@@ -81,6 +81,10 @@ public class Cuadruplo {
                 writer.println("if "+dir1.get(i)+"="+dir2.get(i)+" GOTO "+dir3.get(i));
             }else if(comandos.get(i).equals("If!=")){
                 writer.println("if "+dir1.get(i)+"!="+dir2.get(i)+" GOTO "+dir3.get(i));
+            }else if(comandos.get(i).equals("FINSUB")){
+                writer.println("FINSUB");
+            }else if(comandos.get(i).equals("Main")){
+                writer.println("main:");
             }
         }
         writer.close();

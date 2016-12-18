@@ -688,7 +688,7 @@ public class CodigoFinal {
                     }
                     
                     if(type == OperationType.INTEGER_OPERATION){
-                        assembly_file.append("\tbge "+t1+", "+t2+", _"+direccion3.get(i)+"\n");
+                        assembly_file.append("\tbgt "+t1+", "+t2+", _"+direccion3.get(i)+"\n");
                     }
                     setAvailableTemp(t1);
                     setAvailableTemp(t2);
