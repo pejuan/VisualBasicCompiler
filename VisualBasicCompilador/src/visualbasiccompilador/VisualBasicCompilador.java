@@ -58,13 +58,12 @@ public class VisualBasicCompilador {
             CodigoFinal finalcode = new CodigoFinal(p.cuadruplo,p.tableIds);
             finalcode.generateFinalCode();
             finalcode.generateASMFile();
-            
+        
+        
+        
         }catch(Exception e){
-            e.printStackTrace();
+            System.err.println("A Semantic Error Was Found, no final code generated");
         }
-        
-        
-        
-    }
     
+    }
 }

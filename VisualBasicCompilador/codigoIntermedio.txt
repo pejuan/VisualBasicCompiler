@@ -1,13 +1,14 @@
 main:
-a=10
-b=20
-t0=b+3
-b=t0
+a=1
+mayor=0
 etiqueta0:
-print "Hola"
-t1=a+1
-a=t1
-if b>a GOTO etiqueta0
+print "Ingrese un numero "
+read a
+if a>mayor GOTO etiqueta1
+GOTO etiqueta2
 etiqueta1:
+mayor=a
 etiqueta2:
-etiqueta3:
+if a!=0 GOTO etiqueta0
+print "El mayor es "
+print mayor

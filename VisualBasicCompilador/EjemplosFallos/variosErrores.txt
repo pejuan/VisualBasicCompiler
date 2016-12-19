@@ -1,0 +1,34 @@
+Structure Car
+	Dim milage As Integer = 1000
+	Dim isUsed As Boolean = False
+End Structure
+
+Sub imprimir(ByVal mensaje As String, ByVal numero As Int)
+	Do While a > 0
+		Write(a)
+	Loop
+End Sub
+
+Sub imprimir2(ByVal mensaje As String, ByVal numero As Integer)
+	Do While a > 0
+		Write(a)
+	Loop
+End Sub 
+
+Function Suma() As Integer
+	Dim c As Integer = 0
+	Dim a As Integer = 0
+	Dim b As Integer = 0
+	Return a+b
+End Function
+
+Sub main()
+	Dim num1 As Integer = 0
+	Dim cadena As String = "Esto es una cadena"
+	num1 = Suma(2, cadena)
+	Dim c As Integer = True
+	Dim carro As Car
+	num1 = carro
+	imprimir2(cadena)
+	
+End Sub

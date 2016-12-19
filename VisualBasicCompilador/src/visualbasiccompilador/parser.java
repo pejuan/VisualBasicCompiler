@@ -3533,7 +3533,7 @@ cuadruplo.addNode("ETIQ","etiqueta"+contadoretiquetas);
                                                                                         }else{
                                                                                             for(int k = 0; k < listaarguments.size(); k++){
                                                                                                 if(!tableIds.searchNodeType(listaarguments.get(k).getExpression().getId(),ambito_actual).equals(split2[k]) && listaarguments.get(k).getExpression().getId() != null) {
-                                                                                                    System.err.println("Error with function or sub "+i+" on call. Wrong parameter "+listaarguments.get(k).getExpression().getId()+". Expected: "+tableIds.searchNodeType(listaarguments.get(k).getExpression().getId(),ambito_actual)+" found "+split2[k]+". Line "+ileft);
+                                                                                                    System.err.println("Error with function or sub "+i+" on call. Wrong parameter "+listaarguments.get(k).getExpression().getId()+". Expected: "+split2[k]+" found "+tableIds.searchNodeType(listaarguments.get(k).getExpression().getId(),ambito_actual)+". Line "+ileft);
                                                                                                 }
                                                                                             } 
                                                                                         }

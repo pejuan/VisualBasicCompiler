@@ -1,0 +1,12 @@
+Sub main()
+	Dim a As Integer = 0
+	Dim b As Integer = 1
+	Write("Ingrese el numero para calcular factorial ")
+	Read(a)
+	Do While a <> 1
+		b = b * a
+		a = a - 1
+	Loop
+	Write("El factorial es ")
+	Write(b)
+End Sub

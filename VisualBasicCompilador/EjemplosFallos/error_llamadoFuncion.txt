@@ -1,0 +1,17 @@
+Structure Car
+	Dim milage As Integer = 1000
+	Dim isUsed As Boolean = False
+End Structure
+
+
+Function Suma(ByVal a As Integer, ByVal b As Integer) As Integer
+	Dim c As Integer = 0
+	c = a + b
+	Return a
+End Function
+
+Sub main()
+	Dim num1 As Integer = 0
+	Dim cadena As String = "Esto es una cadena"
+	num1 = Suma(2, cadena)
+End Sub

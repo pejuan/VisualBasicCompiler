@@ -1,0 +1,17 @@
+Sub main()
+	Dim num1 As Integer = 0
+	Dim num2 As Integer = 1
+	Dim num3 As Integer = 0
+	Dim fibonacci As Integer = 0
+	Write("Ingrese cuantos valores de fibonacci quiere visualizar ")
+	Read(fibonacci)
+	Write(num1)
+	Write(num2)
+	For Dim i As Integer = 0 To i < fibonacci
+		num3 = num1 + num2
+		Write(num3)
+		num1 = num2
+		num2 = num3 
+		Write(" ")
+	Next
+End Sub
