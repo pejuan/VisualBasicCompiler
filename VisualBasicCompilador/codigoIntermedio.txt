@@ -1,14 +1,18 @@
-main:
-a=1
+fun_getMayor:
 mayor=0
 etiqueta0:
 print "Ingrese un numero "
-read a
-if a>mayor GOTO etiqueta1
+read numero
+if numero>mayor GOTO etiqueta1
 GOTO etiqueta2
 etiqueta1:
-mayor=a
+mayor=numero
 etiqueta2:
-if a!=0 GOTO etiqueta0
-print "El mayor es "
-print mayor
+if numero!=0 GOTO etiqueta0
+RET numero
+FINFUN
+main:
+a=1
+param a
+call getMayor, 1
+mayor=RET

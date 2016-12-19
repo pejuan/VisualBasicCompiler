@@ -1,0 +1,16 @@
+Function getMayor(ByVal numero As Integer) As Integer
+	Dim mayor As Integer = 0
+	Do While numero <> 0
+		Write("Ingrese un numero ")
+		Read(numero)
+		If numero > mayor Then
+			mayor = numero
+		End If
+	Loop
+	Return numero
+End Function
+
+Sub main()
+	Dim a As Integer = 1
+	Dim mayor As Integer = getMayor(a)
+End Sub

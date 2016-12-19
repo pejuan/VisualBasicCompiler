@@ -62,7 +62,7 @@ public class VisualBasicCompilador {
         
         
         }catch(Exception e){
-            System.err.println("A Semantic Error Was Found, no final code generated");
+            System.err.println("An error or multiple errors were found trying to generate final code, no final code was generated");
         }
     
     }
